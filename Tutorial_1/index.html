@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<!-- MathJax for LaTeX -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: Title -->
+    <section>
+      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Perceptron and NCC</h2>
+      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+    </section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Course Structure</h3>
+  <svg id="tree1" width="700" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const data = {
+      name: "Machine Learning",
+      children: [
+        {
+          name: "Supervised Learning",
+          children: [
+            { name: "Regression", children: [{ name: "Linear Regression", children: [{ name: "Kernel Ridge Regression"}]}] },
+            { name: "Classification", children: [{ name: "Binary Classification", children: [{ name: "LDA"},{ name: "Perceptron"},{ name: "NCC"}]}] },
+          ]
+        },
+        {
+          name: "Unsupervised Learning",
+          children: [
+            { name: "Clustering", children: [{ name: "k-Means"}] },
+            { name: "Dimension Reduction", children: [{ name: "NMF"}, { name: "PCA", children: [{ name: "kPCA"}]}] }
+          ]
+        }
+      ]
+    };
+
+    function drawTree(svgId, highlight=false) {
+      const width = 700, height = 600;
+      const treeLayout = d3.tree().size([width, height - 100]);
+      const root = d3.hierarchy(data);
+      treeLayout(root);
+
+      const svg = d3.select(svgId)
+        .append("g")
+        .attr("transform", "translate(50,50)");
+
+      const highlightNames = new Set([
+        "Machine Learning",
+        "Supervised Learning",
+        "Classification",
+        "Binary Classification",
+        "Perceptron",
+        "NCC"
+      ]);
+
+      function isHighlighted(link) {
+        const src = link.source.data.name;
+        const tgt = link.target.data.name;
+        return highlight && highlightNames.has(src) && highlightNames.has(tgt);
+      }
+
+      // Draw links
+      svg.selectAll("path")
+        .data(root.links())
+        .enter()
+        .append("path")
+        .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+        .attr("stroke", d => isHighlighted(d) ? "#00FF9C" : "#A8E6CF")
+        .attr("stroke-width", d => isHighlighted(d) ? 3 : 2)
+        .attr("fill", "none");
+
+      // Draw nodes
+      svg.selectAll("circle")
+        .data(root.descendants())
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 6)
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#FFD166");
+
+      // Draw labels
+      svg.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.children ? d.x - 10 : d.x)
+        .attr("y", d => d.children ? d.y + 5 : d.y + 20)
+        .attr("text-anchor", d => d.children ? "end" : "middle")
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#EAEAEA")
+        .style("font-size", "16px")
+        .text(d => d.data.name);
+    }
+
+    drawTree("#tree1", false);
+  </script>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Today</h3>
+  <svg id="tree2" width="700" height="600"></svg>
+
+  <script>
+    drawTree("#tree2", true);
+  </script>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Binary Classification</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/NCC_Toy_data.png" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+    <p style="color:#EAEAEA; font-size:0.9em; margin-top:10px;">
+      
+    </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		predict class labels of future unlabeled datapoints
+	  </p>
+  </div>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;">Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = sign(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+    
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+	
+  </div>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Nearest Centroid Classifier</h3>
+
+  <svg width="700" height="300" style="display:block; margin:auto;">
+    <!-- Number line -->
+    <line x1="50" y1="200" x2="650" y2="200" stroke="#EAEAEA" stroke-width="4" />
+
+    <!-- Tick marks -->
+    <line x1="50" y1="195" x2="50" y2="205" stroke="#EAEAEA" stroke-width="2" />
+    <line x1="650" y1="195" x2="650" y2="205" stroke="#EAEAEA" stroke-width="2" />
+
+    <!-- Dog images -->
+    <image href="../img/chihuahua.png" x="150" y="120" height="60px" width="60px"/>
+    <image href="../img/labrador.png" x="480" y="60" height="120px" width="120px"/>
+
+    <!-- Labels -->
+    <text x="170" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Chihuahua</text>
+    <text x="540" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Labrador</text>
+
+    <!-- Class dots -->
+    <!-- Blue dots for Chihuahuas -->
+    <circle cx="120" cy="200" r="8" fill="#3498db"/>
+    <circle cx="180" cy="200" r="8" fill="#3498db"/>
+    <circle cx="220" cy="200" r="8" fill="#3498db"/>
+
+    <!-- Orange dots for Labradors -->
+    <circle cx="500" cy="200" r="10" fill="#e67e22"/>
+    <circle cx="550" cy="200" r="10" fill="#e67e22"/>
+    <circle cx="580" cy="200" r="10" fill="#e67e22"/>
+	 <!-- Centroid markers -->
+    <text x="173" y="210" fill="#ffffff" font-size="28px" font-weight="bold" text-anchor="middle">×</text>
+    <text x="543" y="210" fill="#ffffff" font-size="30px" font-weight="bold" text-anchor="middle">×</text>
+	
+  </svg>
+  	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		NCC: Based on Similarity along dimensions
+
+		e.g. height of dog 
+	  </p>
+</section>
+
+
+
+
+<section>
+  <h2 style="color:#A8E6CF;">Perceptron Algorithm </h2>
+
+  <pre><code class="python">
+Input: Training data { (x_i, y_i) }, x_i ∈ ℝᵈ, y_i ∈ {-1,+1}, 
+	    step size η > 0
+Output: Weight vector w, bias β
+
+Initialize w ∈ ℝᵈ, β ∈ ℝ
+repeat
+    # Loop through each training example
+    for each (x_i, y_i):
+        # Check if x_i is misclassified
+        if y_i * (wᵀ x_i + β) ≤ 0:
+            w ← w + η * y_i * x_i
+            β ← β + η * y_i
+
+until no misclassifications
+  </code></pre>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;">Perceptron Loss function</h3>
+      <p style="color:#EAEAEA;">
+    
+          \begin{align*}
+        \mathcal{L}_{\mathcal{P}}: \mathbb{R}^d \to \mathbb{R}, \quad w\mapsto - \sum_{m\in \mathcal{M}}w^\top x_m y_m 
+    \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Counts how many datapoints are misclassified
+	  </p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Perceptron Learning step by step</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/perceptron_learning.gif" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Maximum number of steps is set to 20 
+	  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Perceptron Outcome</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/Perceptron_random.png" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Outcome of Perceptron Learning can be different on the same dataset.
+	  </p>
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+  </div>
+</section>
+
+    <section>
+      <h3 style="color:#A8E6CF;">Homework</h3>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/task2_1.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Decision boundary decides which class points are assigned to
+	  </p>
+  </div>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/task2_2.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Decision boundary decides which class points are assigned to
+	  </p>
+  </div>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/task2_3.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Decision boundary decides which class points are assigned to
+	  </p>
+  </div>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/task2_4.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Decision boundary decides which class points are assigned to
+	  </p>
+  </div>
+</section>
+
+
+  </div>
+</div>
+
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+  				transition: 'none',           // default: no transition
+  				backgroundTransition: 'none', // default: no background fade
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
+				  math: {
+					  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+					config: {
+					tex: {
+						macros: {
+						R: "\\mathbb{R}",
+						bw: "\\mathbf{w}",
+						bx: "\\mathbf{x}",
+						sign: "\\operatorname{sign}"
+						}
+					}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<!-- MathJax for LaTeX -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: Title -->
+    <section>
+      <h2 style="color:#A8E6CF;">Cognitive Algorithms: LDA and Gaussian distribution</h2>
+      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Homework</h3>
+  
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		I corrected everyone's Homework Sheet 1. If you have questions ask me after the tutorial or email me at h.boldt@campus.tu-berlin.de!
+	  </p>
+
+  
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Course Structure</h3>
+  <svg id="tree1" width="700" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const data = {
+      name: "Machine Learning",
+      children: [
+        {
+          name: "Supervised Learning",
+          children: [
+            { name: "Regression", children: [{ name: "Linear Regression", children: [{ name: "Kernel Ridge Regression"}]}] },
+            { name: "Classification", children: [{ name: "Binary Classification", children: [{ name: "LDA"},{ name: "Perceptron"},{ name: "NCC"}]}] },
+          ]
+        },
+        {
+          name: "Unsupervised Learning",
+          children: [
+            { name: "Clustering", children: [{ name: "k-Means"}] },
+            { name: "Dimension Reduction", children: [{ name: "NMF"}, { name: "PCA", children: [{ name: "kPCA"}]}] }
+          ]
+        }
+      ]
+    };
+
+    function drawTree(svgId, highlight=false) {
+      const width = 700, height = 600;
+      const treeLayout = d3.tree().size([width, height - 100]);
+      const root = d3.hierarchy(data);
+      treeLayout(root);
+
+      const svg = d3.select(svgId)
+        .append("g")
+        .attr("transform", "translate(50,50)");
+
+      const highlightNames = new Set([
+        "Machine Learning",
+        "Supervised Learning",
+        "Classification",
+        "Binary Classification",
+        "LDA"
+      ]);
+
+      function isHighlighted(link) {
+        const src = link.source.data.name;
+        const tgt = link.target.data.name;
+        return highlight && highlightNames.has(src) && highlightNames.has(tgt);
+      }
+
+      // Draw links
+      svg.selectAll("path")
+        .data(root.links())
+        .enter()
+        .append("path")
+        .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+        .attr("stroke", d => isHighlighted(d) ? "#00FF9C" : "#A8E6CF")
+        .attr("stroke-width", d => isHighlighted(d) ? 3 : 2)
+        .attr("fill", "none");
+
+      // Draw nodes
+      svg.selectAll("circle")
+        .data(root.descendants())
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 6)
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#FFD166");
+
+      // Draw labels
+      svg.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.children ? d.x - 10 : d.x)
+        .attr("y", d => d.children ? d.y + 5 : d.y + 20)
+        .attr("text-anchor", d => d.children ? "end" : "middle")
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#EAEAEA")
+        .style("font-size", "16px")
+        .text(d => d.data.name);
+    }
+
+    drawTree("#tree1", false);
+  </script>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Today</h3>
+  <svg id="tree2" width="700" height="600"></svg>
+
+  <script>
+    drawTree("#tree2", true);
+  </script>
+                <!-- Question highlighted -->
+    <p style="color:#00FF9C; font-weight:bold;  font-size:0.6em;">
+     + some math basics
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Recap: Binary Classification</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/NCC_Toy_data.png" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+    <p style="color:#EAEAEA; font-size:0.9em; margin-top:10px;">
+      
+    </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		predict class labels of future unlabeled datapoints
+	  </p>
+  </div>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = sign(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+    
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+	
+  </div>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Nearest Centroid Classifier</h3>
+
+  <svg width="700" height="300" style="display:block; margin:auto;">
+    <!-- Number line -->
+    <line x1="50" y1="200" x2="650" y2="200" stroke="#EAEAEA" stroke-width="4" />
+
+    <!-- Tick marks -->
+    <line x1="50" y1="195" x2="50" y2="205" stroke="#EAEAEA" stroke-width="2" />
+    <line x1="650" y1="195" x2="650" y2="205" stroke="#EAEAEA" stroke-width="2" />
+
+    <!-- Dog images -->
+    <image href="../img/chihuahua.png" x="150" y="120" height="60px" width="60px"/>
+    <image href="../img/labrador.png" x="480" y="60" height="120px" width="120px"/>
+
+    <!-- Labels -->
+    <text x="170" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Chihuahua</text>
+    <text x="540" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Labrador</text>
+
+    <!-- Class dots -->
+    <!-- Blue dots for Chihuahuas -->
+    <circle cx="120" cy="200" r="8" fill="#3498db"/>
+    <circle cx="180" cy="200" r="8" fill="#3498db"/>
+    <circle cx="220" cy="200" r="8" fill="#3498db"/>
+
+    <!-- Orange dots for Labradors -->
+    <circle cx="500" cy="200" r="10" fill="#e67e22"/>
+    <circle cx="550" cy="200" r="10" fill="#e67e22"/>
+    <circle cx="580" cy="200" r="10" fill="#e67e22"/>
+	 <!-- Centroid markers -->
+    <text x="173" y="210" fill="#ffffff" font-size="28px" font-weight="bold" text-anchor="middle">×</text>
+    <text x="543" y="210" fill="#ffffff" font-size="30px" font-weight="bold" text-anchor="middle">×</text>
+	
+  </svg>
+  	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		NCC: Based on Similarity along dimensions
+
+		e.g. height of dog 
+	  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Example</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/decision_empty.png" width="1000" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      What will NCC do?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Example NCC</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/decision_ncc.png" width="1000" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      What will LDA do?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Example LDA</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/decision_lda.png" width="1000" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      Why?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">LDA assumes Gaussianity</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/two_classes_with_histo.png" width="1000" style="display:block; margin: 0 auto;">
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		plot of histogram along $x_1$ axis of dataset (shows empirical variance)
+	  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Gaussian distribution</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/Gaussian_1.png" width="1000" style="display:block; margin: 0 auto;">
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$\sigma$ changes the Variance of Gaussian distribution, $\mu$ is mean
+	  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Sample of Gaussian distribution</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/Gaussian_2.png" width="600" style="display:block; margin: 0 auto;">
+     <img src="../img/Gaussian_2_1D.png" width="600" style="display:block; margin: 0 auto;">
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Plot below shows 3 datapoints sampled from the distribution
+	  </p>
+  </div>
+</section>
+
+    <section>
+      <h3 style="color:#A8E6CF;">How do we estimate variance and expected value of underlying distribution?</h3>
+    </section>
+
+
+
+<!-- Slide 2: Question (matrix highlighted) -->
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Variance & Covariance</h3>
+  <div style="text-align:left; margin-left: 50px; color:#EAEAEA; font-size:0.7em;">
+    <p>• $X$: discrete random variable, $p_i \in [0,1]$ (probabilities), $x_i$ possible outcomes</p>
+    <p>• Expected Value: $\mathbb{E}[X] = \sum_i p_i x_i$</p>
+    <p>• Variance: $Var(X) = \mathbb{E}[(X - \mathbb{E}[X])^2]$</p>
+    <p>• Covariance: $Cov(X,Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]$</p>
+
+    <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      What is the empirical covariance of axis $x_1$ and $x_2$ for the dataset
+      $A = \begin{bmatrix} 1 & 0 & -1 \\ 1 & 0 & -1 \end{bmatrix}$?
+    </p>
+  </div>
+</section>
+
+
+    <section>
+      <h3 style="color:#A8E6CF;">Covariance Matrix $\Sigma_x$</h3>
+      <p style="color:#EAEAEA;">
+          \begin{align*}
+        \Sigma_X=
+                   \begin{bmatrix}
+                    Var(X_1) & \ldots & Cov(X_1, X_d)\\
+                    \vdots & \ddots & \vdots\\
+                    Cov(X_d, X_1) & \ldots & Var(X_d)
+                    \end{bmatrix} \in \mathbb{R}^{d \times d}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Describes covariance an variance of dataset along Dimensions
+	  </p>
+        <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+     How does a dataset sampled from $\Sigma_X$ with gaussianity look like?
+    </p>
+            <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+     What shape should Data from $S_A = \begin{bmatrix} 1 & 1  \\ 1 & 1 \end{bmatrix}$ have? How would $S_B = \begin{bmatrix} 1 & 0  \\ 0 & 1 \end{bmatrix}$ look? Is negative Covariance possible? 5 min 
+    </p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Interactive Gaussian Scatter</h3>
+
+  <!-- Input controls -->
+  <div style="text-align:center; margin-bottom: 10px; display:flex; justify-content:center; align-items:center; gap:10px;">
+    <label for="x1" style="color:#EAEAEA;">X₁:</label>
+    <input id="x1" type="number" step="0.1" value="1" class="num-input">
+
+    <label for="x2" style="color:#EAEAEA;">X₂:</label>
+    <input id="x2" type="number" step="0.1" value="1" class="num-input">
+
+    <label for="cov" style="color:#EAEAEA;">Cov:</label>
+    <input id="cov" type="number" step="0.1" value="1" class="num-input">
+  </div>
+
+  <!-- Plot -->
+  <div id="plot" style="width:700px; height:500px; margin:auto;"></div>
+
+  <!-- Covariance matrix -->
+  <div id="matrix" style="text-align:center; color:#EAEAEA; font-size:1.1em; margin-top:20px;"></div>
+
+  <!-- Plotly and MathJax -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <style>
+    .num-input {
+      width: 4em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+      transition: border 0.2s;
+    }
+    .num-input:focus {
+      outline: none;
+      border-color: #A8E6CF;
+    }
+  </style>
+
+  <script>
+    // Generate correlated 2D Gaussian samples
+    function generateData(X1, X2, cov, n=2000) {
+      const points = [];
+      const rho = cov / Math.sqrt(X1 * X2);
+      for (let i = 0; i < n; i++) {
+        const u1 = Math.random(), u2 = Math.random();
+        const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        const z1 = Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+        const x = Math.sqrt(X1) * z0;
+        const y = Math.sqrt(X2) * (rho * z0 + Math.sqrt(1 - rho ** 2) * z1);
+        points.push({ x, y });
+      }
+      return points;
+    }
+
+    // Plot with Plotly
+    function plotData(X1, X2, cov) {
+      const data = generateData(X1, X2, cov);
+      const trace = {
+        x: data.map(p => p.x),
+        y: data.map(p => p.y),
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: '#3498db', size: 4 },
+        name: 'Samples'
+      };
+      const layout = {
+        paper_bgcolor: '#000',
+        plot_bgcolor: '#000',
+        font: { color: '#EAEAEA' },
+        xaxis: { range: [-10, 10], title: 'x₁', gridcolor: '#333' },
+        yaxis: { range: [-10, 10], title: 'x₂', gridcolor: '#333' },
+        width: 700,
+        height: 500,
+        title: `X₁=${X1}, X₂=${X2}, Cov=${cov}`,
+      };
+      Plotly.newPlot('plot', [trace], layout, {displayModeBar: false});
+    }
+
+    // Display covariance matrix in LaTeX
+    function updateMatrix(X1, X2, cov) {
+      const html = `
+        $$S_A = \\begin{bmatrix}
+          ${X1.toFixed(2)} & ${cov.toFixed(2)} \\\\
+          ${cov.toFixed(2)} & ${X2.toFixed(2)}
+        \\end{bmatrix}$$
+      `;
+      document.getElementById('matrix').innerHTML = html;
+      MathJax.typesetPromise();
+    }
+
+    // Live update handler
+    function update() {
+      const X1 = parseFloat(document.getElementById('x1').value);
+      const X2 = parseFloat(document.getElementById('x2').value);
+      const cov = parseFloat(document.getElementById('cov').value);
+      plotData(X1, X2, cov);
+      updateMatrix(X1, X2, cov);
+    }
+
+    // Attach listeners
+    ['x1', 'x2', 'cov'].forEach(id => {
+      document.getElementById(id).addEventListener('input', update);
+    });
+
+    // Initial plot
+    update();
+  </script>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Variance & Covariance</h3>
+  <div style=" margin-left: 50px; color:#EAEAEA; font-size:0.7em;">
+
+    $Corr(X,Y) = \frac{Cov(X,Y)}{\sqrt{Var(X)} \sqrt{Var(Y)}}\in[-1,1]$
+        
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Correlation is normalized Covariance
+	  </p>
+  </div>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;">LDA goal</h3>
+      <p style="color:#EAEAEA;">
+      $w$ normal vector of subspace, $\mu$ mean of data projected on $w$, $\sigma$  variance of projected data  
+          \begin{align*}
+        \mathcal{J}: \mathbb{R}^d \to \mathbb{R}, \quad w\mapsto \frac{(\mu_* - \mu_\circ )^2 }{\sigma_*^2 + \sigma_\circ^2}
+    \end{align*}
+       
+  
+      </p>
+	
+      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		We want to maximize the fisher criterion $\mathcal{J}$
+	  </p>
+    <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      What is the Fisher criterion for $w = \begin{bmatrix} 1 & 0 \end{bmatrix}^\top$ and datasets
+      $A_* = \begin{bmatrix} 1 & 0 & -1 \\ 1 & 0 & -1 \end{bmatrix}$ $A_\circ = \begin{bmatrix} 2 & 0  \\ 1 & 0  \end{bmatrix}$ ?
+    </p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Calculating Fisher example</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/Tutorial_2_fisher_task.png" width="1000" style="display:block; margin: 0 auto;">
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		plot of histogram along $x_1$ axis of dataset (shows empirical variance)
+	  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Distribution of datapoints projected onto subspace</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/projection_loop.gif" width="1100" style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Maximum number of steps is set to 20 
+	  </p>
+  </div>
+</section>
+
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      Is NCC always better than LDA?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">LDA not always better than NCC</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/decision_lda_ncc_x.jpg" width="1000" style="display:block; margin: 0 auto;">
+    
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      When are NCC and LDA equal?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Whitening</h3>
+  <div style="text-align:left; margin-left: 50px; color:#EAEAEA; font-size:0.7em;">
+    <p> $X \in \mathbb{R}^{d \times n}$ dataset, $\mu \in \mathbb{R}^d$ mean, $\hat{\Sigma}_X \in \mathbb{R}^{d \times d}$  </p>
+    <p>• Centering: $\mu = 0 \in \mathbb{R^d}$</p>
+    <p>• Decorrelating: $\hat{\Sigma}_X = \lambda I$</p>
+    <p>• Whitening: $\hat{\Sigma}_X = I$</p>
+</p>
+
+  </div>
+</section>
+
+
+
+    <section>
+      <h3 style="color:#A8E6CF;">Homework</h3>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/task2_1.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Decision boundary decides which class points are assigned to
+	  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/task2_3.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+
+
+  </div>
+</div>
+
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+  				transition: 'none',           // default: no transition
+  				backgroundTransition: 'none', // default: no background fade
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
+				  math: {
+					  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+					config: {
+					tex: {
+						macros: {
+						R: "\\mathbb{R}",
+						bw: "\\mathbf{w}",
+						bx: "\\mathbf{x}",
+						sign: "\\operatorname{sign}"
+						}
+					}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
