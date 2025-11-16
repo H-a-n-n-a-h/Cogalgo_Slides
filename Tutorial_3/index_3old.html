@@ -12,10 +12,7 @@
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
-		<!-- MathJax for LaTeX -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 	</head>
 	<body>
 <div class="reveal">
@@ -23,8 +20,8 @@
 
     <!-- Slide 1: Title -->
     <section>
-      <h2 style="color:#A8E6CF;">Cognitive Algorithms: LDA and Gaussian distribution</h2>
-      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Linear Regression</h2>
+
     </section>
 
 <section>
@@ -32,7 +29,7 @@
   
     
 	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		I corrected everyone's Homework Sheet 1. If you have questions ask me after the tutorial or email me at h.boldt@campus.tu-berlin.de!
+		The deadline of the homework is now Wednesday 8 am!
 	  </p>
 
   
@@ -76,9 +73,8 @@
       const highlightNames = new Set([
         "Machine Learning",
         "Supervised Learning",
-        "Classification",
-        "Binary Classification",
-        "LDA"
+        "Regression",
+        "Linear Regression"
       ]);
 
       function isHighlighted(link) {
@@ -198,74 +194,121 @@
 	
   </div>
 </section>
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;">Nearest Centroid Classifier</h3>
-
-  <svg width="700" height="300" style="display:block; margin:auto;">
-    <!-- Number line -->
-    <line x1="50" y1="200" x2="650" y2="200" stroke="#EAEAEA" stroke-width="4" />
-
-    <!-- Tick marks -->
-    <line x1="50" y1="195" x2="50" y2="205" stroke="#EAEAEA" stroke-width="2" />
-    <line x1="650" y1="195" x2="650" y2="205" stroke="#EAEAEA" stroke-width="2" />
-
-    <!-- Dog images -->
-    <image href="../img/chihuahua.png" x="150" y="120" height="60px" width="60px"/>
-    <image href="../img/labrador.png" x="480" y="60" height="120px" width="120px"/>
-
-    <!-- Labels -->
-    <text x="170" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Chihuahua</text>
-    <text x="540" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Labrador</text>
-
-    <!-- Class dots -->
-    <!-- Blue dots for Chihuahuas -->
-    <circle cx="120" cy="200" r="8" fill="#3498db"/>
-    <circle cx="180" cy="200" r="8" fill="#3498db"/>
-    <circle cx="220" cy="200" r="8" fill="#3498db"/>
-
-    <!-- Orange dots for Labradors -->
-    <circle cx="500" cy="200" r="10" fill="#e67e22"/>
-    <circle cx="550" cy="200" r="10" fill="#e67e22"/>
-    <circle cx="580" cy="200" r="10" fill="#e67e22"/>
-	 <!-- Centroid markers -->
-    <text x="173" y="210" fill="#ffffff" font-size="28px" font-weight="bold" text-anchor="middle">×</text>
-    <text x="543" y="210" fill="#ffffff" font-size="30px" font-weight="bold" text-anchor="middle">×</text>
-	
-  </svg>
-  	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		NCC: Based on Similarity along dimensions
-
-		e.g. height of dog 
-	  </p>
-</section>
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center;">Example</h3>
   
   <div style="text-align:center;">
     <!-- Make the GIF larger -->
-    <img src="../img/decision_empty.png" width="1000" style="display:block; margin: 0 auto;">
+    <img src="../img/simple_linear_regression.png" width="700" style="display:block; margin: 0 auto;">
     
 	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-      What will NCC do?
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we find a function that approximates the underlying function?
     </p>
   </div>
 </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;">Example NCC</h3>
-  
-  <div style="text-align:center;">
-    <!-- Make the GIF larger -->
-    <img src="../img/decision_ncc.png" width="1000" style="display:block; margin: 0 auto;">
+  <section>
+      <h3 style="color:#A8E6CF;">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
     
-	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-      What will LDA do?
-    </p>
-  </div>
-</section>
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = sign(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+  <section>
+      <h3 style="color:#A8E6CF;">Linear Regressioin with mapping on output</h3>
+      <p style="color:#EAEAEA;">
+    
+   $$ \hat{f}: \R^d \to \R, \quad x \mapsto  \bw^\top \varphi(x)  $$
+    where $\varphi$ is a function, weight vector $\bw \in \R^m$, data point $x \in \R^d$, and bias $\beta \in \R$. 
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+
+  <section>
+      <h3 style="color:#A8E6CF;">Example 1</h3>
+      <p style="color:#EAEAEA;">
+    
+   $$ \hat{f}: \R \to \R, \quad x \mapsto  w x  $$
+    where $\varphi = x$ is a function, weight vector $w \in \R$, data point $x \in \R$, and bias $\beta \in \R$.
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		
+	  </p>
+    </section>
+
+  <section>
+      <h3 style="color:#A8E6CF;">Example 2</h3>
+      <p style="color:#EAEAEA;">
+    
+If we choose $d = 1$ and $\varphi(x) = \begin{bmatrix}
+        1 \\ x
+    \end{bmatrix}$ we get simple linear regression with an offset:
+    \begin{align*}
+    \hat{f}: \R \to \R, \quad x \mapsto w_1 + w_2 x
+    \end{align*}
+    where weight vector $w \in \R^2$, data point $x \in \R$ 
+
+    and 
+    $\bw^\top \varphi(x)
+    = 
+    \begin{bmatrix}
+        w_1 & w_2
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 \\ x
+    \end{bmatrix}
+    =  w_1 + w_2 x$. 
+
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		
+	  </p>
+    </section>
+
+
+  <section>
+      <h3 style="color:#A8E6CF;">Example 3</h3>
+      <p style="color:#EAEAEA;">
+    
+    $d=1$, $\varphi(x) = \begin{bmatrix}
+        1 & x & x^2 & \dots & x^p
+    \end{bmatrix}^\top$
+    then 
+    \begin{align*}
+        \hat{f}: \R \to \R, \quad x \mapsto w_0 + w_1 x + w_2 x^2 + \dots w_p x^p
+    \end{align*}
+    since
+    \begin{align*}
+    \bw^\top \varphi(x)
+    = 
+    \begin{bmatrix}
+        w_0 & w_1 & w_2 & \dots & w_p
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 \\ x \\ x^2 \\ \vdots \\x^p
+    \end{bmatrix}
+    = w_0 + w_1 x + w_2 x^2 + \dots w_p x^p.  
+    \end{align*}
+
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		
+	  </p>
+    </section>
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center;">Example LDA</h3>
@@ -344,7 +387,6 @@
 </section>
 
 
-
     <section>
       <h3 style="color:#A8E6CF;">Covariance Matrix $\Sigma_x$</h3>
       <p style="color:#EAEAEA;">
@@ -372,7 +414,6 @@
     </p>
     </section>
 
-
 <section>
   <h3 style="color:#A8E6CF; text-align:center;">Interactive Gaussian Scatter</h3>
 
@@ -388,24 +429,13 @@
     <input id="cov" type="number" step="0.1" value="1" class="num-input">
   </div>
 
-  <!-- Plot + Matrix container -->
-  <div style="display:flex; justify-content:center; align-items:flex-start; gap:20px;">
-    <!-- Plot -->
-    <div id="plot" style="width:700px; height:500px;"></div>
+  <!-- Plot -->
+  <div id="plot" style="width:700px; height:500px; margin:auto;"></div>
 
-    <!-- Covariance matrix -->
-    <div id="matrix" style="color:#EAEAEA; font-size:1.1em; text-align:center;"></div>
-  </div>
+  <!-- Covariance matrix -->
+  <div id="matrix" style="text-align:center; color:#EAEAEA; font-size:1.1em; margin-top:20px;"></div>
 
-  <!-- Plotly and MathJax -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 
   <style>
     .num-input {
@@ -426,6 +456,7 @@
   </style>
 
   <script>
+    // Generate correlated 2D Gaussian samples
     function generateData(X1, X2, cov, n=2000) {
       const points = [];
       const rho = cov / Math.sqrt(X1 * X2);
@@ -440,6 +471,7 @@
       return points;
     }
 
+    // Plot with Plotly
     function plotData(X1, X2, cov) {
       const data = generateData(X1, X2, cov);
       const trace = {
@@ -463,6 +495,7 @@
       Plotly.newPlot('plot', [trace], layout, {displayModeBar: false});
     }
 
+    // Display covariance matrix in LaTeX
     function updateMatrix(X1, X2, cov) {
       const html = `
         $$S_A = \\begin{bmatrix}
@@ -474,6 +507,7 @@
       MathJax.typesetPromise();
     }
 
+    // Live update handler
     function update() {
       const X1 = parseFloat(document.getElementById('x1').value);
       const X2 = parseFloat(document.getElementById('x2').value);
@@ -482,15 +516,15 @@
       updateMatrix(X1, X2, cov);
     }
 
+    // Attach listeners
     ['x1', 'x2', 'cov'].forEach(id => {
       document.getElementById(id).addEventListener('input', update);
     });
 
+    // Initial plot
     update();
   </script>
 </section>
-
-
 <section>
   <h3 style="color:#A8E6CF; text-align:center;">Variance & Covariance</h3>
   <div style=" margin-left: 50px; color:#EAEAEA; font-size:0.7em;">
@@ -615,46 +649,6 @@
       <h3 style="color:#A8E6CF;">Homework</h3>
     </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/task2_1.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
-
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Decision boundary decides which class points are assigned to
-	  </p>
-  </div>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/task2_3.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
 
 
 
@@ -666,32 +660,28 @@
 		<script src="../plugin/notes/notes.js"></script>
 		<script src="../plugin/markdown/markdown.js"></script>
 		<script src="../plugin/highlight/highlight.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="../plugin/math/math.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
-  				transition: 'none',           // default: no transition
-  				backgroundTransition: 'none', // default: no background fade
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
-				  math: {
-					  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
-					config: {
-					tex: {
-						macros: {
-						R: "\\mathbb{R}",
-						bw: "\\mathbf{w}",
-						bx: "\\mathbf{x}",
-						sign: "\\operatorname{sign}"
-						}
-					}
-					}
-				}
-			});
+Reveal.initialize({
+  plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3 ],
+  math: {
+    mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+    config: {
+      tex: {
+        macros: {
+          R: "\\mathbb{R}",
+          bw: "\\mathbf{w}",
+          bx: "\\mathbf{x}",
+          sign: "\\operatorname{sign}"
+        }
+      }
+    }
+  }
+});
+
 		</script>
 	</body>
 </html>

@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<!-- MathJax for LaTeX -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+
+  <style>
+:root {
+  --nicecyan:   #00CC99;  /* (0,0.8,0.6) */
+  --niceblue:   #4D66FF;  /* (0.3,0.4,1) */
+  --nicepurple: #FF1AFF;  /* (1,0.1,1) */
+  --nicered:    #CC001A;  /* (0.8,0,0.1) */
+  --niceyellow: #FFB300;  /* (1,0.7,0) */
+  --niceorange: #FF8000;  /* (1,0.5,0) */
+  --offwhite:   #FFE6FF;  /* (1,0.9,1) */
+}
+</style>
+
+	<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: Title -->
+    <section>
+      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Linear Regression</h2>
+      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Homework</h3>
+  
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		The deadline of the homework is now Wednesday 8 am!
+	  </p>
+
+  
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Course Structure</h3>
+  <svg id="tree1" width="700" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const data = {
+      name: "Machine Learning",
+      children: [
+        {
+          name: "Supervised Learning",
+          children: [
+            { name: "Regression", children: [{ name: "Linear Regression", children: [{ name: "Kernel Ridge Regression"}]}] },
+            { name: "Classification", children: [{ name: "Binary Classification", children: [{ name: "LDA"},{ name: "Perceptron"},{ name: "NCC"}]}] },
+          ]
+        },
+        {
+          name: "Unsupervised Learning",
+          children: [
+            { name: "Clustering", children: [{ name: "k-Means"}] },
+            { name: "Dimension Reduction", children: [{ name: "NMF"}, { name: "PCA", children: [{ name: "kPCA"}]}] }
+          ]
+        }
+      ]
+    };
+
+    function drawTree(svgId, highlight=false) {
+      const width = 700, height = 600;
+      const treeLayout = d3.tree().size([width, height - 100]);
+      const root = d3.hierarchy(data);
+      treeLayout(root);
+
+      const svg = d3.select(svgId)
+        .append("g")
+        .attr("transform", "translate(50,50)");
+
+      const highlightNames = new Set([
+        "Machine Learning",
+        "Supervised Learning",
+        "Regression",
+        "Linear Regression"
+      ]);
+
+      function isHighlighted(link) {
+        const src = link.source.data.name;
+        const tgt = link.target.data.name;
+        return highlight && highlightNames.has(src) && highlightNames.has(tgt);
+      }
+
+      // Draw links
+      svg.selectAll("path")
+        .data(root.links())
+        .enter()
+        .append("path")
+        .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+        .attr("stroke", d => isHighlighted(d) ? "#00FF9C" : "#A8E6CF")
+        .attr("stroke-width", d => isHighlighted(d) ? 3 : 2)
+        .attr("fill", "none");
+
+      // Draw nodes
+      svg.selectAll("circle")
+        .data(root.descendants())
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 6)
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#FFD166");
+
+      // Draw labels
+      svg.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.children ? d.x - 10 : d.x)
+        .attr("y", d => d.children ? d.y + 5 : d.y + 20)
+        .attr("text-anchor", d => d.children ? "end" : "middle")
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#EAEAEA")
+        .style("font-size", "16px")
+        .text(d => d.data.name);
+    }
+
+    drawTree("#tree1", false);
+  </script>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Today</h3>
+  <svg id="tree2" width="700" height="600"></svg>
+
+  <script>
+    drawTree("#tree2", true);
+  </script>
+                <!-- Question highlighted -->
+    <p style="color:#00FF9C; font-weight:bold;  font-size:0.6em;">
+     + some math basics
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+    
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+	
+  </div>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = sign(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.2em;">Linear Regression with mapping on output</h3>
+  <p style="color:#EAEAEA;">
+    $$ \hat{f}: \mathbb{R}^d \to \mathbb{R}, \quad x \mapsto  \mathbf{w}^\top \varphi(x)  $$
+    where $\varphi$ is a function, weight vector $\mathbf{w} \in \mathbb{R}^m$, data point $x \in \mathbb{R}^d$, and bias $\beta \in \mathbb{R}$. 
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/simple_linear_regression.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we find a function that approximates the underlying function?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.2em;">Linear Regression with mapping on output</h3>
+  <p style="color:#EAEAEA;">
+    $$ \hat{f}: \mathbb{R}^d \to \mathbb{R}, \quad x \mapsto  \mathbf{w}^\top \varphi(x)  $$
+    where $\varphi$ is a function, weight vector $\mathbf{w} \in \mathbb{R}^m$, data point $x \in \mathbb{R}^d$, and bias $\beta \in \mathbb{R}$. 
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Mapping function</h3>
+  
+  <div style="text-align:center;">
+    $$
+    \varphi: \mathcal{X} \to \mathcal{F}, \quad \mathbf{x} \mapsto \varphi(\mathbf{x})
+    $$
+    where $\mathcal{X}$ is the space where our datapoints come from (usually $\mathbb{R}^d$) and $\mathcal{F}$, called feature space, is some other space (usually $\mathbb{R}^m$ with $m > d$).
+    
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+      
+    </p>
+     <p class="fragment" style="color:#A8E6CF; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     The function $f(x) = \mathbf{w}^\top \varphi(x)$ is linear in the weights $w_i$, even if $\varphi$ is not.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example 1</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    \[w \in \mathbb{R}, \text{datapoint }x \in \mathbb{R} \text{ and }
+    \varphi(x) =  x  \]
+    then simple linear regression:
+    \begin{align*}
+      \hat{f}: \mathbb{R} \to \mathbb{R}, \quad x \mapsto wx
+    \end{align*}
+  since
+    \[
+      \mathbf{w}^\top \varphi(x) = 
+      \begin{bmatrix} w \end{bmatrix}
+      \begin{bmatrix} x \end{bmatrix} = wx
+    \]
+  </p>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example 2</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    \[\mathbf{w} \in \mathbb{R}^2, \text{datapoint }x \in \mathbb{R}, d = 1 \text{ and }
+    \varphi(x) = \begin{bmatrix} 1 \\ x \end{bmatrix}\] 
+    then simple linear regression with an offset:
+    \begin{align*}
+      \hat{f}: \mathbb{R} \to \mathbb{R}, \quad x \mapsto w_1 + w_2 x
+    \end{align*}
+  since
+    \[
+      \mathbf{w}^\top \varphi(x) = 
+      \begin{bmatrix} w_1 & w_2 \end{bmatrix}
+      \begin{bmatrix} 1 \\ x \end{bmatrix} = w_1 + w_2 x
+    \]
+  </p>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+  </p>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example 3</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    \[x \in \mathbb{R}, p \in \mathbb{N},\varphi(x) = \begin{bmatrix} 1 & x & x^2 & \dots & x^p \end{bmatrix}^\top\]
+    then polynomial of degree $p$:
+    \begin{align*}
+      \hat{f}: \mathbb{R} \to \mathbb{R}, \quad x \mapsto w_0 + w_1 x + w_2 x^2 + \dots + w_p x^p
+    \end{align*}
+    since
+    \[
+      \mathbf{w}^\top \varphi(x) = 
+      \begin{bmatrix} w_0 & w_1 & w_2 & \dots & w_p \end{bmatrix}
+      \begin{bmatrix} 1 \\ x \\ x^2 \\ \vdots \\ x^p \end{bmatrix} 
+      = w_0 + w_1 x + w_2 x^2 + \dots + w_p x^p
+    \]
+    where $\mathbf{w} \in \mathbb{R}^{p+1}$ is the weight vector, and $x \in \mathbb{R}$ is the input.
+  </p>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+  </p>
+</section>
+
+<section>
+How do we find $w$ and $\varphi$?
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Regression Goal (Least Squares)</h3>
+
+  <table style="width: 100%; border-collapse: collapse; border: none;">
+    <tr class="fragment">
+      <td style="vertical-align: top; width: 20%; border: none;"><b>$\displaystyle \mathcal{E}_{LSQ}(\mathbf{w})$</b></td>
+      <td style="vertical-align: top; text-align: left; border: none;">
+        $= \|\mathbf{y} - \hat{\mathbf{y}}\|^2$
+      </td>
+    </tr>
+    <tr class="fragment">
+      <td style="border: none;"></td>
+      <td style="text-align: left; border: none;">
+        $\displaystyle = \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2$
+      </td>
+    </tr>
+    <tr class="fragment">
+      <td style="border: none;"></td>
+      <td style="text-align: left; border: none;">
+        $\displaystyle = \sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2$
+      </td>
+    </tr>
+  </table>
+
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+    We want to minimize this error.
+  </p>
+</section>
+
+
+<section>
+      <h3 style="color:#8A8A8A; text-align:left; text-transform: none;font-size:1.2em">Regression goal (LSQ with regularization)</h3>
+      <p style="color:#8A8A8A;">
+        \begin{align*}
+        
+        \mathcal{E}_{rr}(\mathbf{w}) :&= 
+        \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 
+        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}\\
+        &=
+        \left(\sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2\right) 
+        + \underbrace{\lambda (\mathbf{w}^\top \mathbf{w})}_{\text{regularization}}
+        
+        \end{align*}
+      </p>
+      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		We want to minimize this error.
+	  </p>
+</section>
+
+
+
+<section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Regression Goal (Least Squares)</h3>
+      <p style="color:#EAEAEA;">
+        \begin{align*}
+        
+        \mathcal{E}_{LSQ}(\mathbf{w}) :&= 
+        \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 \\
+   
+        \end{align*}
+      </p>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		We want to minimize this error.
+	  </p>
+    	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      This function is convex! Set derivative to 0 and solve for $\mathbf{w}$.
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Solution Regression Goal (Least Squares)</h3>
+  
+  <p style="color:#EAEAEA;">
+    \begin{equation*}
+      \mathbf{w} = (X X^\top)^{-1} X \mathbf{y}^\top
+    \end{equation*}
+    where $\mathbf{w} \in \mathbb{R}^d$, $X \in \mathbb{R}^{n \times d}$ is the matrix containing mapped data points.
+  </p>
+  
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+    This $\mathbf{w}$ minimizes the least squares error.
+  </p>
+  
+  <!-- Question highlighted -->
+<p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;"> 
+  \[\text{Let }\varphi(x) = \begin{bmatrix} x \\ 1 \end{bmatrix}.\quad \text{What is }
+    \mathbf{w} \text{ for } A = \begin{bmatrix} 1 & 0 & -1 \\ 1 & 0 & -1 \end{bmatrix}?
+  \]
+</p>
+
+</section>
+
+
+
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/sample_measurements.png" width="700" style="display:block; margin: 0 auto;">
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/sample_measurements_fit.png" width="700" style="display:block; margin: 0 auto;">
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">OLS Is BLUE</h3>
+    <p class="fragment" style="color:#A8E6CF; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     Best Linear Unbiased Estimator
+    </p>
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     What does that mean? And under what assumptions?
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Sample of Gaussian distribution</h3>
+
+  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+    <img src="../img/Gaussian_2.png" width="600">
+    <img src="../img/Gaussian_2_1D.png" width="500">
+  </div>
+
+  <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
+    Plot on the right shows three 1-D datapoints sampled from the gaussian distribution
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/constant_measurement_no_noise.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Not realistic.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/constant_measurement.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      We assume that our noise follows a gaussian distribution around the assumed underlying function.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/constant_measurement_fit.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     More noise!
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/constant_measurement_fit_2.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      We estimate $w$. What is the bias and variance of our estimator of $w$?
+    </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Histogram of estimator</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/constant_measurement_fit_histo_2.png" width="700" style="display:block; margin: 0 auto;">
+    
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		The $w$ of the underlying function is $0$ and mean of our estimated $w$ is the same. We call this an unbiased estimation.
+	  </p>
+  </div>
+</section>
+
+
+
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Variance of linear Estimator</h3>
+
+  <!-- Input controls -->
+  <div style="text-align:center; margin-bottom: 10px; display:flex; justify-content:center; align-items:center; gap:10px;">
+    <label for="n" style="color:#EAEAEA;">n:</label>
+    <input id="n" type="number" step="1" value="20" class="num-input">
+
+    <label for="variance_e" style="color:#EAEAEA;">Variance:</label>
+    <input id="variance_e" type="number" step="0.1" value="0.5" class="num-input">
+
+    <label for="slope" style="color:#EAEAEA;">Slope:</label>
+    <input id="slope" type="number" step="0.1" value="0" class="num-input">
+  </div>
+
+  <!-- Plots -->
+  <div id="container" style="display:flex; justify-content:center; gap:25px;">
+<div id="plot1" style="width:600px; height:500px;"></div>
+<div id="plot2" style="width:600px; height:500px;"></div>
+  </div>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    .num-input {
+      width: 4em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+      transition: border 0.2s;
+    }
+    .num-input:focus {
+      outline: none;
+      border-color: #A8E6CF;
+    }
+  </style>
+
+  <script>
+    // utilities
+    function linspace(a, b, n) {
+      const arr = [];
+      const step = (b - a) / (n - 1);
+      for (let i = 0; i < n; i++) arr.push(a + i * step);
+      return arr;
+    }
+
+    function randn() {
+      const u = Math.random(), v = Math.random();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    function update() {
+      const n = parseInt(document.getElementById('n').value);
+      const variance_e = parseFloat(document.getElementById('variance_e').value);
+      const slope = parseFloat(document.getElementById('slope').value);
+      const iterations = 1000;
+      const n_bins = 10;
+
+      // ----- left plot: regression line and data -----
+      const X = linspace(-10, 10, n);
+      const Y = X.map(x => slope * x);
+      const Y_m = X.map(x => slope * x + randn() * variance_e);
+
+      let num = 0, den = 0;
+      for (let i = 0; i < n; i++) { num += X[i] * Y_m[i]; den += X[i] * X[i]; }
+      const w = num / den;
+
+      const Y_pred = X.map(x => w * x);
+      
+      Plotly.newPlot('plot1', [
+        { x: X, y: Y, mode: 'lines', name: 'Underlying function', line:{color:'#8f80ff'} },
+        { x: X, y: Y_m, mode: 'markers', name: 'Data', marker:{color:'#8f80ff'} },
+        { x: X, y: Y_pred, mode: 'lines', name: `Prediction w=${w.toFixed(3)}`, line:{color:'#ff13ef'} }
+      ], {
+        paper_bgcolor:'#000', 
+        plot_bgcolor:'#000', 
+        font:{color:'#EAEAEA'},
+        xaxis:{title:'X', gridcolor:'#333', range: [-10,10]}, 
+        yaxis:{title:'Y', gridcolor:'#333', range: [-10,10]},
+        margin: {l:40, r:20, t:40, b:40}, 
+        legend: {
+            x: -0.1,      // negative to place outside left
+            y: 1,         // top
+            xanchor: 'left',
+            yanchor: 'top',
+            bgcolor: 'rgba(0,0,0,0)', // transparent
+            font: { color:'#EAEAEA' }
+        }
+
+      });
+
+      // ----- right plot: histogram of w over many trials -----
+      let w_list = [];
+      for (let k = 0; k < iterations; k++) {
+        const Xm = linspace(-10, 10, n);
+        const Ym = Xm.map(x => slope*x + randn()*variance_e);
+        let num_k=0, den_k=0;
+        for (let i=0;i<n;i++){ num_k += Xm[i]*Ym[i]; den_k += Xm[i]*Xm[i]; }
+        w_list.push(num_k/den_k);
+      }
+
+      Plotly.newPlot('plot2', [{
+        x: w_list, type:'histogram', nbinsx:n_bins,
+        marker:{color:'#ff13ef', line:{color:'black', width:1}}
+      }], {
+        paper_bgcolor:'#000', plot_bgcolor:'#000', font:{color:'#EAEAEA'},
+        xaxis:{title:'Predicted w', range:[slope-1, slope+1], gridcolor:'#333'},
+        yaxis:{title:'Count', gridcolor:'#333'},
+        margin: {l:40, r:20, t:40, b:40}, 
+      });
+    }
+
+    // attach input listeners for auto-update
+    ['n','variance_e','slope'].forEach(id => {
+      document.getElementById(id).addEventListener('input', update);
+    });
+
+    update(); // initial render
+  </script>
+</section>
+
+ 
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Linear regression</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/linearfit_on_polynomial.png" width="700" style="display:block; margin: 0 auto;">
+  </div>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Linear fit on polynomial function.
+	  </p>
+    	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Let's increase the degree of our polynomial!
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Linear regression with polynomial basis</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/polyfit_50_on_polynomial.png" width="700" style="display:block; margin: 0 auto;">
+  </div>
+      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Overfit on polynomial function.
+	  </p>
+      <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Degree 50 seems to much? Let's decrease it.
+    </p>
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Linear regression with polynomial basis</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/polyfit_2_on_polynomial.png" width="700" style="display:block; margin: 0 auto;">
+  </div>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Good fit on polynomial function.
+	  </p>
+         <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     How do we find good Hyperparameters?.
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Combination of possible hyperparameter</h3>
+
+  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+    <img src="../img/grid_train.png" width="600">
+    <img src="../img/grid_test.png" width="600">
+  </div>
+
+  <p style="color:#8A8A8A; font-size:0.7em; text-align:center; margin-top:5px;">
+    Darker "better" (lower mean squared error)
+  </p>
+</section>
+
+<section>
+    <h3 style="color:#A8E6CF; text-align:left; text-transform: none;font-size:1.2em">Ridge Regression goal (LSQ + regularization)</h3>
+
+  <table style="width: 100%; border-collapse: collapse; border: none;">
+    <tr class="fragment">
+      <td style="vertical-align: top; width: 20%; border: none;"><b>$\displaystyle 
+        \mathcal{E}_{rr}(\mathbf{w})
+        $</b></td>
+      <td style="vertical-align: top; text-align: left; border: none;">
+        $= \mathcal{E}_{LSQ}(\mathbf{w}) +  \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}$
+      </td>
+    </tr>
+    <tr class="fragment">
+      <td style="border: none;"></td>
+      <td style="text-align: left; border: none;">
+        $\displaystyle = \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2  +  \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}$
+      </td>
+    </tr>
+    <tr class="fragment">
+      <td style="border: none;"></td>
+      <td style="text-align: left; border: none;">
+        $\displaystyle = \left(\sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2\right) 
+        + \underbrace{\lambda (\mathbf{w}^\top \mathbf{w})}_{\text{regularization}}$
+      </td>
+    </tr>
+  </table>
+
+      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Regularization penalizes $\mathbf{w}$ with large norm. If $\lambda = 0$ then no penalty. 
+	  </p>
+      </p>
+         <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     How does $\lambda$ influence bias and variance? 
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Overview: Bias and Variance</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/bias_variance_visualization.jpg" width="800" style="display:block; margin: 0 auto;">
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Standard approach</h3>
+    Split data into two sets
+      <p style="color:#8A8A8A; font-size:0.8em; margin-top:5px;">
+		
+      
+        \begin{align*}
+        X =
+        \underbrace{[x_1,x_2,x_3,x_4,x_5,x_6,x_7, }_{\text{train on this}}
+        \underbrace{ x_8,x_9]}_{\text{test on this}}
+        
+        \end{align*}
+      </p>
+          	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+    We are not using the full dataset!
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Cross validation</h3>
+  
+  <p>
+    Split data k-times:
+    <br>
+        <p style="color:#8A8A8A; font-size:0.8em; margin-top:5px;">
+		
+	  <mathjax>
+    
+    \begin{align*}
+
+    \text{Fold 2} &= 
+      \underbrace{[x_1,x_2}_{\text{test}} , 
+      \underbrace{x_3,x_4,x_5,x_6,x_7,x_8,x_9]}_{\text{train }}\\
+          \text{Fold 2} &= 
+      \underbrace{[x_1,x_2}_{\text{train }} , 
+      \underbrace{x_3,x_4}_{\text{test }} , 
+      \underbrace{x_5,x_6,x_7,x_8,x_9]}_{\text{train }}\\
+        \text{Fold i} &= \dots\\
+          \text{Fold k} &= 
+      \underbrace{[x_1,x_2,x_3,x_4,x_5,x_6,x_7}_{\text{train }} , 
+      \underbrace{x_8,x_9]}_{\text{test }} \\
+    \end{align*}
+    </mathjax>
+    </p>
+    Return average test error
+  </p>
+  
+  <!-- Question highlighted -->
+  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px; font-size:0.7em;">
+    Why do we rotate the test fold each time? What is the benefit of cross-validation?
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Summary: Linear regression</h3>
+  
+  <div style="text-align:center;"> 
+    <img src="../img/polyfit_2_on_polynomial.png" width="700" style="display:block; margin: 0 auto;">
+  </div>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Good fit on polynomial function.
+	  </p>
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     Linear? Yes linear in weights w.
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+
+  </div>
+</section>
+
+    <section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Questions for upcoming Homework?</h3>
+    </section>
+
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+  				transition: 'none',           // default: no transition
+  				backgroundTransition: 'none', // default: no background fade
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
+				  math: {
+					  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+					config: {
+					tex: {
+						macros: {
+						R: "\\mathbb{R}",
+						bw: "\\mathbf{w}",
+						bx: "\\mathbf{x}",
+						sign: "\\operatorname{sign}"
+						}
+					}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
