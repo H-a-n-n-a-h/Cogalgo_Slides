@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<!-- MathJax for LaTeX -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+
+  <style>
+:root {
+  --nicecyan:   #00CC99;  /* (0,0.8,0.6) */
+  --niceblue:   #4D66FF;  /* (0.3,0.4,1) */
+  --nicepurple: #FF1AFF;  /* (1,0.1,1) */
+  --nicered:    #CC001A;  /* (0.8,0,0.1) */
+  --niceyellow: #FFB300;  /* (1,0.7,0) */
+  --niceorange: #FF8000;  /* (1,0.5,0) */
+  --offwhite:   #FFE6FF;  /* (1,0.9,1) */
+}
+</style>
+
+	<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: Title -->
+    <section>
+      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Kernels</h2>
+      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
+  
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Next tutorial on the 15th December will also be over zoom. 
+    <br>
+    I'll create a poll for exact dates!
+	  </p>    
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Course Structure</h3>
+  <svg id="tree1" width="700" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const data = {
+      name: "Machine Learning",
+      children: [
+        {
+          name: "Supervised Learning",
+          children: [
+            { name: "Regression", children: [{ name: "Linear Regression", children: [{ name: "Kernel Ridge Regression"}]}] },
+            { name: "Classification", children: [{ name: "Binary Classification", children: [{ name: "LDA"},{ name: "Perceptron"},{ name: "NCC"}]}] },
+          ]
+        },
+        {
+          name: "Unsupervised Learning",
+          children: [
+            { name: "Clustering", children: [{ name: "k-Means"}] },
+            { name: "Dimension Reduction", children: [{ name: "NMF"}, { name: "PCA", children: [{ name: "kPCA"}]}] }
+          ]
+        }
+      ]
+    };
+
+    function drawTree(svgId, highlight=false) {
+      const width = 700, height = 600;
+      const treeLayout = d3.tree().size([width, height - 100]);
+      const root = d3.hierarchy(data);
+      treeLayout(root);
+
+      const svg = d3.select(svgId)
+        .append("g")
+        .attr("transform", "translate(50,50)");
+
+      const highlightNames = new Set([
+        "Machine Learning",
+        "Supervised Learning",
+        "Regression",
+        "Linear Regression",
+        "Kernel Ridge Regression",
+      ]);
+
+      function isHighlighted(link) {
+        const src = link.source.data.name;
+        const tgt = link.target.data.name;
+        return highlight && highlightNames.has(src) && highlightNames.has(tgt);
+      }
+
+      // Draw links
+      svg.selectAll("path")
+        .data(root.links())
+        .enter()
+        .append("path")
+        .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+        .attr("stroke", d => isHighlighted(d) ? "#00FF9C" : "#A8E6CF")
+        .attr("stroke-width", d => isHighlighted(d) ? 3 : 2)
+        .attr("fill", "none");
+
+      // Draw nodes
+      svg.selectAll("circle")
+        .data(root.descendants())
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 6)
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#FFD166");
+
+      // Draw labels
+      svg.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.children ? d.x - 10 : d.x)
+        .attr("y", d => d.children ? d.y + 5 : d.y + 20)
+        .attr("text-anchor", d => d.children ? "end" : "middle")
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#EAEAEA")
+        .style("font-size", "16px")
+        .text(d => d.data.name);
+    }
+
+    drawTree("#tree1", false);
+  </script>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Today</h3>
+  <svg id="tree2" width="700" height="600"></svg>
+                <!-- Question highlighted -->
+  
+  <script>
+    drawTree("#tree2", true);
+  </script>
+</section>
+
+<style>
+.global-ring {
+  padding: 40px;                 /* controls thickness of ring */
+  border: 4px solid #00FF9C;     /* ring color */
+  border-radius: 50%;            /* circular/oval feel */
+  display: inline-block;
+}
+</style>
+
+<section>
+    <p style="color:#00FF9C; font-weight:bold;  font-size:0.6em;">
+     Kernels and Model Evaluation
+    </p>
+    
+    <div class="global-ring">
+  <svg id="tree3" width="400" height="400"></svg>
+</div>
+<script>
+  function drawTree(svgId, highlight = false) {
+    const svgElement = document.querySelector(svgId);
+    const width  = svgElement.clientWidth  || svgElement.getAttribute("width");
+    const height = svgElement.clientHeight || svgElement.getAttribute("height");
+
+    const treeLayout = d3.tree().size([width - 60, height - 120]);
+    const root = d3.hierarchy(data);
+    treeLayout(root);
+
+    const svg = d3.select(svgId)
+      .append("g")
+      .attr("transform", "translate(30,30)");
+
+    // links
+    svg.selectAll("path")
+      .data(root.links())
+      .enter()
+      .append("path")
+      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+      .attr("stroke", "#A8E6CF")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+
+    // nodes
+    svg.selectAll("circle")
+      .data(root.descendants())
+      .enter()
+      .append("circle")
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", 5)
+      .attr("fill", "#FFD166");
+
+    // labels
+    svg.selectAll("text")
+      .data(root.descendants())
+      .enter()
+      .append("text")
+      .attr("x", d => d.x)
+      .attr("y", d => d.children ? d.y - 10 : d.y + 15)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#EAEAEA")
+      .style("font-size", "10px")
+      .text(d => d.data.name);
+  }
+
+  // correct call
+  drawTree("#tree3", true);
+</script>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+    Kernels and Model Evaluation can be used everywhere here so I put them outside of this Tree.
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+    
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+	
+  </div>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $\mathbf{w}_{bin},\mathbf{x}_{new} \in \mathbb{R}^d$, $\beta \in \mathbb{R}$ then prediction by
+        \begin{align*}
+        \hat{f}: \mathbb{R}^d \to \{0,1\}, \quad   
+        \mathbf{x}_{new} \mapsto sign(\mathbf{w}_{bin}^\top \mathbf{x}_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w_{bin}$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+
+      <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.2em;">Linear Regression with mapping on output</h3>
+  <p style="color:#EAEAEA;">
+    Let $\mathbf{w}_{lin}  \in \mathbb{R}^p, \mathbf{x}_{new} \in \mathbb{R}^d$, $\varphi: \mathbb{R}^d \to \mathbb{R}^p$ function,
+    $$ \hat{f}: \mathbb{R}^d \to \mathbb{R}, \quad \mathbf{x}_{new} \mapsto  \mathbf{w}^\top \varphi(\mathbf{x}_{new})  = \hat{y}_{new}$$
+  
+  </p>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w_{lin}$ and $\varphi$ determine how the predicted function will look like.
+	  </p>
+    </section>
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Mapping function</h3>
+  
+  <div style="text-align:center;">
+    $$
+    \varphi: \mathcal{X} \to \mathcal{F}, \quad \mathbf{x} \mapsto \varphi(\mathbf{x})
+    $$
+    where $\mathcal{X}$ is the space where our datapoints come from (usually $\mathbb{R}^d$) and $\mathcal{F}$, called feature space, is some other space (usually $\mathbb{R}^m$ with $m > d$).
+    
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+      
+    </p>
+     <p class="fragment" style="color:#A8E6CF; font-weight:bold; margin-top:20px;font-size:0.7em;">
+     The function $f(x) = \mathbf{w}^\top \varphi(x)$ is linear in the weights $w_i$, even if $\varphi$ is not.
+    </p>
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.1em;">Example: Mapping function from $\mathbb{R}$ to $\mathbb{R}^2$</h3>
+
+  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+    <img src="../img/non_linear_1D.png" width="600">
+    <img src="../img/non_linear_1D_mapped.png" width="500">
+  </div>
+
+  <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
+    Here $\mathcal{X} = \mathbb{R}, \mathcal{F} = \mathbb{R}^2,$datapoints $x \in \mathcal{X}$ and the mapping function $\varphi(x_1) = [x_1 \quad 0.2 x_1^2]^\top \in \mathcal{F}$
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.1em;">Example: Mapping function from $\mathbb{R}$ to $\mathbb{R}^2$</h3>
+  <div style="text-align:center;">
+     
+    <img src="../img/non_linear_1D_mapped_perceptron.png" width="500" style="display:block; margin: 0 auto;">
+    
+      <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
+   Classes become linearly separable in mapped space.
+  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.1em;">Example: Mapping function from $\mathbb{R}^2$ to $\mathbb{R}^3$</h3>
+
+  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+    <img src="../img/non_linear_2D.png" width="500">
+    <img src="../img/non_linear_2D_mapped.gif" width="700">
+  </div>
+
+  <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
+    Here $\mathcal{X} = \mathbb{R}^2, \mathcal{F} = \mathbb{R}^3,$datapoints $x \in \mathcal{X}$ and the mapping function $\varphi(x) = [ x_1 \quad x_2 \quad  x_1^2 + x_2^2]^\top \in \mathcal{F}$
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.1em;">Example: Mapping function from $\mathbb{R}^2$ to $\mathbb{R}^3$</h3>
+  <div style="text-align:center;">
+     
+    <img src="../img/non_linear_2D_mapped_perceptron.gif" width="700" style="display:block; margin: 0 auto;">
+    
+      <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
+   Classes become linearly separable in mapped space.
+  </p>
+  </div>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">
+    Kernel function \(k\) corresponding to \(\varphi\)
+  </h3>
+  
+  <div style="text-align:center;">
+
+    \[
+      k : \mathcal{X} \times \mathcal{X} \to \mathbb{R},
+      \qquad
+      k(x_i, x_j) \mapsto \varphi(x_i)^{\top} \varphi(x_j)
+    \]
+
+    where \(\varphi : \mathcal{X} \to \mathcal{F}\) is a mapping into a feature space.  
+     \(x_i\) and \(x_j\) denote the \(i\)-th and \(j\)-th datapoints in \(\mathcal{X}\).
+
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+      In this course we usually take \(\mathcal{X} = \mathbb{R}^d\), where \(d\) is the dimension of each datapoint.
+    </p>
+  </div>
+</section>
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Kernel function k: Example 1</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    \[\text{Datapoint }x,z \in \mathbb{R} \text{ and }
+    \varphi(x) =  x  \]
+    then kernel function k:
+    \begin{align*}
+      k: \mathbb{R} \times \mathbb{R} \to \mathbb{R}, \quad (x, z) \mapsto xz
+    \end{align*}
+  </p>
+  	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Is this a kernel function?
+    </p>
+    	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      
+  Yes! since
+    \[
+      \varphi(x)^\top \varphi(z) = 
+      \begin{bmatrix} x \end{bmatrix}
+      \begin{bmatrix} z \end{bmatrix} = xz
+    \]
+    </p>
+
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Kernel function k: Example 2</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    \[\text{Datapoint }x,z \in \mathbb{R} \text{ and }
+    \varphi(x) = \begin{bmatrix} 1 \\ x \end{bmatrix}\] 
+    then kernel function k:
+    \begin{align*}
+      k: \mathbb{R} \to \mathbb{R}, \quad (x, z) \mapsto 1 + xz
+    \end{align*}
+  </p>
+  	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Is this a kernel function?
+    </p>
+    	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      
+  Yes!   since
+    \[
+      \varphi(x)^\top \varphi(z) = 
+      \begin{bmatrix} 1 & x \end{bmatrix}
+      \begin{bmatrix} 1 \\ z \end{bmatrix} = 1 \cdot 1 + xz
+    \]
+    </p>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Kernel function k: Example 3</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    \[\text{Datapoint }x,z \in \mathbb{R}, p \in \mathbb{N}, \text{ and }
+    \varphi(x) = \begin{bmatrix} 1 & x & x^2 & \dots & x^p \end{bmatrix}^\top\] 
+    then kernel function k:
+    \begin{align*}
+      k: \mathbb{R} \to \mathbb{R}, \quad (x, z) \mapsto 1 + xy + (xz)^2 + \dots + (xz)^p
+    \end{align*}
+  
+  </p>
+  	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Is this a kernel function?
+    </p>
+    	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      
+  Yes!     since
+    \[
+      \mathbf{z}^\top \varphi(x) = 
+      \begin{bmatrix} 1 & x & x^2 & \dots & x^p \end{bmatrix}
+      \begin{bmatrix} 1 \\ x \\ x^2 \\ \vdots \\ x^p \end{bmatrix} 
+      = 1 + xy + (xz)^2 + \dots + (xz)^p
+    \]
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Definition: Gram Matrix</h3>
+  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+
+$\mathbf{x}_1,\mathbf{x}_1$ datapoints, $k$ kernel function
+$$
+K := 
+\begin{bmatrix}
+    k(\mathbf{x}_1,\mathbf{x}_1) & k(\mathbf{x}_1,\mathbf{x}_2) & \dots & k(\mathbf{x}_1,\mathbf{x}_n) \\
+    k(\mathbf{x}_2,\mathbf{x}_1) & k(\mathbf{x}_2,\mathbf{x}_2) & \dots & k(\mathbf{x}_2,\mathbf{x}_n) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    k(\mathbf{x}_n,\mathbf{x}_1) & k(\mathbf{x}_n,\mathbf{x}_2) & \dots & k(\mathbf{x}_n,\mathbf{x}_n)
+\end{bmatrix}
+= 
+k(X_{\text{train}}, X_{\text{train}}) \in \mathbb{R}^{n\times n}
+$$
+
+  </p>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$K$ is the <b>Gram matrix</b> of $k$.  
+In each entry \(K_{i,j}\) we have the value of the kernel function on the \(i\)-th and \(j\)-th data point.  
+This matrix is symmetric positive semidefinite.
+	  </p>
+</section>
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Kernel Trick and Mercer's Theorem</h3>
+
+  <svg width="7900" height="560">
+
+    <!-- scalar product -->
+    <foreignObject id="phi" x="80" y="100" width="200" height="60" opacity="0">
+      <div xmlns="http://www.w3.org/1999/xhtml"
+           style="font-size:28px; color:#EAEAEA;">
+        \(\varphi(x_i)^{\top}\varphi(x_j)\)
+      </div>
+    </foreignObject>
+    <animate xlink:href="#phi" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="0s" fill="freeze" />
+
+    <!-- equals sign -->
+    <foreignObject id="eq" x="310" y="100" width="40" height="60" opacity="0">
+      <div xmlns="http://www.w3.org/1999/xhtml"
+           style="font-size:28px; color:#EAEAEA;">
+        \(=\)
+      </div>
+    </foreignObject>
+    <animate xlink:href="#eq" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="1.0s" fill="freeze" />
+
+    <!-- kernel -->
+    <foreignObject id="kxx" x="390" y="100" width="200" height="60" opacity="0">
+      <div xmlns="http://www.w3.org/1999/xhtml"
+           style="font-size:28px; color:#EAEAEA;">
+        \(k(x_i, x_j)\)
+      </div>
+    </foreignObject>
+    <animate xlink:href="#kxx" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="2.4s" fill="freeze" />
+
+    <!-- kernel trick arrow -->
+    <path id="kt-arrow"
+          d="M 180 80 C 250 20, 450 20, 520 80"
+          stroke="#00FF9C" stroke-width="3"
+          fill="none" marker-end="url(#arrowhead)" opacity="0"/>
+    <animate xlink:href="#kt-arrow" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="1.6s" fill="freeze" />
+
+    <text id="kt-text" x="350" y="25" font-size="20"
+          fill="#00FF9C" opacity="0">
+      Kernel Trick
+
+      if $\bx$ enters only in scalar products, then we can replace each scalar product with $k(\bx_i,\bx_j)$.
+    </text>
+    <animate xlink:href="#kt-text" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="1.6s" fill="freeze" />
+
+    <!-- Mercer's theorem arrow -->
+    <path id="merc-arrow"
+          d="M 520 180 C 450 230, 250 230, 170 180"
+          stroke="#FFD166" stroke-width="3"
+          fill="none" marker-end="url(#arrowhead)" opacity="0"/>
+    <animate xlink:href="#merc-arrow" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="3.6s" fill="freeze" />
+
+    <text id="merc-text" x="310" y="235" font-size="20"
+          fill="#FFD166" opacity="0">
+      Mercer's Theorem
+
+      If $k$ is a valid kernel function one can construct a
+ feature space and a mapping $\varphi$ such that the scalar product in the mapped space is the same as $k$ 
+
+
+    </text>
+    <animate xlink:href="#merc-text" attributeName="opacity"
+             from="0" to="1" dur="0.8s" begin="3.6s" fill="freeze" />
+
+    <!-- arrowhead -->
+    <defs>
+      <marker id="arrowhead"
+              markerWidth="10" markerHeight="7"
+              refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#EAEAEA"/>
+      </marker>
+    </defs>
+
+  </svg>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">How do we check if a function is a kernel function? </h3>
+  <ul style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+    <li>Proof by definition (find $\varphi$)</li>
+    <li>Show that it is composed of other valid kernel functions.</li>
+    <li>Show that it is symmetric and positive semidefinite (show $K$ is PSD and symmetric).</li>
+  </ul>
+
+  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+    Is the function $k:\mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}, \quad k(x,z) = 1 xz^2+x^2$
+    a kernel function?
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Examples of Popular Kernel Functions
+  </h3>
+
+  <p style="color:#EAEAEA; text-align:center; font-size:0.85em;">
+    \(x_1, x_2 \in \mathbb{R}^d\) (datapoints)
+  </p>
+
+  <ul style="color:#EAEAEA; text-align:left; font-size:0.75em; line-height:1.6;">
+
+    <li>
+      <strong>Linear kernel</strong>  
+      \[
+        k : \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}, 
+        \qquad 
+        (x_1, x_2) \mapsto x_1^{\top} x_2
+      \]
+    </li>
+
+    <li>
+      <strong>Polynomial kernel</strong>  
+      \(p \in \mathbb{N},\; c \in \mathbb{R}\)  
+      \[
+        k : \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}, 
+        \qquad 
+        (x_1, x_2) \mapsto (x_1^{\top} x_2 + c)^p
+      \]
+    </li>
+
+    <li>
+      <strong>Gaussian (RBF) kernel</strong>  
+      \(\sigma \in \mathbb{R}\)  
+      \[
+        \mathrm{rbf} : \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}, 
+        \qquad 
+        (x_1, x_2) \mapsto 
+        \exp\!\left( -\frac{\|x_1 - x_2\|^2}{2\sigma^2} \right)
+      \]
+    </li>
+
+  </ul>
+</section>
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Gaussian kernel</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/RBF_Kernel.jpeg" width="700" style="display:block; margin: 0 auto;">
+
+  </div>
+</section>  
+
+
+<section>
+ Quick Break
+   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Kernel Ridge Regression next
+	  </p>
+</section>
+
+
+<section>
+    <p style="color:#00FF9C; font-weight:bold;  font-size:0.6em;">
+     Kernels and Model Evaluation
+    </p>
+    
+    <div class="global-ring">
+  <svg id="tree4" width="400" height="400"></svg>
+</div>
+<script>
+  function drawTree(svgId, highlight = false) {
+    const svgElement = document.querySelector(svgId);
+    const width  = svgElement.clientWidth  || svgElement.getAttribute("width");
+    const height = svgElement.clientHeight || svgElement.getAttribute("height");
+
+    const treeLayout = d3.tree().size([width - 60, height - 120]);
+    const root = d3.hierarchy(data);
+    treeLayout(root);
+
+    const svg = d3.select(svgId)
+      .append("g")
+      .attr("transform", "translate(30,30)");
+
+    // links
+    svg.selectAll("path")
+      .data(root.links())
+      .enter()
+      .append("path")
+      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+      .attr("stroke", "#A8E6CF")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+
+    // nodes
+    svg.selectAll("circle")
+      .data(root.descendants())
+      .enter()
+      .append("circle")
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", 5)
+      .attr("fill", "#FFD166");
+
+    // labels
+    svg.selectAll("text")
+      .data(root.descendants())
+      .enter()
+      .append("text")
+      .attr("x", d => d.x)
+      .attr("y", d => d.children ? d.y - 10 : d.y + 15)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#EAEAEA")
+      .style("font-size", "10px")
+      .text(d => d.data.name);
+  }
+
+  // correct call
+  drawTree("#tree4", true);
+</script>
+      	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+         Lecture Example: Ridge Regression $\Rightarrow$ Kernel Ridge Regression
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none; font-size:1.2em;">
+    Recap: Ridge Regression (LSQ + Regularization)
+  </h3>
+
+  <table style="width:100%; border-collapse: collapse; border:none;">
+    <tr class="fragment">
+      <td style="vertical-align: top; width:20%; border:none;"><b>$\displaystyle \mathcal{E}_{rr}(\mathbf{w})$</b></td>
+      <td style="vertical-align: top; text-align:left; border:none;">
+        $= \mathcal{E}_{LSQ}(\mathbf{w}) + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}$
+      </td>
+    </tr>
+    <tr class="fragment">
+      <td></td>
+      <td style="text-align:left; border:none;">
+        $= \sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2 + \lambda \mathbf{w}^\top \mathbf{w}$
+      </td>
+    </tr>
+  </table>
+
+  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:15px; font-size:0.8em;">
+    Goal: find $\mathbf{w}$ minimizing the LSQ error plus regularization
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none; font-size:1.2em;">
+    Why Kernelize Ridge Regression?
+  </h3>
+
+  <p class="fragment" style="color:#FFFFFF; font-size:0.8em; margin-top:5px;">
+    In high-dimensional or infinite-dimensional feature spaces, computing $\varphi(\mathbf{x}_i)$ explicitly is impractical.  
+    Key insight: the optimal $\mathbf{w}$ lies in the span of the training features:
+  </p>
+
+  <p class="fragment" style="color:#FFD166; font-weight:bold; font-size:0.8em;">
+    $\mathbf{w} = \sum_{i=1}^N \alpha_i \varphi(\mathbf{x}_i) = \varphi(X)^\top \boldsymbol{\alpha}$
+  </p>
+
+  <p class="fragment" style="color:#FFFFFF; font-size:0.8em;">
+    Substituting this into the error function rewrites it entirely in terms of inner products of features.
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none; font-size:1.2em;">
+    Dual Representation & Kernel Trick
+  </h3>
+
+  <table style="width:100%; border-collapse: collapse; border:none; font-size:0.8em;">
+    <tr class="fragment">
+      <td style="vertical-align: top; width:20%; border:none;"><b>$\displaystyle \mathcal{E}_{rr}(\boldsymbol{\alpha})$</b></td>
+      <td style="vertical-align: top; text-align:left; border:none;">
+        $= \sum_{i=1}^N \Big(y_i - \sum_{j=1}^N \alpha_j \varphi(\mathbf{x}_j)^\top \varphi(\mathbf{x}_i) \Big)^2 + \lambda \boldsymbol{\alpha}^\top K \boldsymbol{\alpha}$
+      </td>
+    </tr>
+  </table>
+
+  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:15px; font-size:0.8em;">
+    Now, $\varphi$ appears only in scalar products $\varphi(\mathbf{x}_i)^\top \varphi(\mathbf{x}_j)$
+  </p>
+
+  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:10px; font-size:0.8em;">
+    Replace them with a kernel function $k(\mathbf{x}_i, \mathbf{x}_j)$ → Kernel Ridge Regression
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none;">Ridge vs Kernel Ridge Regression</h3>
+
+  <table style="width:90%; margin:20px auto; border-collapse: collapse; color:#EAEAEA; font-size:0.6em;">
+    <thead>
+      <tr style="background-color:#444;">
+        <th style="padding:10px; border:1px solid #666;"></th>
+        <th style="padding:10px; border:1px solid #666;">Ridge Regression (RR)</th>
+        <th style="padding:10px; border:1px solid #666;">Kernel Ridge Regression (KRR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background-color:#333;">
+        <td style="padding:10px; border:1px solid #666;">Parameter Calculation</td>
+        <td style="padding:10px; border:1px solid #666; text-align:left;">
+          \(\mathbf{w} = (\varphi(X)^\top \varphi(X) + \lambda I)^{-1} \varphi(X)^\top \mathbf{y}\)
+        </td>
+        <td style="padding:10px; border:1px solid #666; text-align:left;">
+          \(\mathbf{\alpha} = (K + \lambda I)^{-1} \mathbf{y}\)
+        </td>
+      </tr>
+      <tr style="background-color:#444;">
+        <td style="padding:10px; border:1px solid #666;">Prediction</td>
+        <td style="padding:10px; border:1px solid #666; text-align:left;">
+          \( f(\mathbf{x}_{new}) =  \mathbf{w}^\top \varphi(\mathbf{x}_{new}) \)
+        </td>
+        <td style="padding:10px; border:1px solid #666; text-align:left;">
+          \( f(\mathbf{x}_{new}) =  \sum_{i=1}^n \alpha_i k(x_i, x_{new}) \)
+        </td>
+      </tr>
+      <tr style="background-color:#333;">
+        <td style="padding:10px; border:1px solid #666;">Error Function</td>
+        <td style="padding:10px; border:1px solid #666; text-align:left;">
+                  \( \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 
+        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}} \)
+        </td>
+        <td style="padding:10px; border:1px solid #666; text-align:left;">
+          \( \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 
+        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}} \)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+         <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      RR needs to compute inverse of $\mathbb{R}^p \times \mathbb{R}^p$ matrix and KRR of $\mathbb{R}^n \times \mathbb{R}^n$. What are $p$ and $n$?
+       <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      If you can compute $\varphi$ then the result of RR and KRR is the same!</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Interactive RBF Kernel Regression</h3>
+
+  <!-- Inputs -->
+  <div style="text-align:center; margin-bottom: 15px; display:flex; justify-content:center; align-items:center; gap:10px;">
+    <label style="color:#EAEAEA;">σ:</label>
+    <input id="sigma" type="number" step="0.01" value="1" min="0" class="num-input">
+
+    <label style="color:#EAEAEA;">λ:</label>
+    <input id="lambda" type="number" step="0.01" value="0.1" min="0" class="num-input">
+  </div>
+
+  <!-- Plot -->
+  <div id="plot" style="width:900px; height:550px; margin:auto;"></div>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    .num-input {
+      width: 5em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+      transition: border 0.2s;
+    }
+    .num-input:focus {
+      outline: none;
+      border-color: #A8E6CF;
+    }
+  </style>
+
+  <script>
+    /* ----- Data ----- */
+    const X = [];
+    const Y = [];
+    const n = 20;
+
+    for (let i = 0; i < n; i++) {
+      const x = -10 + 20 * i / (n - 1);
+      const noise = (Math.random() * 2 - 1);
+      X.push(x);
+      Y.push(7 * Math.sin(x) + noise);
+    }
+
+    /* ----- Kernel ----- */
+    function rbfKernelMatrix(X, sigma) {
+      const K = Array(n).fill(0).map(() => Array(n).fill(0));
+      const denom = 2 * sigma * sigma;
+
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const d = X[i] - X[j];
+          K[i][j] = Math.exp(-(d * d) / denom);
+        }
+      }
+      return K;
+    }
+
+    /* ----- Solve system ----- */
+    function solveLinearSystem(A, b) {
+      const M = A.map(r => r.slice());
+      const v = b.slice();
+
+      for (let i = 0; i < n; i++) {
+        let pivot = M[i][i];
+        if (Math.abs(pivot) < 1e-12) pivot = 1e-12;
+
+        for (let j = i + 1; j < n; j++) {
+          const f = M[j][i] / pivot;
+          for (let k = i; k < n; k++) M[j][k] -= f * M[i][k];
+          v[j] -= f * v[i];
+        }
+      }
+
+      const x = Array(n).fill(0);
+      for (let i = n - 1; i >= 0; i--) {
+        let sum = v[i];
+        for (let j = i + 1; j < n; j++) sum -= M[i][j] * x[j];
+        x[i] = sum / M[i][i];
+      }
+      return x;
+    }
+
+    /* ----- Prediction ----- */
+    function predict(x, X, sigma, alpha) {
+      const denom = 2 * sigma * sigma;
+      let s = 0;
+      for (let i = 0; i < n; i++) {
+        const d = X[i] - x;
+        s += alpha[i] * Math.exp(-(d * d) / denom);
+      }
+      return s;
+    }
+
+    /* ----- Plotting ----- */
+    function drawPlot() {
+      const sigma = parseFloat(document.getElementById("sigma").value);
+      const lambda = parseFloat(document.getElementById("lambda").value);
+
+      const K = rbfKernelMatrix(X, sigma);
+
+      for (let i = 0; i < n; i++) K[i][i] += lambda;
+
+      const alpha = solveLinearSystem(K, Y);
+
+      const X_lin = [];
+      const Y_pred = [];
+      const Y_true = [];
+
+      for (let i = 0; i < 1500; i++) {
+        const x = -10 + 20 * i / 1499;
+        X_lin.push(x);
+        Y_pred.push(predict(x, X, sigma, alpha));
+        Y_true.push(7 * Math.sin(x));
+      }
+
+      const traceData = {
+        x: X,
+        y: Y,
+        mode: "markers",
+        marker: { size: 7, color: "#9bd7ff" },   // light blue
+        name: "Data"
+      };
+
+      const traceTrue = {
+        x: X_lin,
+        y: Y_true,
+        mode: "lines",
+        line: { width: 3, color: "#9bd7ff" },    // light blue
+        name: "True sin(·)"
+      };
+
+      const traceFit = {
+        x: X_lin,
+        y: Y_pred,
+        mode: "lines",
+        line: { width: 3, color: "magenta" },    // magenta curve
+        name: "Prediction"
+      };
+
+      const layout = {
+        paper_bgcolor: "#000",
+        plot_bgcolor: "#000",
+        font: { color: "#EAEAEA" },
+        width: 900,
+        height: 550,
+        xaxis: { gridcolor: "#333" },
+        yaxis: { gridcolor: "#333" },
+        title: `σ = ${sigma}, λ = ${lambda}`
+      };
+
+      Plotly.newPlot("plot", [traceData, traceTrue, traceFit], layout, { displayModeBar: false });
+    }
+
+    document.getElementById("sigma").addEventListener("input", drawPlot);
+    document.getElementById("lambda").addEventListener("input", drawPlot);
+
+    drawPlot();
+  </script>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Overview: Sigma vs Lambda in KRR</h3>
+  
+  <div style="text-align:center;"> 
+    <img src="../img/lambda_vs_sigma.png" width="750" style="display:block; margin: 0 auto;">
+  </div>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Pink is prediction
+	  </p>
+
+</section>
+
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Testing: Standard approach</h3>
+    Split data into two sets
+      <p style="color:#8A8A8A; font-size:0.8em; margin-top:5px;">
+		
+      
+        \begin{align*}
+        X =
+        \underbrace{[x_1,x_2,x_3,x_4,x_5,x_6,x_7, }_{\text{train on this}}
+        \underbrace{ x_8,x_9]}_{\text{test on this}}
+        
+        \end{align*}
+      </p>
+          	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+    We are not using the full dataset!
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Testing: Cross validation</h3>
+  
+  <p>
+    Split data k-times:
+    <br>
+        <p style="color:#8A8A8A; font-size:0.8em; margin-top:5px;">
+		
+	  <mathjax>
+    
+    \begin{align*}
+
+    \text{Fold 2} &= 
+      \underbrace{[x_1,x_2}_{\text{test}} , 
+      \underbrace{x_3,x_4,x_5,x_6,x_7,x_8,x_9]}_{\text{train }}\\
+          \text{Fold 2} &= 
+      \underbrace{[x_1,x_2}_{\text{train }} , 
+      \underbrace{x_3,x_4}_{\text{test }} , 
+      \underbrace{x_5,x_6,x_7,x_8,x_9]}_{\text{train }}\\
+        \text{Fold i} &= \dots\\
+          \text{Fold k} &= 
+      \underbrace{[x_1,x_2,x_3,x_4,x_5,x_6,x_7}_{\text{train }} , 
+      \underbrace{x_8,x_9]}_{\text{test }} \\
+    \end{align*}
+    </mathjax>
+    </p>
+    Return average test error
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Testing: Nested Cross validation</h3>
+  
+  <div style="text-align:center;"> 
+    <img src="../img/nested_cv.webp" width="950" style="display:block; margin: 0 auto;">
+  </div>
+    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Source:  mlfromscratch.com/nested-cross-validation-python-code
+	  </p>
+
+</section>
+
+
+
+    <section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Questions for upcoming Homework?</h3>
+    </section>
+
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+  				transition: 'none',           // default: no transition
+  				backgroundTransition: 'none', // default: no background fade
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
+				  math: {
+					  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+					config: {
+					tex: {
+						macros: {
+						R: "\\mathbb{R}",
+						bw: "\\mathbf{w}",
+						bx: "\\mathbf{x}",
+						sign: "\\operatorname{sign}"
+						}
+					}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
