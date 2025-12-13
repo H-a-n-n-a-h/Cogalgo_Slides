@@ -149,7 +149,7 @@ Next tutorial will be in person in Mar.0001 again!
   </script>
 </section>
 
-<section style="padding:0; margin:0; width:100vw; overflow-x:hidden;">
+<section style="padding:0; margin:0; width:100vw;">
   <h3 style="color:#A8E6CF; text-align:left; text-transform: none;font-size:0.7em; margin:0;">
     Recap: Supervised Learning
   </h3>
@@ -166,6 +166,17 @@ Next tutorial will be in person in Mar.0001 again!
     </tr>
     <tr>
       <td style="padding:5px; vertical-align:top; border-right:1px solid #444; word-wrap: break-word;">
+          <div style="text-align:center; margin-top:10px;">
+          <img 
+            src="../img/ncc_perceptron_lda.png" 
+            alt="Perceptron Learning Animation"
+            style="max-width:100%; height:auto; display:block; margin:0 auto;"
+          >
+          <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+            Comparison of NCC, LDA, and Perceptron boundaries.  $w_{bin}$ and $\beta$ determine the decision boundary
+          </p>
+          </div>
+          
         <p>
           Let $w_{bin}, x_{new} \in \mathbb{R}^d$, $\beta \in \mathbb{R}$.  
           Prediction by:
@@ -176,25 +187,15 @@ Next tutorial will be in person in Mar.0001 again!
             x_{new} \mapsto \mathrm{sign}(w_{bin}^\top x_{new} - \beta) = \hat{y}_{new}
           \]
         </p>
-        <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-          $w_{bin}$ and $\beta$ determine the decision boundary
-        </p>
+  
 
-        <div style="text-align:center; margin-top:10px;">
-          <img 
-            src="../img/ncc_perceptron_lda.png" 
-            alt="Perceptron Learning Animation"
-            style="max-width:100%; height:auto; display:block; margin:0 auto;"
-          >
-          <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-            Comparison of NCC, LDA, and Perceptron boundaries
-          </p>
-           <table style="width:90%; margin:20px auto; border-collapse: collapse; color:#EAEAEA; font-size:0.6em;">
+  
+           <table style="margin:0px ; border-collapse: collapse; color:#EAEAEA; font-size:0.5em;">
     <thead>
       <tr style="background-color:#444;">
         <th style="padding:10px; border:1px solid #666;"></th>
         <th style="padding:10px; border:1px solid #666;">NCC (Nearest Centroid)</th>
-        <th style="padding:10px; border:1px solid #666;">LDA (Linear Discriminant Analysis)</th>
+        <th style="padding:10px; border:1px solid #666;">LDA <br>(Linear Discriminant Analysis)</th>
         <th style="padding:10px; border:1px solid #666;">Perceptron</th>
       </tr>
     </thead>
@@ -209,7 +210,8 @@ Next tutorial will be in person in Mar.0001 again!
           \(\mathbf{w} = \Sigma^{-1} (\mu_1 - \mu_0)\)
           
           \(\beta  = \frac{1}{2}\mathbf{w}^\top \left(\mu_1 + \mu_0 \right)
-	+ \log\left( \frac{n_0}{n_1} \right). \)covariance matrix \(\Sigma\)
+	+ \log\left( \frac{n_0}{n_1} \right). \) <br>
+  covariance matrix \(\Sigma\)
         </td>
         <td style="padding:10px; border:1px solid #666; text-align:left;">
           Iterative update: \(\mathbf{w}_{aug} \leftarrow \mathbf{w}_{aug} + \eta (y_i - \hat{y}_i) x_i\)
@@ -231,10 +233,33 @@ Next tutorial will be in person in Mar.0001 again!
   </table>
         </div>
       </td>
-      <td style="padding:5px; vertical-align:top; word-wrap: break-word;">
+      <td style="padding:0px; vertical-align:top; word-wrap: break-word;">
+          <div style="text-align:center; margin-top:0px;"> 
+          <div style="
+          display:flex;
+          gap:0;
+          align-items:stretch;
+        ">
+          <img
+            src="../img/simple_linear_regression.png"
+            style="height:120px; width:auto; display:block;"
+          >
+          <img
+            src="../img/polyfit_2_on_polynomial.png"
+            style="height:120px; width:auto; display:block;"
+          >
+            <img
+            src="../img/polyfit_50_on_polynomial.png"
+            style="height:120px; width:auto; display:block;"
+          >
+
+        </div>
+         <p style="color:#8A8A8A; font-size:0.7em; margin-top:0px;">
+            Linear regression with different basis functions. $w_{lin}$ and $\varphi (bzw. k)$ determine how the predicted function looks
+          </p>
+          </div> 
         <p>
-          Let $w_{lin} \in \mathbb{R}^p$, $x_{new} \in \mathbb{R}^d$, and $\varphi: \mathbb{R}^d \to \mathbb{R}^p$.  
-          Prediction by:
+          Let $w_{lin} \in \mathbb{R}^p$, $x_{new} \in \mathbb{R}^d$, and $\varphi: \mathbb{R}^d \to \mathbb{R}^p$ then 
           \[
             \hat{f}: \mathbb{R}^d \to \mathbb{R}
           \]
@@ -247,16 +272,9 @@ Next tutorial will be in person in Mar.0001 again!
         \]
         </p>
         <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-          $w_{lin}$ and $\varphi (bzw. k)$ determine how the predicted function looks
+      
         </p>
-         <img 
-            src="../img/polyfit_2_on_polynomial.png" 
-            alt="Perceptron Learning Animation"
-            style="max-width:40%; height:auto; display:block; margin:0 auto;"
-          >
-         <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-            RR and KRR result the same with same lambda. Computation and prediction comparison:
-          </p>
+   
            <table style="width:90%; margin:20px auto; border-collapse: collapse; color:#EAEAEA; font-size:0.6em;">
     <thead>
       <tr style="background-color:#444;">
@@ -332,19 +350,7 @@ Next tutorial will be in person in Mar.0001 again!
   </div>
 </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Approach 1: Maximize Variance in Projected Space</h3>
-  
-  <div style="text-align:center;">
-     
-    <img src="../img/test.png" width="700" style="display:block; margin: 0 auto;">
-    
-	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      
-    </p>
-  </div>
-</section>
+
 
 <section>
   <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.0em;">Approach 1: Maximize Variance in Projected Space</h3>
@@ -357,6 +363,16 @@ Next tutorial will be in person in Mar.0001 again!
   <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
     Left shows all possible projections in lower dimensional subspace. Right shows projection one subspace that maximizes variance.
   </p>
+
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Approach 1: Maximize Variance in Projected Space</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/projection_loop_one_class_max_variance.webp" width="700" style="display:block; margin: 0 auto;">
+    
   	   <!-- Question highlighted -->
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
       Which algorithm from the lecture uses this approach?
@@ -365,6 +381,7 @@ Next tutorial will be in person in Mar.0001 again!
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
       PCA!
     </p>
+  </div>
 </section>
 
 <section>
@@ -448,8 +465,8 @@ Next tutorial will be in person in Mar.0001 again!
   <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.0em;">Approach 2: Clustering</h3>
 
   <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
-    <img src="../img/projection_loop_one_class.gif" width="600">
-    <img src="../img/projection_loop_one_class_max_variance.webp" width="600">
+    <img src="../img/test.png" width="400">
+    <img src="../img/test.png" width="400">
   </div>
 
   <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
@@ -461,177 +478,76 @@ Next tutorial will be in person in Mar.0001 again!
     </p>
     <!-- Question highlighted -->
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      PCA!
+      k Means!
     </p>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Definition: Gram Matrix</h3>
-  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none; font-size:1.0em;">
+    k-means algorithm
+  </h3>
 
-$\mathbf{x}_1,\mathbf{x}_1$ datapoints, $k$ kernel function
-$$
-K := 
-\begin{bmatrix}
-    k(\mathbf{x}_1,\mathbf{x}_1) & k(\mathbf{x}_1,\mathbf{x}_2) & \dots & k(\mathbf{x}_1,\mathbf{x}_n) \\
-    k(\mathbf{x}_2,\mathbf{x}_1) & k(\mathbf{x}_2,\mathbf{x}_2) & \dots & k(\mathbf{x}_2,\mathbf{x}_n) \\
-    \vdots & \vdots & \ddots & \vdots \\
-    k(\mathbf{x}_n,\mathbf{x}_1) & k(\mathbf{x}_n,\mathbf{x}_2) & \dots & k(\mathbf{x}_n,\mathbf{x}_n)
-\end{bmatrix}
-= 
-k(X_{\text{train}}, X_{\text{train}}) \in \mathbb{R}^{n\times n}
-$$
+  <div style="margin-top:10px; font-size:0.6em; padding-left:10px;">
+    <ol>
 
-  </p>
-    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		$K$ is the <b>Gram matrix</b> of $k$.  
-In each entry \(K_{i,j}\) we have the value of the kernel function on the \(i\)-th and \(j\)-th data point.  
-This matrix is symmetric positive semidefinite.
-	  </p>
+        Let \(X \in \mathbb{R}^{n \times d}\) be the data matrix containing
+        \(n\) data points \(\mathbf{x}_i \in \mathbb{R}^d\).
+    
+
+      <li>
+        Initialize \(k\) cluster vectors \(c_j \in \mathbb{R}^d\) randomly then
+        \[
+          C =
+          \begin{bmatrix}
+            | & | & \dots & | \\
+            c_1 & c_2 & \dots & c_k \\
+            | & | & \dots & |
+          \end{bmatrix}
+          \in \mathbb{R}^{d \times k}.
+        \]
+        Each column represents one cluster center.
+      </li>
+
+      <li>
+        
+        For each datapoint $\mathbf{x}_i$ assign to clusterpoint based on distance  
+        then assignment matrix
+        \[
+          Y =
+          \begin{bmatrix}
+            | & | & \dots & | \\
+            y_1 & y_2 & \dots & y_k \\
+            | & | & \dots & |
+          \end{bmatrix}
+          \in \{0,1\}^{n \times k},
+        \]
+        where \(y_{ij} = 1\) iff \(\mathbf{x}_i\) is assigned to cluster \(j\).
+      </li>
+
+      <li>
+        Update each cluster center by  the mean of all data points
+        assigned to that cluster.
+      </li>
+
+      <li>
+        Repeat 2. and 3. until either a maximum number of iterations is
+        reached or the cluster centers change by less than
+        \(\varepsilon > 0\).
+      </li>
+
+    </ol>
+  </div>
 </section>
 
 
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Kernel Trick and Mercer's Theorem</h3>
-
-  <svg width="7900" height="560">
-
-    <!-- scalar product -->
-    <foreignObject id="phi" x="80" y="100" width="200" height="60" opacity="0">
-      <div xmlns="http://www.w3.org/1999/xhtml"
-           style="font-size:28px; color:#EAEAEA;">
-        \(\varphi(x_i)^{\top}\varphi(x_j)\)
-      </div>
-    </foreignObject>
-    <animate xlink:href="#phi" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="0s" fill="freeze" />
-
-    <!-- equals sign -->
-    <foreignObject id="eq" x="310" y="100" width="40" height="60" opacity="0">
-      <div xmlns="http://www.w3.org/1999/xhtml"
-           style="font-size:28px; color:#EAEAEA;">
-        \(=\)
-      </div>
-    </foreignObject>
-    <animate xlink:href="#eq" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="1.0s" fill="freeze" />
-
-    <!-- kernel -->
-    <foreignObject id="kxx" x="390" y="100" width="200" height="60" opacity="0">
-      <div xmlns="http://www.w3.org/1999/xhtml"
-           style="font-size:28px; color:#EAEAEA;">
-        \(k(x_i, x_j)\)
-      </div>
-    </foreignObject>
-    <animate xlink:href="#kxx" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="2.4s" fill="freeze" />
-
-    <!-- kernel trick arrow -->
-    <path id="kt-arrow"
-          d="M 180 80 C 250 20, 450 20, 520 80"
-          stroke="#00FF9C" stroke-width="3"
-          fill="none" marker-end="url(#arrowhead)" opacity="0"/>
-    <animate xlink:href="#kt-arrow" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="1.6s" fill="freeze" />
-
-    <text id="kt-text" x="350" y="25" font-size="20"
-          fill="#00FF9C" opacity="0">
-      Kernel Trick
-
-      if $\bx$ enters only in scalar products, then we can replace each scalar product with $k(\bx_i,\bx_j)$.
-    </text>
-    <animate xlink:href="#kt-text" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="1.6s" fill="freeze" />
-
-    <!-- Mercer's theorem arrow -->
-    <path id="merc-arrow"
-          d="M 520 180 C 450 230, 250 230, 170 180"
-          stroke="#FFD166" stroke-width="3"
-          fill="none" marker-end="url(#arrowhead)" opacity="0"/>
-    <animate xlink:href="#merc-arrow" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="3.6s" fill="freeze" />
-
-    <text id="merc-text" x="310" y="235" font-size="20"
-          fill="#FFD166" opacity="0">
-      Mercer's Theorem
-
-      If $k$ is a valid kernel function one can construct a
- feature space and a mapping $\varphi$ such that the scalar product in the mapped space is the same as $k$ 
-
-
-    </text>
-    <animate xlink:href="#merc-text" attributeName="opacity"
-             from="0" to="1" dur="0.8s" begin="3.6s" fill="freeze" />
-
-    <!-- arrowhead -->
-    <defs>
-      <marker id="arrowhead"
-              markerWidth="10" markerHeight="7"
-              refX="9" refY="3.5" orient="auto">
-        <polygon points="0 0, 10 3.5, 0 7" fill="#EAEAEA"/>
-      </marker>
-    </defs>
-
-  </svg>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">How do we check if a function is a kernel function?</h3>
-  <ul style="color:#EAEAEA; text-align:left; font-size:0.8em;">
-    <li>Proof by definition (find $\varphi$)</li>
-    <li>Show that it is composed of other valid kernel functions.</li>
-    <li>Show that it is symmetric and positive semidefinite (show $K$ is PSD and symmetric).</li>
-  </ul>
-
-  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-    Is the function $k:\mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}, \quad k(x,z) = 1 xz^2+x^2$
-    a kernel function?
+  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px; font-size:0.7em;">
+    For centered data! Same result as PCA, different complexity.
   </p>
 </section>
 
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">How do we check if a function is a kernel function?</h3>
- $x_1, x_2 \in \R^d$ Datapoints
-  <ul style="color:#EAEAEA; text-align:left; font-size:0.8em;">
-
-    <li>Linear Kernel:
-       \begin{align*}
-        k:\R^d \times \R^d \to \R, \quad (x_1,x_2) \mapsto x_1^\top x_2
-    \end{align*}
-    </li>
-    <li>Polynomial Kernel: $p \in \N, c \in \R$
-       \begin{align*}
-        k:\R^d \times \R^d \to \R, \quad (x_1,x_2) \mapsto (x_1^\top x_2 + c)^p
-    \end{align*}
-    </li>
-    <li>  Gaussian kernel:    $\sigma \in \R$, then
-    \begin{align*}
-        \text{rbf}:\R^d \times \R^d \to \R, \quad (x_1,x_2) \mapsto e^{-\frac{\norm{x_1 -x_2}^2 }{2 \sigma^2}}
-    \end{align*}
-    </li>
-  </ul>
-</section>
 
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Gaussian kernel</h3>
-  
-  <div style="text-align:center;">
-     
-    <img src="../img/RBF_Kernel.jpeg" width="700" style="display:block; margin: 0 auto;">
-
-  </div>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Geometric interpretation Gaussian kernel</h3>
-  
-  <div style="text-align:center;">
-Datapoints close to x are more similar than datapoints far away from x.
-  </div>
-</section>
 
 <section>
  Quick Break
@@ -939,7 +855,8 @@ We can rewrite our existing error function as:
 
     <!-- Optional caption -->
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Comparison of NCC, LDA, and Perceptron decision boundaries
+	Comparison of NCC, LDA, and Perceptron decision boundaries. 
+  
 	  </p>
 
   </div>
