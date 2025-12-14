@@ -149,189 +149,27 @@ Next tutorial will be in person in Mar.0001 again!
   </script>
 </section>
 
-<section style="padding:0; margin:0; width:100vw;">
-  <h3 style="color:#A8E6CF; text-align:left; text-transform: none;font-size:0.7em; margin:0;">
-    Recap: Supervised Learning
-  </h3>
-
-  <table style="width:100%; border-collapse: collapse; color:#EAEAEA; font-size:0.4em; margin:0; table-layout:fixed;">
-    <colgroup>
-      <col style="width:50%;">
-      <col style="width:40%;">
-      <col style="width:30%;">
-    </colgroup>
-    <tr>
-      <th style="text-align:center; border-bottom: 2px solid #A8E6CF;">Classification</th>
-      <th style="text-align:center; border-bottom: 2px solid #A8E6CF;">Regression</th>
-    </tr>
-    <tr>
-      <td style="padding:5px; vertical-align:top; border-right:1px solid #444; word-wrap: break-word;">
-          <div style="text-align:center; margin-top:10px;">
-          <img 
-            src="../img/ncc_perceptron_lda.png" 
-            alt="Perceptron Learning Animation"
-            style="max-width:100%; height:auto; display:block; margin:0 auto;"
-          >
-          <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-            Comparison of NCC, LDA, and Perceptron boundaries.  $w_{bin}$ and $\beta$ determine the decision boundary
-          </p>
-          </div>
-          
-        <p>
-          Let $w_{bin}, x_{new} \in \mathbb{R}^d$, $\beta \in \mathbb{R}$.  
-          Prediction by:
-          \[
-            \hat{f}: \mathbb{R}^d \to \{0,1\}
-          \]
-                \[
-            x_{new} \mapsto \mathrm{sign}(w_{bin}^\top x_{new} - \beta) = \hat{y}_{new}
-          \]
-        </p>
-  
-
-  
-           <table style="margin:0px ; border-collapse: collapse; color:#EAEAEA; font-size:0.5em;">
-    <thead>
-      <tr style="background-color:#444;">
-        <th style="padding:10px; border:1px solid #666;"></th>
-        <th style="padding:10px; border:1px solid #666;">NCC (Nearest Centroid)</th>
-        <th style="padding:10px; border:1px solid #666;">LDA <br>(Linear Discriminant Analysis)</th>
-        <th style="padding:10px; border:1px solid #666;">Perceptron</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background-color:#333;">
-        <td style="padding:10px; border:1px solid #666;">Parameter Calculation</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( \mathbf{w} = \mu_0 - \mu_1 \)
-          \( \beta = \frac{1}{2} (\mu_0^\top\mu_0 - \mu_1 ^\top \mu_1) \)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \(\mathbf{w} = \Sigma^{-1} (\mu_1 - \mu_0)\)
-          
-          \(\beta  = \frac{1}{2}\mathbf{w}^\top \left(\mu_1 + \mu_0 \right)
-	+ \log\left( \frac{n_0}{n_1} \right). \) <br>
-  covariance matrix \(\Sigma\)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          Iterative update: \(\mathbf{w}_{aug} \leftarrow \mathbf{w}_{aug} + \eta (y_i - \hat{y}_i) x_i\)
-        </td>
-      </tr>
-      <tr style="background-color:#444;">
-        <td style="padding:10px; border:1px solid #666;">Error Function / Loss</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          Minimize distance to centroids \(\hat{y} = \arg\min_c \|x - \mu_c\|^2\)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          Maximizes Fisher criterion
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          Perceptron loss: \(\sum_i \max(0, -y_i \mathbf{w}^\top x_i)\)
-        </td>
-      </tr>
-    </tbody>
-  </table>
-        </div>
-      </td>
-      <td style="padding:0px; vertical-align:top; word-wrap: break-word;">
-          <div style="text-align:center; margin-top:0px;"> 
-          <div style="
-          display:flex;
-          gap:0;
-          align-items:stretch;
-        ">
-          <img
-            src="../img/simple_linear_regression.png"
-            style="height:120px; width:auto; display:block;"
-          >
-          <img
-            src="../img/polyfit_2_on_polynomial.png"
-            style="height:120px; width:auto; display:block;"
-          >
-            <img
-            src="../img/polyfit_50_on_polynomial.png"
-            style="height:120px; width:auto; display:block;"
-          >
-
-        </div>
-         <p style="color:#8A8A8A; font-size:0.7em; margin-top:0px;">
-            Linear regression with different basis functions. $w_{lin}$ and $\varphi (bzw. k)$ determine how the predicted function looks
-          </p>
-          </div> 
-        <p>
-          Let $w_{lin} \in \mathbb{R}^p$, $x_{new} \in \mathbb{R}^d$, and $\varphi: \mathbb{R}^d \to \mathbb{R}^p$ then 
-          \[
-            \hat{f}: \mathbb{R}^d \to \mathbb{R}
-          \]
-          \[
-            x_{new} \mapsto w_{lin}^\top \varphi(x_{new}) = \hat{y}_{new}
-          
-          \text{ or }
-        
-         \sum_{i=1}^n \alpha_i k(x_i, x_{new})
-        \]
-        </p>
-        <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-      
-        </p>
-   
-           <table style="width:90%; margin:20px auto; border-collapse: collapse; color:#EAEAEA; font-size:0.6em;">
-    <thead>
-      <tr style="background-color:#444;">
-        <th style="padding:10px; border:1px solid #666;"></th>
-        <th style="padding:10px; border:1px solid #666;">Ridge Regression (RR)</th>
-        <th style="padding:10px; border:1px solid #666;">Kernel Ridge Regression (KRR)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background-color:#333;">
-        <td style="padding:10px; border:1px solid #666;">Parameter Calculation</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \(\mathbf{w} = (\varphi(X)^\top \varphi(X) + \lambda I)^{-1} \varphi(X)^\top \mathbf{y}\)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \(\mathbf{\alpha} = (K + \lambda I)^{-1} \mathbf{y}\)
-        </td>
-      </tr>
-      <tr style="background-color:#444;">
-        <td style="padding:10px; border:1px solid #666;">Prediction</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( f(\mathbf{x}_{new}) =  \mathbf{w}^\top \varphi(\mathbf{x}_{new}) \)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( f(\mathbf{x}_{new}) =  \sum_{i=1}^n \alpha_i k(x_i, x_{new}) \)
-        </td>
-      </tr>
-      <tr style="background-color:#333;">
-        <td style="padding:10px; border:1px solid #666;">Error Function</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-                  \( \underbrace{ \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 }_{\text{OLS}}
-        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}} \)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( \underbrace{ \sum_{i=1}^N \Big(y_i - \sum_{j=1}^N \alpha_j \underbrace{\varphi(\mathbf{x}_j)^\top \varphi(\mathbf{x}_i}_{k(\mathbf{x}_i,\mathbf{x}_j)}) \Big)^2 }_{\text{OLS Dual form}}
-        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}} \)
-        </td>
-      </tr>
-    </tbody>
-  </table>
-      </td>
-    </tr>
-  </table>
+<section>
+ <h3 style="color:#A8E6CF; text-align:middle; text-transform: none; font-size:1.1em;">Recap Supervised</h3>
+       <a href="../other/" class="shake-on-hover" style="color:#13DAEC; text-decoration: none; font-weight: normal;font-size:0.8em;">
+          Supervised Learning Models Overview
+        </a>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.1em;">Example: Mapping function from $\mathbb{R}^2$ to $\mathbb{R}^3$</h3>
-
-  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
-    <img src="../img/non_linear_2D.png" width="500">
-    <img src="../img/non_linear_2D_mapped.gif" width="700">
-  </div>
-
-  <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
-    Here $\mathcal{X} = \mathbb{R}^2, \mathcal{F} = \mathbb{R}^3,$datapoints $x \in \mathcal{X}$ and the mapping function $\varphi(x) = [ x_1 \quad x_2 \quad  x_1^2 + x_2^2]^\top \in \mathcal{F}$
-  </p>
+ <h3 style="color:#A8E6CF; text-align:middle; text-transform: none; font-size:1.1em;">Recap Kernels</h3>
+       <a href="../Tutorial_4/#/12" class="shake-on-hover" style="color:#13DAEC; text-decoration: none; font-weight: normal;font-size:0.8em;">
+          Kernel function
+        </a>
+        <br>
+         <a href="../Tutorial_4/#/27" class="shake-on-hover" style="color:#13DAEC; text-decoration: none; font-weight: normal;font-size:0.8em;">
+          Interactive: RBF Kernel Regression
+        </a>
 </section>
+
+
+
+
 
 <section>
   <h3 style="color:#A8E6CF; text-align:middle; text-transform: none; font-size:1.1em;">Dimensionality Reduction</h3>
@@ -541,326 +379,77 @@ Next tutorial will be in person in Mar.0001 again!
 
 
   <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px; font-size:0.7em;">
-    For centered data! Same result as PCA, different complexity.
+    This finds k classes in data.
   </p>
 </section>
 
 
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.0em;">Approach 3: Minimize Distance between matrices directly</h3>
 
+  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+ \begin{align*}
+    \text{argmin}_{W,H} \sum_{i = 1}^d \sum_{j = 1}^n (X_{ij} - (WH)_{ij})^2
+\end{align*}
+  </div>
 
+  <p style="color:#8A8A8A; font-size:0.5em; text-align:center; margin-top:5px;">
+    Sum of all squared distances of each entry of the matrix.
+  </p>
+
+     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;"> What is the distance between $X$ and $WH$ given
+        $$ X = \begin{bmatrix}
+            1 & 0 & 0  \\
+            1 & 2 & 1 
+          \end{bmatrix},  
+          W = \begin{bmatrix}
+            0 \\ 1       
+          \end{bmatrix},  
+          H = \begin{bmatrix}
+            1 & 1 & 1      
+          \end{bmatrix}?
+           $$
+    </p>
+      	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Which algorithm from the lecture uses this approach?
+    </p>
+    <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      NMF!
+    </p>
+  
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none; font-size:1.0em;">
+    Non negative matrix factorization algorithm
+  </h3>
+  Gradient descent finds optimal solution!
+  <div>
+  $$ H \leftarrow H - \eta ( W^\top WH - W^\top X )$$
+  $$ W \leftarrow W - \eta ( WHH^\top  - XH^\top  )$$
+  </div>
+    <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Can also be transformed into...
+    </p>
+
+      <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+        $$  H = H \odot W ^\top X \oslash W^\top WH
+        $$
+     $$ W = W \odot XH^\top \oslash WHH^\top$$
+    </p>
+</section>
 
 <section>
  Quick Break
    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Kernel Ridge Regression next
+		Jupiter Notebook showing example code
 	  </p>
 </section>
 
 
-<section>
-    <p style="color:#00FF9C; font-weight:bold;  font-size:0.6em;">
-     Kernels and Model Evaluation
-    </p>
-    
-    <div class="global-ring">
-  <svg id="tree4" width="400" height="400"></svg>
-</div>
-<script>
-  function drawTree(svgId, highlight = false) {
-    const svgElement = document.querySelector(svgId);
-    const width  = svgElement.clientWidth  || svgElement.getAttribute("width");
-    const height = svgElement.clientHeight || svgElement.getAttribute("height");
-
-    const treeLayout = d3.tree().size([width - 60, height - 120]);
-    const root = d3.hierarchy(data);
-    treeLayout(root);
-
-    const svg = d3.select(svgId)
-      .append("g")
-      .attr("transform", "translate(30,30)");
-
-    // links
-    svg.selectAll("path")
-      .data(root.links())
-      .enter()
-      .append("path")
-      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
-      .attr("stroke", "#A8E6CF")
-      .attr("stroke-width", 2)
-      .attr("fill", "none");
-
-    // nodes
-    svg.selectAll("circle")
-      .data(root.descendants())
-      .enter()
-      .append("circle")
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y)
-      .attr("r", 5)
-      .attr("fill", "#FFD166");
-
-    // labels
-    svg.selectAll("text")
-      .data(root.descendants())
-      .enter()
-      .append("text")
-      .attr("x", d => d.x)
-      .attr("y", d => d.children ? d.y - 10 : d.y + 15)
-      .attr("text-anchor", "middle")
-      .attr("fill", "#EAEAEA")
-      .style("font-size", "10px")
-      .text(d => d.data.name);
-  }
-
-  // correct call
-  drawTree("#tree4", true);
-</script>
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-    Kernels and Model Evaluation can be used everywhere here so I put them outside of this Tree.
-  </p>
-</section>
-
-<section>
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-    Example: Ridge Regression $\Rightarrow$ Kernel Ridge Regression
-  </p>
-</section>
-
-<section>
-    <h3 style="color:#A8E6CF; text-align:left; text-transform: none;font-size:1.2em">Recap: Ridge Regression goal (LSQ + regularization)</h3>
-
-  <table style="width: 100%; border-collapse: collapse; border: none;">
-    <tr class="fragment">
-      <td style="vertical-align: top; width: 20%; border: none;"><b>$\displaystyle 
-        \mathcal{E}_{rr}(\mathbf{w})
-        $</b></td>
-      <td style="vertical-align: top; text-align: left; border: none;">
-        $= \mathcal{E}_{LSQ}(\mathbf{w}) +  \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}$
-      </td>
-    </tr>
-    <tr class="fragment">
-      <td style="border: none;"></td>
-      <td style="text-align: left; border: none;">
-        $\displaystyle = \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2  +  \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}$
-      </td>
-    </tr>
-    <tr class="fragment">
-      <td style="border: none;"></td>
-      <td style="text-align: left; border: none;">
-        $\displaystyle = \left(\sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2\right) 
-        + \underbrace{\lambda (\mathbf{w}^\top \mathbf{w})}_{\text{regularization}}$
-      </td>
-    </tr>
-  </table>
-</section>
-
-<section>
-    <h3 style="color:#A8E6CF; text-align:left; text-transform: none;font-size:0.8em">Kernelizing Ridge Regression</h3>
-      <p style="color:#FFFFFF; font-size:0.7em; margin-top:5px;text-align:left;">
-We can rewrite our existing error function as:
-  <table style="width: 100%; border-collapse: collapse; border: none;font-size:0.5em">
-    <tr class="fragment">
-      <td style="vertical-align: top; width: 20%; border: none;"><b>$\displaystyle 
-        \mathcal{E}_{rr}(\mathbf{w})
-        $</b></td>
-      <td style="vertical-align: top; text-align: left; border: none;">
-        $\displaystyle = \left(\sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2\right) 
-        + \underbrace{\lambda (\mathbf{w}^\top \mathbf{w})}_{\text{regularization}}$
-      </td>
-    </tr>
-       <tr class="fragment">
-      <td style="border: none;"></td>
-      <td style="text-align: left; border: none;">
-        rewrite $\mathbf{w} = \mathbf{\alpha} \varphi(X)$
-      </td>
-    </tr>
-        <tr class="fragment">
-      <td style="border: none;"></td>
-      <td style="text-align: left; border: none;">
-        $\displaystyle = \dots$
-      </td>
-    </tr>
-    <tr class="fragment">
-      <td style="border: none;"></td>
-      <td style="text-align: left; border: none;">
-        $\displaystyle = \mathbf{y}\mathbf{y}^\top - 2 \mathbf{\alpha} \varphi(X)^\top \varphi(X) \mathbf{y}^\top + \mathbf{\alpha} \varphi(X)^\top \varphi(X) \varphi(X)^\top \varphi(X) \mathbf{\alpha} + \lambda \mathbf{\alpha}^\top \varphi(X)^\top \varphi(X)$
-      </td>
-    </tr>
-  </table>
-  </p>
-    	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      The last line is called the dual representation of $\mathcal{E}_{rr}(\mathbf{w})$.
-    </p>
-        	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      How does that help?
-    </p>
-       <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      We dont want to use $\varphi$. Data enters only in scalarproducts we can use the kernel trick and replace scalarproducts with $k$.
-    </p>
-</section>
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none;">Ridge vs Kernel Ridge Regression</h3>
-
-  <table style="width:90%; margin:20px auto; border-collapse: collapse; color:#EAEAEA; font-size:0.6em;">
-    <thead>
-      <tr style="background-color:#444;">
-        <th style="padding:10px; border:1px solid #666;"></th>
-        <th style="padding:10px; border:1px solid #666;">Ridge Regression (RR)</th>
-        <th style="padding:10px; border:1px solid #666;">Kernel Ridge Regression (KRR)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background-color:#333;">
-        <td style="padding:10px; border:1px solid #666;">Parameter Calculation</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \(\mathbf{w} = (\varphi(X)^\top \varphi(X) + \lambda I)^{-1} \varphi(X)^\top \mathbf{y}\)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \(\mathbf{\alpha} = (K + \lambda I)^{-1} \mathbf{y}\)
-        </td>
-      </tr>
-      <tr style="background-color:#444;">
-        <td style="padding:10px; border:1px solid #666;">Prediction</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( f(\mathbf{x}_{new}) =  \mathbf{w}^\top \varphi(\mathbf{x}_{new}) \)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( f(\mathbf{x}_{new}) =  \sum_{i=1}^n \alpha_i k(x_i, x_{new}) \)
-        </td>
-      </tr>
-      <tr style="background-color:#333;">
-        <td style="padding:10px; border:1px solid #666;">Error Function</td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-                  \( \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 
-        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}} \)
-        </td>
-        <td style="padding:10px; border:1px solid #666; text-align:left;">
-          \( \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 
-        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}} \)
-        </td>
-      </tr>
-    </tbody>
-  </table>
-         <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      RR needs to compute inverse of $\R^p \times \R^p$ matrix and KRR of $\R^n \times \R^n$. What are $p$ and $n$?</section>
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">$\sigma$ vs $\lambda$</h3>
- todo
-</section>
-
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Combination overview</h3>
-
-  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
-    <img src="../img/grid_train.png" width="600">
-    <img src="../img/grid_test.png" width="600">
-  </div>
-
-  <p style="color:#8A8A8A; font-size:0.7em; text-align:center; margin-top:5px;">
-    Darker "better" (lower mean squared error)
-  </p>
-</section>
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Standard approach</h3>
-    Split data into two sets
-      <p style="color:#8A8A8A; font-size:0.8em; margin-top:5px;">
-		
-      
-        \begin{align*}
-        X =
-        \underbrace{[x_1,x_2,x_3,x_4,x_5,x_6,x_7, }_{\text{train on this}}
-        \underbrace{ x_8,x_9]}_{\text{test on this}}
-        
-        \end{align*}
-      </p>
-          	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-    We are not using the full dataset!
-    </p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Cross validation</h3>
-  
-  <p>
-    Split data k-times:
-    <br>
-        <p style="color:#8A8A8A; font-size:0.8em; margin-top:5px;">
-		
-	  <mathjax>
-    
-    \begin{align*}
-
-    \text{Fold 2} &= 
-      \underbrace{[x_1,x_2}_{\text{test}} , 
-      \underbrace{x_3,x_4,x_5,x_6,x_7,x_8,x_9]}_{\text{train }}\\
-          \text{Fold 2} &= 
-      \underbrace{[x_1,x_2}_{\text{train }} , 
-      \underbrace{x_3,x_4}_{\text{test }} , 
-      \underbrace{x_5,x_6,x_7,x_8,x_9]}_{\text{train }}\\
-        \text{Fold i} &= \dots\\
-          \text{Fold k} &= 
-      \underbrace{[x_1,x_2,x_3,x_4,x_5,x_6,x_7}_{\text{train }} , 
-      \underbrace{x_8,x_9]}_{\text{test }} \\
-    \end{align*}
-    </mathjax>
-    </p>
-    Return average test error
-  </p>
-  
-  <!-- Question highlighted -->
-  <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px; font-size:0.7em;">
-    Why do we rotate the test fold each time? What is the benefit of cross-validation?
-  </p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Summary: Linear regression</h3>
-  
-  <div style="text-align:center;"> 
-    <img src="../img/polyfit_2_on_polynomial.png" width="700" style="display:block; margin: 0 auto;">
-  </div>
-    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Good fit on polynomial function.
-	  </p>
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-     Linear? Yes linear in weights w.
-    </p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: NCC vs. LDA vs. Perceptron</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/ncc_perceptron_lda.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
-
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Comparison of NCC, LDA, and Perceptron decision boundaries. 
-  
-	  </p>
-
-  </div>
-</section>
 
     <section>
       <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Questions for upcoming Homework?</h3>

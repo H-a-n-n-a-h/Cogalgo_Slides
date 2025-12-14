@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recap Supervised Learning</title>
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #EAEAEA;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      max-width: 780px;
+      margin: 80px auto;
+      padding: 0 20px 80px;
+      line-height: 1.7;
+      font-size: 1.05em;
+    }
+
+    h1, h3, h4 {
+      text-align: left;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h3 {
+      margin-top: 60px;
+    }
+
+    h4 {
+      margin-top: 40px;
+    }
+
+    p {
+      margin: 20px 0;
+    }
+
+    figure {
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    figcaption {
+      color: #8A8A8A;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 40px 0;
+      font-size: 0.9em;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #666;
+      text-align: left;
+    }
+
+    thead tr {
+      background-color: #444;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #333;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #444;
+    }
+  </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+
+<h1>Lecture Recap: Supervised Learning Models</h1>
+
+<main>
+
+<section>
+
+<h2 style="color:#A8E6CF;">Binary Classification</h2>
+We want to predict binary class labels. Input is a new datapoint we want to classify and output is a label that is binary. We can rewrite this mathematically as:
+<p>
+Let $w_{bin}, x_{new} \in \mathbb{R}^d$, $\beta \in \mathbb{R}$.  
+Then the prediction can be done by this function:
+\[
+  \hat{f}: \mathbb{R}^d \to \{0,1\}
+\]
+\[
+  x_{new} \mapsto \mathrm{sign}(w_{bin}^\top x_{new} - \beta) = \hat{y}_{new}
+\]
+</p>
+We have learned about three algorithms to calculate the parameter $w_{bin}, x_{new} \in \mathbb{R}^d$ based on the dataset. See an example outcome below:
+<figure>
+  <img src="../img/ncc_perceptron_lda.png" style="max-width:100%; height:auto;">
+  <figcaption>
+    Comparison of NCC, LDA, and Perceptron boundaries.
+    $w_{bin}$ and $\beta$ determine the decision boundary
+  </figcaption>
+</figure>
+Each algorithm is based on a different Error function. Therefore calculation for $w_{bin}, x_{new}$ is different. See an overview below:
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>NCC (Nearest Centroid)</th>
+      <th>LDA <br>(Linear Discriminant Analysis)</th>
+      <th>Perceptron</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Parameter Calculation</td>
+      <td>
+        \( \mathbf{w} = \mu_0 - \mu_1 \)
+        \( \beta = \frac{1}{2} (\mu_0^\top\mu_0 - \mu_1 ^\top \mu_1) \)
+      </td>
+      <td>
+        \(\mathbf{w} = \Sigma^{-1} (\mu_1 - \mu_0)\)
+
+        \(\beta  = \frac{1}{2}\mathbf{w}^\top (\mu_1 + \mu_0)
+        + \log( \frac{n_0}{n_1} ).\) <br>
+        covariance matrix \(\Sigma\)
+      </td>
+      <td>
+        Iterative update:
+        \(\mathbf{w}_{aug} \leftarrow \mathbf{w}_{aug}
+        + \eta (y_i - \hat{y}_i) x_i\)
+      </td>
+    </tr>
+    <tr>
+      <td>Error Function / Loss</td>
+      <td>
+        Minimize distance to centroids
+        \(\hat{y} = \arg\min_c \|x - \mu_c\|^2\)
+      </td>
+      <td>Maximizes Fisher criterion</td>
+      <td>
+        Perceptron loss:
+        \(\sum_i \max(0, -y_i \mathbf{w}^\top x_i)\)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 style="color:#A8E6CF;">Linear Regression</h2>
+We want to predict continous labels. The input is a new datapoint and we want predict the continous label. We can rewrite this mathematically as:
+<p>
+Let $w_{lin} \in \mathbb{R}^p$, $x_{new} \in \mathbb{R}^d$,
+and $\varphi: \mathbb{R}^d \to \mathbb{R}^p$ then
+\[
+  \hat{f}: \mathbb{R}^d \to \mathbb{R}
+\]
+\[
+  x_{new} \mapsto w_{lin}^\top \varphi(x_{new}) = \hat{y}_{new}
+\quad \text{or} \quad
+\sum_{i=1}^n \alpha_i k(x_i, x_{new})
+\]
+</p>
+To predict a function we can use different basis functions $\varphi$. Below from left to right the basis functions are $\varphi(x) = x$, $\varphi(x) = [1 \  x \ x^2]$ and $\varphi(x) = [1 \  x \ \dots \ x^{50}]$. 
+<figure>
+  <img src="../img/simple_linear_regression.png" style="height:190px;">
+  <img src="../img/polyfit_2_on_polynomial.png" style="height:190px;">
+  <img src="../img/polyfit_50_on_polynomial.png" style="height:190px;">
+  <figcaption>
+    Linear regression with different basis functions.
+    $w_{lin}$ and $\varphi (or k kernel function)$ determine how the predicted function looks
+  </figcaption>
+</figure>
+Both RR and KRR can result in the same outcome if the hyperparameter (parameter chosen by the user) $\lambda$ is the same. The Result of RR and OLS is the same if $\lambda = 0$.
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Ridge Regression (RR)</th>
+      <th>Kernel Ridge Regression (KRR)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Parameter Calculation</td>
+      <td>
+        \(\mathbf{w} =
+        (\varphi(X)^\top \varphi(X) + \lambda I)^{-1}
+        \varphi(X)^\top \mathbf{y}\)
+      </td>
+      <td>
+        \(\mathbf{\alpha} = (K + \lambda I)^{-1} \mathbf{y}\)
+      </td>
+    </tr>
+    <tr>
+      <td>Prediction</td>
+      <td>
+        \( f(\mathbf{x}_{new}) =
+        \mathbf{w}^\top \varphi(\mathbf{x}_{new}) \)
+      </td>
+      <td>
+        \( f(\mathbf{x}_{new}) =
+        \sum_{i=1}^n \alpha_i k(x_i, x_{new}) \)
+      </td>
+    </tr>
+    <tr>
+      <td>Error Function</td>
+      <td>
+        \( \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2
+        + \lambda \|\mathbf{w}\|^2 \)
+      </td>
+      <td>
+        \( \sum_{i=1}^N (y_i -
+        \sum_{j=1}^N \alpha_j k(\mathbf{x}_i,\mathbf{x}_j))^2
+        + \lambda \|\mathbf{w}\|^2 \)
+      </td>
+    </tr>
+  </tbody>
+</table>
+The difference between RR and KRR is in their calculation complexity. 
+</section>
+
+</main>
+
+</body>
+</html>
