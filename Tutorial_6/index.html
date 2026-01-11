@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+		<!-- MathJax for LaTeX -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+
+  <style>
+:root {
+  --nicecyan:   #00CC99;  /* (0,0.8,0.6) */
+  --niceblue:   #4D66FF;  /* (0.3,0.4,1) */
+  --nicepurple: #FF1AFF;  /* (1,0.1,1) */
+  --nicered:    #CC001A;  /* (0.8,0,0.1) */
+  --niceyellow: #FFB300;  /* (1,0.7,0) */
+  --niceorange: #FF8000;  /* (1,0.5,0) */
+  --offwhite:   #FFE6FF;  /* (1,0.9,1) */
+}
+</style>
+
+	<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: Title -->
+    <section>
+      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Multilayer Perceptron</h2>
+      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+    </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
+  
+    
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Happy New Year! This is the last tutorial with new content! 
+	  </p>    
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Course Structure</h3>
+  <svg id="tree1" width="700" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const data = {
+      name: "Machine Learning",
+      children: [
+        {
+          name: "Supervised Learning",
+          children: [
+            { name: "Regression", children: [{ name: "Linear Regression", children: [{ name: "Kernel Ridge Regression"}]}] },
+            { name: "Classification", children: [{ name: "Binary Classification", children: [{ name: "LDA"},{ name: "Perceptron"},{ name: "NCC"}]}] },
+          ]
+        },
+        {
+          name: "Unsupervised Learning",
+          children: [
+            { name: "Clustering", children: [{ name: "k-Means"}] },
+            { name: "Dimension Reduction", children: [{ name: "NMF"}, { name: "PCA", children: [{ name: "kPCA"}]}] }
+          ]
+        }
+      ]
+    };
+
+    function drawTree(svgId, highlight=false) {
+      const width = 700, height = 600;
+      const treeLayout = d3.tree().size([width, height - 100]);
+      const root = d3.hierarchy(data);
+      treeLayout(root);
+
+      const svg = d3.select(svgId)
+        .append("g")
+        .attr("transform", "translate(50,50)");
+
+      const highlightNames = new Set([
+      ]);
+
+      function isHighlighted(link) {
+        const src = link.source.data.name;
+        const tgt = link.target.data.name;
+        return highlight && highlightNames.has(src) && highlightNames.has(tgt);
+      }
+
+      // Draw links
+      svg.selectAll("path")
+        .data(root.links())
+        .enter()
+        .append("path")
+        .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+        .attr("stroke", d => isHighlighted(d) ? "#00FF9C" : "#A8E6CF")
+        .attr("stroke-width", d => isHighlighted(d) ? 3 : 2)
+        .attr("fill", "none");
+
+      // Draw nodes
+      svg.selectAll("circle")
+        .data(root.descendants())
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 6)
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#FFD166");
+
+      // Draw labels
+      svg.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.children ? d.x - 10 : d.x)
+        .attr("y", d => d.children ? d.y + 5 : d.y + 20)
+        .attr("text-anchor", d => d.children ? "end" : "middle")
+        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#EAEAEA")
+        .style("font-size", "16px")
+        .text(d => d.data.name);
+    }
+
+    drawTree("#tree1", false);
+  </script>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Today</h3>
+  <svg id="tree2" width="700" height="600"></svg>
+                <!-- Question highlighted -->
+  
+  <script>
+    drawTree("#tree2", true);
+  </script>
+</section>
+
+<style>
+.global-ring {
+  padding: 40px;                 /* controls thickness of ring */
+  border: 4px solid #00FF9C;     /* ring color */
+  border-radius: 50%;            /* circular/oval feel */
+  display: inline-block;
+}
+</style>
+
+<section>
+    <p style="color:#00FF9C; font-weight:bold;  font-size:0.6em;">
+     Neural Networks
+    </p>
+    
+    <div class="global-ring">
+  <svg id="tree3" width="400" height="400"></svg>
+</div>
+<script>
+  function drawTree(svgId, highlight = false) {
+    const svgElement = document.querySelector(svgId);
+    const width  = svgElement.clientWidth  || svgElement.getAttribute("width");
+    const height = svgElement.clientHeight || svgElement.getAttribute("height");
+
+    const treeLayout = d3.tree().size([width - 60, height - 120]);
+    const root = d3.hierarchy(data);
+    treeLayout(root);
+
+    const svg = d3.select(svgId)
+      .append("g")
+      .attr("transform", "translate(30,30)");
+
+    // links
+    svg.selectAll("path")
+      .data(root.links())
+      .enter()
+      .append("path")
+      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
+      .attr("stroke", "#A8E6CF")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+
+    // nodes
+    svg.selectAll("circle")
+      .data(root.descendants())
+      .enter()
+      .append("circle")
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", 5)
+      .attr("fill", "#FFD166");
+
+    // labels
+    svg.selectAll("text")
+      .data(root.descendants())
+      .enter()
+      .append("text")
+      .attr("x", d => d.x)
+      .attr("y", d => d.children ? d.y - 10 : d.y + 15)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#EAEAEA")
+      .style("font-size", "10px")
+      .text(d => d.data.name);
+  }
+
+  // correct call
+  drawTree("#tree3", true);
+</script>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+    Today: Multilayer Perceptron
+  </p>
+</section>
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+
+  <div style="text-align:center; width:100%; height:100%;">
+    <img 
+      src="../img/ncc_perceptron_lda.png" 
+      alt="Perceptron Learning Animation"
+      style="
+        max-width: 100%; 
+        max-height: 80vh; 
+        width: auto; 
+        height: auto; 
+        display: block; 
+        margin: 0 auto;
+      "
+    >
+
+    <!-- Optional caption -->
+    
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+	Comparison of NCC, LDA, and Perceptron decision boundaries
+	  </p>
+		   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:14px;">
+      What did we model? How does our function for prediction looks like?
+    </p>
+  </div>
+</section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = sign(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = h(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       where $h$ is an activation function.
+  
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		$w$ and $\beta$ determine how the decision boundary looks like
+	  </p>
+    </section>
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Perceptron: sign as the activation function</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_perceptron_sign.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      What will happen if we change the activation function to sigmoid instead of sign? 
+    </p>
+</section>
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Perceptron: sigmoid as the activation function</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_perceptron_sigmoid.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      What other activation functions are popular? 
+    </p>
+          <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      ReLU! Tanh!
+    </p>
+</section>
+
+    <section>
+      <h3 style="color:#A8E6CF;">Recap: Binary classification model</h3>
+      <p style="color:#EAEAEA;">
+    
+        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
+        \begin{align*}
+            f(x_{new}) = h(w^\top x_{new} - \beta) = \hat{y}_{new}
+        \end{align*}
+       where $h$ is an activation function.
+  
+      </p>
+
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      We can draw this function as a diagram!
+    </p>
+    </section>
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Perceptron diagram: f as the activation function</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_perceptron_1.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we make the output two dimensional? 
+    </p>
+</section>
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Perceptron in paralell</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_perceptron_2.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      We can add layers by using the output as an input for the next layer! 
+    </p>
+</section>
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Perceptron in paralell</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_MLP_full.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      We can add layers by using the output as an input for the next layer! 
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none; font-size:1.0em;">
+    Tutorial task: Draw the MLP
+  </h3>
+
+  <div style="margin-top:10px; font-size:0.6em; padding-left:10px;">
+         Given weight matrices $$W^{(1)} = \begin{bmatrix}
+            w^1_{1,1}&  w^1_{1,2} \\ w^1_{2,1}&0   \\   0&w^1_{3,2} 
+        \end{bmatrix}, W^{(2)} = \begin{bmatrix}
+            0&  w^2_{1,2}   \\ w^2_{2,1} & w^2_{2,2}
+        \end{bmatrix},W^{(3)} = \begin{bmatrix}
+              w^3_{1,1} &0  & w^3_{1,3} &  0\\  0 & w^3_{2,2}  & 0 &  w^3_{2,4}
+        \end{bmatrix}$$
+      
+        arbitrary activation functions $f^{(1)}, f^{(2)}$ and all biases $0$ except $\beta^{(1)} = [{w^1_{0,1}},0]$. 
+        <br>
+        
+        Give a Drawing of the MLP!
+  </div>
+</section>
+
+
+    <section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Tutorial task: Draw the MLP</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_1_tut.PNG" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      What are we computing? 
+    </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Tutorial task: Forwardpropagation</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_MLP_forward.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Given the activation function $h(x) = \sigma(x) = \frac{1}{1+e^{-x}}$ and its derivative $\sigma^\prime(x) = \sigma(x) \cdot (1 - \sigma(x))$ what are $a_k$ and $\hat{y}_k$?
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Tutorial task: Forwardpropagation</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_MLP_forward_solution.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Tutorial task: Backpropagation</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_MLP_forward.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      You are given the activation function $h(x) = \sigma(x) = \frac{1}{1+e^{-x}}$, its derivative $\sigma^\prime(x) = \sigma(x) \cdot (1 - \sigma(x))$ and the Error function of the n-th datapoint $E_n = \frac{1}{4} \Sigma^J_{j=0} (\hat{y}_j - y_j)^2$. What are $\frac{\partial E_7}{\partial w^{(2)}_{3,1}}$ and $\frac{\partial E_7}{\partial w^{(1)}_{2,4}}$?
+    </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Tutorial task: Backpropagation</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_MLP_derivation.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Tutorial task: Backpropagation algorithm idea</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/6_Backprop.jpg" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Neural Network</h3>
+  
+  <img src="../img/6_tensoflow.png" width="700" style="display:block; margin: 0 auto;">
+
+  <div style="text-align:center;">
+    <a href="https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.01458&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false">Interactive Neural Network by Tensorflow</a>
+  </div>
+</section>
+
+<section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Programming example in Notebook</h3>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Resources</h3>
+  
+  <img src="../img/6_kaggle.png" width="700" style="display:block; margin: 0 auto;">
+
+  <div style="text-align:center;">
+    <a href="https://www.kaggle.com/datasets">Kaggle</a>
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; font-size:1.0em; text-transform: none">Resources</h3>
+  
+  <img src="../img/6_Hugginface.png" width="700" style="display:block; margin: 0 auto;">
+
+  <div style="text-align:center;">
+    <a href="https://huggingface.co/datasets">Hugging Face</a>
+  </div>
+</section>
+    <section>
+      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Questions for upcoming Homework?</h3>
+    </section>
+
+
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+  				transition: 'none',           // default: no transition
+  				backgroundTransition: 'none', // default: no background fade
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
+				  math: {
+					  mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+					config: {
+					tex: {
+						macros: {
+						R: "\\mathbb{R}",
+						bw: "\\mathbf{w}",
+						bx: "\\mathbf{x}",
+						sign: "\\operatorname{sign}"
+						}
+					}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
