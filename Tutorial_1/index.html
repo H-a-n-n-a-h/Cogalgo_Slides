@@ -26,10 +26,29 @@
       <h2 style="color:#A8E6CF;">Cognitive Algorithms: Perceptron and NCC</h2>
       <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
     </section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
+  
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+    
+		You have to take an elective.
+	  </p> 
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+		Written Homework and Quizzes every week. You can earn 10 points in total.
+	  </p> 
 
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+		I corrected everyone's first sheet, if you have any questions please ask me.
+	  </p> 
+
+      <p class="fragment" style="color:#668aff; font-weight:bold; margin-top:20px;">
+		Any Questions?
+	  </p> 
+
+</section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Course Structure</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Course Structure</h3>
   <svg id="tree1" width="700" height="600"></svg>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -117,7 +136,7 @@
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Today</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Today</h3>
   <svg id="tree2" width="700" height="600"></svg>
 
   <script>
@@ -125,9 +144,25 @@
   </script>
 </section>
 
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Binary Classification: Example 1</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/chihuahua_or_muffin.png" width="500" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+    <p style="color:#EAEAEA; font-size:0.9em; margin-top:10px;">
+      
+    </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Chihuahua or muffin?
+	  </p>
+  </div>
+</section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Binary Classification</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Binary Classification: Example 2</h3>
   
   <div style="text-align:center;">
     <!-- Make the GIF larger -->
@@ -143,9 +178,11 @@
   </div>
 </section>
 
+
+
     <!-- Slide 2: LaTeX math -->
     <section>
-      <h3 style="color:#A8E6CF;">Binary classification model</h3>
+      <h3 style="color:#A8E6CF;text-transform: none">Binary classification model</h3>
       <p style="color:#EAEAEA;">
     
         Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
@@ -162,7 +199,7 @@
 
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">NCC vs. LDA vs. Perceptron</h3>
 
   <div style="text-align:center; width:100%; height:100%;">
     <img 
@@ -187,7 +224,7 @@
   </div>
 </section>
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Nearest Centroid Classifier</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Nearest Centroid Classifier</h3>
 
   <svg width="700" height="300" style="display:block; margin:auto;">
     <!-- Number line -->
@@ -223,15 +260,87 @@
   	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
 		NCC: Based on Similarity along dimensions
 
-		e.g. height of dog 
+		e.g. height of dog , Minimum can be explicitly calculated.
 	  </p>
+        <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      Based on this idea how do we calculate the decision boundary?
+    </p>
 </section>
 
 
 
 
+
+
+    <!-- Slide 2: LaTeX math -->
+    <section>
+      <h3 style="color:#A8E6CF;text-transform: none">Perceptron Loss function</h3>
+      <p style="color:#EAEAEA;">
+  Minimize the following loss function:
+          \begin{align*}
+        \mathcal{L}_{\mathcal{P}}: \mathbb{R}^d \to \mathbb{R}, \quad w\mapsto - \sum_{m\in \mathcal{M}}w^\top x_m y_m 
+    \end{align*}
+      </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Counts how many datapoints are misclassified
+	  </p>
+            <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      Based on this idea how do we calculate the decision boundary?
+    </p>
+    </section>
+
 <section>
-  <h2 style="color:#A8E6CF;">Perceptron Algorithm </h2>
+  <h3 style="color:#A8E6CF;text-transform: none">Recap: Gradient Descent</h3>
+  
+  <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
+    <iframe 
+      src="https://www.youtube.com/embed/IHZwWFHWa-w?start=331" 
+      title="Gradient Descent (3Blue1Brown)"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      style="position:absolute; top:0; left:0; width:100%; height:100%;">
+    </iframe>
+  </div>
+    <p style="color:#8A8A8A; font-size:0.5em; margin-top:5px;">
+		@3Blue1Brown explains how to use gradient descent in Multilayer Perceptron, but the same idea applies to Perceptron learning $C(w) = \mathcal{L}_p(w)$. 
+	  </p>
+
+</section>
+<section style="font-size: 0.7em;">
+  <h2 style="color:#A8E6CF;text-transform: none">Perceptron Algorithm </h2>
+
+  <ol>
+    <li class="fragment">Initialize \( w^{old} \) (randomly, \( 1 / n \), ...)</li>
+
+    <li class="fragment">
+      While there are misclassified data points
+      <ul>
+        <li class="fragment">Pick a <span style="color:rgb(255, 238, 82);">random misclassified data point \( x_m \)</span></li>
+        <li class="fragment">Descent in direction of the gradient at single data point <span style="color:rgb(255, 238, 82);">\( x_m \)</span></li>
+      </ul>
+    </li>
+  </ol>
+ 
+  <p class="fragment">
+    \( \mathcal{L}_m(w) = - w^T\)<span style="color:rgb(255, 238, 82);">\(x_m\)</span>\( y_m \)
+  </p>
+
+  <p class="fragment">
+    \( \nabla_w \mathcal{L}_m(w) = - \)<span style="color:rgb(255, 238, 82);">\(x_m\)</span>\( y_m \)
+  </p>
+
+  <p class="fragment">Update Step with step size \( \eta \in \mathbb{R}^+\):</p>
+
+  <p class="fragment">
+    \( \mathbf{w}^{new} \leftarrow \mathbf{w}^{old} - \eta \nabla_w \mathcal{L}_m(\mathbf{w}^{old}) = \mathbf{w}^{old} + \eta \)<span style="color:rgb(255, 238, 82);">\(x_m\)</span>\( y_m \)
+  </p>
+</section>
+<!--
+<section>
+  <h2 style="color:#A8E6CF;text-transform: none">Perceptron Algorithm </h2>
 
   <pre><code class="python">
 Input: Training data { (x_i, y_i) }, x_i ∈ ℝᵈ, y_i ∈ {-1,+1}, 
@@ -250,25 +359,9 @@ repeat
 until no misclassifications
   </code></pre>
 </section>
-
-    <!-- Slide 2: LaTeX math -->
-    <section>
-      <h3 style="color:#A8E6CF;">Perceptron Loss function</h3>
-      <p style="color:#EAEAEA;">
-    
-          \begin{align*}
-        \mathcal{L}_{\mathcal{P}}: \mathbb{R}^d \to \mathbb{R}, \quad w\mapsto - \sum_{m\in \mathcal{M}}w^\top x_m y_m 
-    \end{align*}
-       
-  
-      </p>
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Counts how many datapoints are misclassified
-	  </p>
-    </section>
-
+-->
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Perceptron Learning step by step</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Perceptron Learning step by step</h3>
   
   <div style="text-align:center;">
     <!-- Make the GIF larger -->
@@ -282,11 +375,11 @@ until no misclassifications
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Perceptron Outcome</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Perceptron Outcome</h3>
   
   <div style="text-align:center;">
     <!-- Make the GIF larger -->
-    <img src="../img/Perceptron_random.png" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    <img src="../img/Perceptron_random.png" width="700" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
     
 	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
 		Outcome of Perceptron Learning can be different on the same dataset.
@@ -295,8 +388,8 @@ until no misclassifications
 </section>
 
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;">NCC vs. LDA vs. Perceptron</h3>
+<section >
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">NCC vs. LDA vs. Perceptron</h3>
 
   <div style="text-align:center; width:100%; height:100%;">
     <img 
@@ -322,7 +415,192 @@ until no misclassifications
     <section>
       <h3 style="color:#A8E6CF;">Homework</h3>
     </section>
+    
+<section style="font-size: 0.7em;">
+  <h3 style="color:#A8E6CF; text-align:center;">Interactive Decision Boundary (\(\mathbb{R}^2\))</h3>
+  <div style="display:flex; justify-content:center; align-items:flex-start; gap:30px;">
 
+    <!-- Plot -->
+    <div id="plot" style="width:700px; height:700px;"></div>
+
+    <!-- Controls (RIGHT SIDE) -->
+ <div style="display:flex; flex-direction:column; gap:10px;">
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">w₁:</label>
+    <input id="w1" type="number" step="0.1" value="1" class="num-input">
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">w₂:</label>
+    <input id="w2" type="number" step="0.1" value="1" class="num-input">
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">β:</label>
+    <input id="beta" type="number" step="0.1" value="0" class="num-input">
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">|w|:</label>
+    <input id="wlen" type="number" step="0.1" value="1.4" class="num-input">
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">θ:</label>
+    <input id="theta" type="number" step="1" value="45" class="num-input">
+  </div>
+
+</div>
+
+  <div id="plot" style="width:700px; height:700px; margin:auto;"></div>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    .num-input {
+      width: 5em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+    }
+    .num-input:focus { outline:none; border-color:#A8E6CF; }
+  </style>
+
+  <script>
+    const X1=[],Y1=[],X2=[],Y2=[];
+    for(let i=0;i<30;i++){
+      X1.push(Math.random()*2-4); Y1.push(Math.random()*2+1);
+      X2.push(Math.random()*2+1); Y2.push(Math.random()*2-4);
+    }
+
+    function computeLine(w1,w2,beta){
+      const x=[],y=[];
+      for(let i=-5;i<=5;i+=0.05){
+        x.push(i);
+        y.push(Math.abs(w2)>1e-6?(beta-w1*i)/w2:null);
+      }
+      return {x,y};
+    }
+
+    function syncFromCartesian(){
+      const w1=parseFloat(w1el.value), w2=parseFloat(w2el.value);
+      const len=Math.sqrt(w1*w1+w2*w2);
+      const ang=Math.atan2(w2,w1)*180/Math.PI;
+      wlen.value=len.toFixed(3);
+      theta.value=ang.toFixed(1);
+    }
+
+    function syncFromPolar(){
+      const len=parseFloat(wlen.value);
+      const ang=parseFloat(theta.value)*Math.PI/180;
+      w1el.value=(len*Math.cos(ang)).toFixed(3);
+      w2el.value=(len*Math.sin(ang)).toFixed(3);
+    }
+
+    function draw(){
+      const w1=parseFloat(w1el.value);
+      const w2=parseFloat(w2el.value);
+      const beta=parseFloat(betael.value);
+
+      const line=computeLine(w1,w2,beta);
+
+      // unit circle
+      const cx=[],cy=[];
+      for(let t=0;t<=2*Math.PI;t+=0.01){
+        cx.push(Math.cos(t));
+        cy.push(Math.sin(t));
+      }
+
+      const circle={
+        x:cx,y:cy,mode:"lines",
+        line:{color:"#555",width:2},
+        name:"unit circle"
+      };
+
+      const trace1={x:X1,y:Y1,mode:"markers",marker:{color:"#9bd7ff",size:7},name:"+1"};
+      const trace2={x:X2,y:Y2,mode:"markers",marker:{color:"orange",size:7},name:"-1"};
+
+      const boundary={
+        x:line.x,y:line.y,mode:"lines",
+        line:{color:"#ff9bd7",width:3},
+        name:"boundary"
+      };
+
+      // arrow for w
+      const arrow={
+        x:[0,w1], y:[0,w2],
+        mode:"lines+markers",
+        line:{color:"#ff2fa3",width:4},
+        marker:{size:6},
+        name:"w"
+      };
+
+      const layout={
+        paper_bgcolor:"#000",
+        plot_bgcolor:"#000",
+        font:{color:"#EAEAEA"},
+        width:700,height:700,
+        xaxis:{range:[-5,5],gridcolor:"#333",scaleanchor:"y"},
+        yaxis:{range:[-5,5],gridcolor:"#333"},
+        showlegend:false,
+        shapes: [{
+          type:"line",
+          x0:0,y0:0,x1:w1,y1:w2,
+          line:{color:"#ff2fa3",width:4},
+          axref:"x",ayref:"y",
+        }],
+annotations: [
+ 
+  {
+    x: w1,
+    y: w2  ,
+    ax: 0,
+    ay: 0,
+    xref: "x",
+    yref: "y",
+    axref: "x",
+    ayref: "y",
+    showarrow: true,
+    arrowhead: 10,
+    arrowsize: 1.5,
+    arrowwidth: 2,
+    arrowcolor: "#ff2fa3",
+  },
+  {
+    x: w1+0.3,
+    y: w2+0.3,
+    text: "w",
+    showarrow: false,
+    font: { color: "#ff2fa3" , size: 16, weight: "bold"},
+  }
+
+]
+      };
+
+      Plotly.newPlot("plot",[circle,trace1,trace2,boundary,arrow],layout,{displayModeBar:false});
+    }
+    const w1el=document.getElementById("w1");
+    const w2el=document.getElementById("w2");
+    const betael=document.getElementById("beta");
+    const wlen=document.getElementById("wlen");
+    const theta=document.getElementById("theta");
+
+    w1el.addEventListener("input",()=>{syncFromCartesian();draw();});
+    w2el.addEventListener("input",()=>{syncFromCartesian();draw();});
+    betael.addEventListener("input",draw);
+
+    wlen.addEventListener("input",()=>{syncFromPolar();draw();});
+    theta.addEventListener("input",()=>{syncFromPolar();draw();});
+
+    syncFromCartesian();
+    draw();
+  </script>
+</section>
 <section>
   <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
 
@@ -416,6 +694,19 @@ until no misclassifications
   </div>
 </section>
 
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;">Notes of this tutorial</h3>
+  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">Written notes can be found here:
+<a href="https://isis.tu-berlin.de/mod/folder/view.php?id=2289551" target="_blank" style="text-decoration:none;">
+  <section style="padding:10px; border:1px solid #444; cursor:pointer;">
+    Notes
+  </section>
+</a>
+
+  </p>
+
+
+</section>
 
   </div>
 </div>
