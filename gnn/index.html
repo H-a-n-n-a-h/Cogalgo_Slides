@@ -23,10 +23,49 @@
 
     <!-- Slide 1: Title -->
     <section>
-      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Perceptron and NCC</h2>
+      <h2 style="color:#A8E6CF;">(Optimal) Coupliing of measures</h2>
       <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+        June 17th 2026, TU Berlin
+      </p>
     </section>
+
 <section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Outline</h3>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Measure Spaces</h3>
+  TV Norm, Probability Measures, Pushforward
+
+  <p><span style="color:rgb(255, 238, 82);">Push forward measure</span> of \( \mu \) by \( T \) is the measure \( \nu \in \mathcal{P}_2(\mathbb{R}^d) \) defined by: <span style="color:rgb(255, 238, 82);">
+    \( \nu = T_{\#}\mu = \mu \circ T^{-1} \)</span>
+where \( T \) is  a Borel measurable Map \(T: \mathbb{R}^d \to \mathbb{R}^n, \mu \in \mathcal{P}_2(\mathbb{R}^d) \)</p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Space \( (\mathcal{P}_2(\mathbb{R}^d) , W_2)\)</h3>
+  <p>Where \( \mathcal{P}_2(\mathbb{R}^d):= \{ \mu \in \mathcal{P}(\mathbb{R}^d) : \int_{\mathbb{R}^d} \|x\|^2_2 \, d\mu(x) < \infty \} \)  </p>
+
+  <p><span style="color:rgb(255, 238, 82);">\( x_m \)Wasserstein distance: \( W_2(\mu, \nu) = \left( \min_{\pi \in \Pi(\mu, \nu)} \int_{\mathbb{R}^d \times \mathbb{R}^d} \|x - y\|^2_2 \, d\pi(x, y) \right) \)</span></p>
+  
+  <p><span style="color:rgb(255, 104, 207);">Push forward measure Coupling: \( \pi \in \Pi(\mu, \nu) \): 
+    \( \Pi(\mu,\nu) = \{ \pi \in \mathcal{P}(\mathbb{R}^d \times \mathbb{R}^d) : P_{1\#}\pi = \mu, P_{2\#}\pi = \nu \} \)</span></p>
+
+    <p> \( P_1 \) and \( P_2 \) are the projection maps. i.e \(P_1: \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}^d \) with \(P_1(x,y) = x \) </p>
+
+</section>
+<section>
+    <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Atomic Measures</h3>
+      <p><span style="color:rgb(255, 104, 207);">Coupling of Atomic measures: \( \pi \in \Pi(\mu, \nu) \): 
+    \( \Pi(\mu,\nu) = \{ \pi \in \mathcal{P}(\mathbb{R}^d \times \mathbb{R}^d) : P_{1\#}\pi = \mu, P_{2\#}\pi = \nu \} 
+    = \sum_{i=1}^n \sum_{j=1}^m \pi_{ij} \|x_i - y_j\|^2_2 \)</span></p>
+          <p><span style="color:rgb(255, 104, 207);">
+    \( = \sum_{i=1}^n \sum_{j=1}^m \pi_{ij} \|x_i - y_j\|^2_2 \) ?</span></p>
+      <p><span style="color:rgb(255, 238, 82);">Then Wasserstein distance: \( W_2(\mu, \nu) = \min_{\pi \in \Pi(\mu, \nu)}  \sum_{i=1}^n \sum_{j=1}^m \pi_{ij} \|x - y\|^2_2  \)</span></p>
+</section>
+<section>
+
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
   
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
@@ -421,27 +460,39 @@ until no misclassifications
   <div style="display:flex; justify-content:center; align-items:flex-start; gap:30px;">
 
     <!-- Plot -->
-    <div id="plot" style="width:600px; height:600px;"></div>
+    <div id="plot" style="width:700px; height:700px;"></div>
 
     <!-- Controls (RIGHT SIDE) -->
- <div style="display:grid;grid-template-columns: auto auto; gap:10px; justify-items: end; text-wrap: nowrap;">
+ <div style="display:flex; flex-direction:column; gap:10px;">
 
-    <label style="color:#EAEAEA;">w₁ =</label>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">w₁:</label>
     <input id="w1" type="number" step="0.1" value="1" class="num-input">
+  </div>
 
-    <label style="color:#EAEAEA;">w₂ =</label>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">w₂:</label>
     <input id="w2" type="number" step="0.1" value="1" class="num-input">
+  </div>
 
-    <label style="color:#EAEAEA;">β =</label>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">β:</label>
     <input id="beta" type="number" step="0.1" value="0" class="num-input">
+  </div>
 
-    <label style="color:#EAEAEA;">|w| =</label>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">|w|:</label>
     <input id="wlen" type="number" step="0.1" value="1.4" class="num-input">
+  </div>
 
-    <label style="color:#EAEAEA;">θ =</label>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="color:#EAEAEA;">θ:</label>
     <input id="theta" type="number" step="1" value="45" class="num-input">
+  </div>
 
 </div>
+
+  <div id="plot" style="width:700px; height:700px; margin:auto;"></div>
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
@@ -532,7 +583,7 @@ until no misclassifications
         paper_bgcolor:"#000",
         plot_bgcolor:"#000",
         font:{color:"#EAEAEA"},
-        width:600,height:600,
+        width:700,height:700,
         xaxis:{range:[-5,5],gridcolor:"#333",scaleanchor:"y"},
         yaxis:{range:[-5,5],gridcolor:"#333"},
         showlegend:false,
@@ -598,7 +649,7 @@ annotations: [
       alt="Perceptron Learning Animation"
       style="
         max-width: 100%; 
-        max-height: 70vh; 
+        max-height: 80vh; 
         width: auto; 
         height: auto; 
         display: block; 
@@ -618,9 +669,10 @@ annotations: [
   <div style="text-align:center; width:100%; height:100%;">
     <img 
       src="../img/task2_2.png" 
+      alt="Perceptron Learning Animation"
       style="
         max-width: 100%; 
-        max-height: 70vh; 
+        max-height: 80vh; 
         width: auto; 
         height: auto; 
         display: block; 
@@ -640,6 +692,7 @@ annotations: [
   <div style="text-align:center; width:100%; height:100%;">
     <img 
       src="../img/task2_3.png" 
+      alt="Perceptron Learning Animation"
       style="
         max-width: 100%; 
         max-height: 80vh; 
@@ -681,17 +734,7 @@ annotations: [
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Notes of this tutorial</h3>
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">Written notes can be found here:
-<a href="https://isis.tu-berlin.de/mod/folder/view.php?id=2289551" target="_blank" style="text-decoration:none;">
-  <section style="padding:10px; border:1px solid #444; cursor:pointer;">
-    Notes
-  </section>
-</a>
-
-  </p>
-
-
+  <h3 style="color:#A8E6CF; text-align:center;">Summary</h3>
 </section>
 
   </div>
