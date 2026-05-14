@@ -26,479 +26,258 @@
       <h2 style="color:#A8E6CF;">(Optimal) Coupliing of measures</h2>
       <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
       <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-        June 17th 2026, TU Berlin
+        June 4th 2026, TU Berlin
       </p>
     </section>
 
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Outline</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Contents</h3>
+  <div style="font-size:0.8em; line-height:1.6; max-width:800px; margin:0 auto;">
+    <ul style="text-align:left; color:#EAEAEA;">
+      <li>Recap: Total Variation Norm</li>
+      <li>Probability Measures and examples</li>
+      <li>Push-forward measures and laws of random variables</li>
+      <li>Wasserstein distance and optimal couplings</li>
+      <li>Couplings from maps and Brenier's theorem</li>
+      <li>Distance between Gaussian measures</li>
+      <li>Summary and outlook</li>
+    </ul>
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Recap: Total Variation Norm
+  </h3>
+
+  <div style="font-size:0.8em;">
+    Let $\mathcal{M}(\mathbb{R}^d)$ be the Banach space of signed
+    $\sigma$-additive Borel measures on $\mathbb{R}^d$.
+
+    \[
+    \|\mu\|_{TV} := |\mu|(\mathbb{R}^d)
+    \]
+
+    where
+
+    \[
+    |\mu|(A)
+    :=
+    \sup_{A=\cup_k A_k}
+    \sum_k |\mu(A_k)|,
+    \qquad
+    A_i \cap A_j = \emptyset .
+    \]
+  </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Measure Spaces</h3>
-  TV Norm, Probability Measures, Pushforward
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Recap: Total Variation Norm
+  </h3>
 
-  <p><span style="color:rgb(255, 238, 82);">Push forward measure</span> of \( \mu \) by \( T \) is the measure \( \nu \in \mathcal{P}_2(\mathbb{R}^d) \) defined by: <span style="color:rgb(255, 238, 82);">
-    \( \nu = T_{\#}\mu = \mu \circ T^{-1} \)</span>
-where \( T \) is  a Borel measurable Map \(T: \mathbb{R}^d \to \mathbb{R}^n, \mu \in \mathcal{P}_2(\mathbb{R}^d) \)</p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Space \( (\mathcal{P}_2(\mathbb{R}^d) , W_2)\)</h3>
-  <p>Where \( \mathcal{P}_2(\mathbb{R}^d):= \{ \mu \in \mathcal{P}(\mathbb{R}^d) : \int_{\mathbb{R}^d} \|x\|^2_2 \, d\mu(x) < \infty \} \)  </p>
-
-  <p><span style="color:rgb(255, 238, 82);">\( x_m \)Wasserstein distance: \( W_2(\mu, \nu) = \left( \min_{\pi \in \Pi(\mu, \nu)} \int_{\mathbb{R}^d \times \mathbb{R}^d} \|x - y\|^2_2 \, d\pi(x, y) \right) \)</span></p>
-  
-  <p><span style="color:rgb(255, 104, 207);">Push forward measure Coupling: \( \pi \in \Pi(\mu, \nu) \): 
-    \( \Pi(\mu,\nu) = \{ \pi \in \mathcal{P}(\mathbb{R}^d \times \mathbb{R}^d) : P_{1\#}\pi = \mu, P_{2\#}\pi = \nu \} \)</span></p>
-
-    <p> \( P_1 \) and \( P_2 \) are the projection maps. i.e \(P_1: \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}^d \) with \(P_1(x,y) = x \) </p>
-
-</section>
-<section>
-    <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Atomic Measures</h3>
-      <p><span style="color:rgb(255, 104, 207);">Coupling of Atomic measures: \( \pi \in \Pi(\mu, \nu) \): 
-    \( \Pi(\mu,\nu) = \{ \pi \in \mathcal{P}(\mathbb{R}^d \times \mathbb{R}^d) : P_{1\#}\pi = \mu, P_{2\#}\pi = \nu \} 
-    = \sum_{i=1}^n \sum_{j=1}^m \pi_{ij} \|x_i - y_j\|^2_2 \)</span></p>
-          <p><span style="color:rgb(255, 104, 207);">
-    \( = \sum_{i=1}^n \sum_{j=1}^m \pi_{ij} \|x_i - y_j\|^2_2 \) ?</span></p>
-      <p><span style="color:rgb(255, 238, 82);">Then Wasserstein distance: \( W_2(\mu, \nu) = \min_{\pi \in \Pi(\mu, \nu)}  \sum_{i=1}^n \sum_{j=1}^m \pi_{ij} \|x - y\|^2_2  \)</span></p>
-</section>
-<section>
-
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
-  
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-    
-		You have to take an elective.
-	  </p> 
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-		Written Homework and Quizzes every week. You can earn 10 points in total.
-	  </p> 
-
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-		I corrected everyone's first sheet, if you have any questions please ask me.
-	  </p> 
-
-      <p class="fragment" style="color:#668aff; font-weight:bold; margin-top:20px;">
-		Any Questions?
-	  </p> 
-
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Course Structure</h3>
-  <svg id="tree1" width="700" height="600"></svg>
-
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script>
-    const data = {
-      name: "Machine Learning",
-      children: [
-        {
-          name: "Supervised Learning",
-          children: [
-            { name: "Regression", children: [{ name: "Linear Regression", children: [{ name: "Kernel Ridge Regression"}]}] },
-            { name: "Classification", children: [{ name: "Binary Classification", children: [{ name: "LDA"},{ name: "Perceptron"},{ name: "NCC"}]}] },
-          ]
-        },
-        {
-          name: "Unsupervised Learning",
-          children: [
-            { name: "Clustering", children: [{ name: "k-Means"}] },
-            { name: "Dimension Reduction", children: [{ name: "NMF"}, { name: "PCA", children: [{ name: "kPCA"}]}] }
-          ]
-        }
-      ]
-    };
-
-    function drawTree(svgId, highlight=false) {
-      const width = 700, height = 600;
-      const treeLayout = d3.tree().size([width, height - 100]);
-      const root = d3.hierarchy(data);
-      treeLayout(root);
-
-      const svg = d3.select(svgId)
-        .append("g")
-        .attr("transform", "translate(50,50)");
-
-      const highlightNames = new Set([
-        "Machine Learning",
-        "Supervised Learning",
-        "Classification",
-        "Binary Classification",
-        "Perceptron",
-        "NCC"
-      ]);
-
-      function isHighlighted(link) {
-        const src = link.source.data.name;
-        const tgt = link.target.data.name;
-        return highlight && highlightNames.has(src) && highlightNames.has(tgt);
-      }
-
-      // Draw links
-      svg.selectAll("path")
-        .data(root.links())
-        .enter()
-        .append("path")
-        .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
-        .attr("stroke", d => isHighlighted(d) ? "#00FF9C" : "#A8E6CF")
-        .attr("stroke-width", d => isHighlighted(d) ? 3 : 2)
-        .attr("fill", "none");
-
-      // Draw nodes
-      svg.selectAll("circle")
-        .data(root.descendants())
-        .enter()
-        .append("circle")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("r", 6)
-        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#FFD166");
-
-      // Draw labels
-      svg.selectAll("text")
-        .data(root.descendants())
-        .enter()
-        .append("text")
-        .attr("x", d => d.children ? d.x - 10 : d.x)
-        .attr("y", d => d.children ? d.y + 5 : d.y + 20)
-        .attr("text-anchor", d => d.children ? "end" : "middle")
-        .attr("fill", d => (highlight && highlightNames.has(d.data.name)) ? "#00FF9C" : "#EAEAEA")
-        .style("font-size", "16px")
-        .text(d => d.data.name);
-    }
-
-    drawTree("#tree1", false);
-  </script>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Today</h3>
-  <svg id="tree2" width="700" height="600"></svg>
-
-  <script>
-    drawTree("#tree2", true);
-  </script>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Binary Classification: Example 1</h3>
-  
   <div style="text-align:center;">
-    <!-- Make the GIF larger -->
-    <img src="../img/chihuahua_or_muffin.png" width="500" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
-    
-    <!-- Text below the GIF -->
-    <p style="color:#EAEAEA; font-size:0.9em; margin-top:10px;">
-      
-    </p>
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Chihuahua or muffin?
-	  </p>
-  </div>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Binary Classification: Example 2</h3>
-  
-  <div style="text-align:center;">
-    <!-- Make the GIF larger -->
-    <img src="../img/NCC_Toy_data.png" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
-    
-    <!-- Text below the GIF -->
-    <p style="color:#EAEAEA; font-size:0.9em; margin-top:10px;">
-      
-    </p>
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		predict class labels of future unlabeled datapoints
-	  </p>
-  </div>
-</section>
-
-
-
-    <!-- Slide 2: LaTeX math -->
-    <section>
-      <h3 style="color:#A8E6CF;text-transform: none">Binary classification model</h3>
-      <p style="color:#EAEAEA;">
-    
-        Let $w,x_{new} \in \mathbb{R}^n$ and $\beta \in \mathbb{R}$ then we can predict by
-        \begin{align*}
-            f(x_{new}) = sign(w^\top x_{new} - \beta) = \hat{y}_{new}
-        \end{align*}
-       
-  
-      </p>
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		$w$ and $\beta$ determine how the decision boundary looks like
-	  </p>
-    </section>
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">NCC vs. LDA vs. Perceptron</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/ncc_perceptron_lda.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
-
-    <!-- Optional caption -->
-    
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Comparison of NCC, LDA, and Perceptron decision boundaries
-	  </p>
-	
-  </div>
-</section>
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Nearest Centroid Classifier</h3>
-
-  <svg width="700" height="300" style="display:block; margin:auto;">
-    <!-- Number line -->
-    <line x1="50" y1="200" x2="650" y2="200" stroke="#EAEAEA" stroke-width="4" />
-
-    <!-- Tick marks -->
-    <line x1="50" y1="195" x2="50" y2="205" stroke="#EAEAEA" stroke-width="2" />
-    <line x1="650" y1="195" x2="650" y2="205" stroke="#EAEAEA" stroke-width="2" />
-
-    <!-- Dog images -->
-    <image href="../img/chihuahua.png" x="150" y="120" height="60px" width="60px"/>
-    <image href="../img/labrador.png" x="480" y="60" height="120px" width="120px"/>
-
-    <!-- Labels -->
-    <text x="170" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Chihuahua</text>
-    <text x="540" y="260" fill="#EAEAEA" font-size="16px" text-anchor="middle">Labrador</text>
-
-    <!-- Class dots -->
-    <!-- Blue dots for Chihuahuas -->
-    <circle cx="120" cy="200" r="8" fill="#3498db"/>
-    <circle cx="180" cy="200" r="8" fill="#3498db"/>
-    <circle cx="220" cy="200" r="8" fill="#3498db"/>
-
-    <!-- Orange dots for Labradors -->
-    <circle cx="500" cy="200" r="10" fill="#e67e22"/>
-    <circle cx="550" cy="200" r="10" fill="#e67e22"/>
-    <circle cx="580" cy="200" r="10" fill="#e67e22"/>
-	 <!-- Centroid markers -->
-    <text x="173" y="210" fill="#ffffff" font-size="28px" font-weight="bold" text-anchor="middle">×</text>
-    <text x="543" y="210" fill="#ffffff" font-size="30px" font-weight="bold" text-anchor="middle">×</text>
-	
-  </svg>
-  	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		NCC: Based on Similarity along dimensions
-
-		e.g. height of dog , Minimum can be explicitly calculated.
-	  </p>
-        <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-      Based on this idea how do we calculate the decision boundary?
-    </p>
-</section>
-
-
-
-
-
-
-    <!-- Slide 2: LaTeX math -->
-    <section>
-      <h3 style="color:#A8E6CF;text-transform: none">Perceptron Loss function</h3>
-      <p style="color:#EAEAEA;">
-  Minimize the following loss function:
-          \begin{align*}
-        \mathcal{L}_{\mathcal{P}}: \mathbb{R}^d \to \mathbb{R}, \quad w\mapsto - \sum_{m\in \mathcal{M}}w^\top x_m y_m 
-    \end{align*}
-      </p>
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Counts how many datapoints are misclassified
-	  </p>
-            <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-      Based on this idea how do we calculate the decision boundary?
-    </p>
-    </section>
-
-<section>
-  <h3 style="color:#A8E6CF;text-transform: none">Recap: Gradient Descent</h3>
-  
-  <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
-    <iframe 
-      src="https://www.youtube.com/embed/IHZwWFHWa-w?start=331" 
-      title="Gradient Descent (3Blue1Brown)"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      style="position:absolute; top:0; left:0; width:100%; height:100%;">
-    </iframe>
-  </div>
-    <p style="color:#8A8A8A; font-size:0.5em; margin-top:5px;">
-		@3Blue1Brown explains how to use gradient descent in Multilayer Perceptron, but the same idea applies to Perceptron learning $C(w) = \mathcal{L}_p(w)$. 
-	  </p>
-
-</section>
-<section style="font-size: 0.7em;">
-  <h2 style="color:#A8E6CF;text-transform: none">Perceptron Algorithm </h2>
-
-  <ol>
-    <li class="fragment">Initialize \( w^{old} \) (randomly, \( 1 / n \), ...)</li>
-
-    <li class="fragment">
-      While there are misclassified data points
-      <ul>
-        <li class="fragment">Pick a <span style="color:rgb(255, 238, 82);">random misclassified data point \( x_m \)</span></li>
-        <li class="fragment">Descent in direction of the gradient at single data point <span style="color:rgb(255, 238, 82);">\( x_m \)</span></li>
-      </ul>
-    </li>
-  </ol>
- 
-  <p class="fragment">
-    \( \mathcal{L}_m(w) = - w^T\)<span style="color:rgb(255, 238, 82);">\(x_m\)</span>\( y_m \)
+     
+    <img src="../img/TV_vs_Wasserstein.png" width="700" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
   </p>
-
-  <p class="fragment">
-    \( \nabla_w \mathcal{L}_m(w) = - \)<span style="color:rgb(255, 238, 82);">\(x_m\)</span>\( y_m \)
-  </p>
-
-  <p class="fragment">Update Step with step size \( \eta \in \mathbb{R}^+\):</p>
-
-  <p class="fragment">
-    \( \mathbf{w}^{new} \leftarrow \mathbf{w}^{old} - \eta \nabla_w \mathcal{L}_m(\mathbf{w}^{old}) = \mathbf{w}^{old} + \eta \)<span style="color:rgb(255, 238, 82);">\(x_m\)</span>\( y_m \)
-  </p>
-</section>
-<!--
-<section>
-  <h2 style="color:#A8E6CF;text-transform: none">Perceptron Algorithm </h2>
-
-  <pre><code class="python">
-Input: Training data { (x_i, y_i) }, x_i ∈ ℝᵈ, y_i ∈ {-1,+1}, 
-	    step size η > 0
-Output: Weight vector w, bias β
-
-Initialize w ∈ ℝᵈ, β ∈ ℝ
-repeat
-    # Loop through each training example
-    for each (x_i, y_i):
-        # Check if x_i is misclassified
-        if y_i * (wᵀ x_i + β) ≤ 0:
-            w ← w + η * y_i * x_i
-            β ← β + η * y_i
-
-until no misclassifications
-  </code></pre>
-</section>
--->
-<section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Perceptron Learning step by step</h3>
-  
-  <div style="text-align:center;">
-    <!-- Make the GIF larger -->
-    <img src="../img/perceptron_learning.gif" width="600" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
-    
-    <!-- Text below the GIF -->
-	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Maximum number of steps is set to 20 
-	  </p>
   </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Is the cross measure or triangle measure nearer to dot measure?
+    </p>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      TV of Probability measures is always 2, but intuitively the cross measure should be closer to the dot measure. (check on board)
+    </p>
 </section>
+
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Perceptron Outcome</h3>
-  
-  <div style="text-align:center;">
-    <!-- Make the GIF larger -->
-    <img src="../img/Perceptron_random.png" width="700" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
-    
-	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Outcome of Perceptron Learning can be different on the same dataset.
-	  </p>
-  </div>
-</section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Recap: TV Norm and test functions
+  </h3>
 
+  <div style="font-size:0.5em;">
 
-<section >
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">NCC vs. LDA vs. Perceptron</h3>
+So wee look at 
+$\mathcal{M}\left(\mathbb{R}^d\right)$ is dual space of $C_0\left(\mathbb{R}^d\right)$, i.e. $C_0\left(\mathbb{R}^d\right)^{\prime}=\mathcal{M}\left(\mathbb{R}^d\right)$ (since $C_c^{\infty}\left(\mathbb{R}^d\right)$ is dense in $C_0\left(\mathbb{R}^d\right)$ we could also test against the first ones)
+$$
+\|\mu\|_{T V}=\sup _{\|\varphi\|_{\infty} \leq 1}|\langle\varphi, \mu\rangle|, \quad\langle x, \mu\rangle:=\int_{\mathbb{R}^d} \varphi(x) \mathrm{d} \mu(x)
+$$
+and $\left(\mu_n\right)_n$ converges weak-* to a measure $\mu$ if
+$$
+\lim _{n \rightarrow \infty} \int \varphi \mathrm{~d} \mu_n=\int \varphi \mathrm{d} \mu \text { for all } \varphi \in C_0\left(\mathbb{R}^d\right)
+$$
+- $\mathcal{P}\left(\mathbb{R}^d\right)$ set of probability measures on $\mathbb{R}^d$ 
+\begin{enumerate}
 
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/ncc_perceptron_lda.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
+    \item  probability measures $\left(\mu_n\right)_n$ does in general not weak-* converge a probability measure e.g. $\mu_n=\delta_n$ converges weak-* to $\mu \equiv 0$
+    \item
+    - probability measures $\left(\mu_n\right)_n$ converges narrowly to a (probability) measure $\mu$ if
+$$
+\lim _{n \rightarrow \infty} \int \varphi \mathrm{~d} \mu_n=\int \varphi \mathrm{d} \mu \text { for all } \varphi \in C_b\left(\mathbb{R}^d\right)
+$$
+\item 
 
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Comparison of NCC, LDA, and Perceptron decision boundaries
-	  </p>
-  </div>
-</section>
-
-    <section>
-      <h3 style="color:#A8E6CF;">Homework</h3>
-    </section>
-    
-<section style="font-size: 0.7em;">
-  <h3 style="color:#A8E6CF; text-align:center;">Interactive Decision Boundary (\(\mathbb{R}^2\))</h3>
-  <div style="display:flex; justify-content:center; align-items:flex-start; gap:30px;">
-
-    <!-- Plot -->
-    <div id="plot" style="width:700px; height:700px;"></div>
-
-    <!-- Controls (RIGHT SIDE) -->
- <div style="display:flex; flex-direction:column; gap:10px;">
-
-  <div style="display:flex; align-items:center; gap:8px;">
-    <label style="color:#EAEAEA;">w₁:</label>
-    <input id="w1" type="number" step="0.1" value="1" class="num-input">
-  </div>
-
-  <div style="display:flex; align-items:center; gap:8px;">
-    <label style="color:#EAEAEA;">w₂:</label>
-    <input id="w2" type="number" step="0.1" value="1" class="num-input">
-  </div>
-
-  <div style="display:flex; align-items:center; gap:8px;">
-    <label style="color:#EAEAEA;">β:</label>
-    <input id="beta" type="number" step="0.1" value="0" class="num-input">
-  </div>
-
-  <div style="display:flex; align-items:center; gap:8px;">
-    <label style="color:#EAEAEA;">|w|:</label>
-    <input id="wlen" type="number" step="0.1" value="1.4" class="num-input">
-  </div>
-
-  <div style="display:flex; align-items:center; gap:8px;">
-    <label style="color:#EAEAEA;">θ:</label>
-    <input id="theta" type="number" step="1" value="45" class="num-input">
-  </div>
-
+- TV-distance $\|\mu-\nu\|$ between $\mu, \nu \in \mathcal{P}\left(\mathbb{R}^d\right)$ with disjoint support is always 2 so need another distance!
 </div>
+</section>
 
-  <div id="plot" style="width:700px; height:700px; margin:auto;"></div>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Recap: Total Variation Norm
+  </h3>
+  <div style="font-size:0.5em;">
 
+Push-Forward Measures
+Let $T: \mathbb{R}^d \rightarrow \mathbb{R}^n, \mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ be a Borel-measurable map. 
+
+Then the push-forward measure of $\mu$ by $T$ is the measure $\nu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ defined by
+$$
+\nu=T_{\#} \mu=\mu \circ T^{-1}
+$$
+with the preimage $T^{-1}(B)$ of $B \in \mathcal{B}\left(\mathbb{R}^n\right)$.
+
+
+A Map $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is integrable with respect to $T_{\#} \mu$ if $f \circ T$ is integrable with respect to $\mu$ and
+$$
+\int_{\mathbb{R}^n} f(y) \mathrm{d} T_{\#} \mu(y)=\int_{T^{-1}\left(\mathbb{R}^n\right)} f(T(x)) \mathrm{d} \mu(x) .
+$$
+Also if the map $T: \mathbb{R}^d \rightarrow \mathbb{R}^d$ is a $C^1$ diffeomorphism and $\mu$ has density $p_\mu$, then
+$$
+\int f(y) \mathrm{d} T_{\# \mu}(y)=\int f(T(x)) p_\mu(x) \mathrm{d} x=\int f(y) \underbrace{p_\mu\left(T^{-1}(y)\right)\left| \operatorname{det}\left(\nabla T^{-1}(y)\right)\right|}_{p_{T_{\#\mu}}} \mathrm{d} y.
+$$
+
+Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \rightarrow \mathbb{R}^d$ random variable, then we call  $\mu_X=X_{\sharp} \mathbb{P}$ \textbf{law of $X$} 
+  </div>
+
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Examples: Probability Measures
+  </h3>
+
+  <div style="font-size:0.5em;">
+
+    Probability measures are maps
+
+    \[
+    \mu : \mathcal{B}(\mathbb{R}^d) \to [0,\infty),
+    \qquad
+    \mu(\mathbb{R}^d)=1 .
+    \]
+
+    We denote the space by \(\mathcal{P}(\mathbb{R}^d)\).
+    It is convex, but not linear.
+
+    For \(\lambda \in [0,1]\),
+    \[
+    (1-\lambda)\mu + \lambda \nu
+    \]
+    is again a probability measure.
+
+    Examples:
+
+    <ul>
+      <li>
+        Dirac measures \(\delta_x\), \(x\in\mathbb{R}^d\):
+        \[
+        \delta_x(\{x\})=1,
+        \qquad
+        \delta_x(\mathbb{R}^d\setminus\{x\})=0 .
+        \]
+      </li>
+
+      <li>
+        Convex combinations of Dirac measures.
+      </li>
+
+      <li>
+        Gaussian measures:
+        \[
+        \mu(A)
+        :=
+        \int_A
+        \frac{1}{(2\pi\sigma^2)^{d/2}}
+        e^{-\frac{|x|^2}{2\sigma^2}}
+        \,dx .
+        \]
+      </li>
+    </ul>
+
+    Probability measures can be visualized through samples/realizations.
+
+  </div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Example: Samples of Dirac measure
+  </h3>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+    Example: Samples of 2 D Gaussian measure
+  </h3>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Sample of Gaussian distribution</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/Gaussian_2.png" width="400" style="display:block; margin: 0 auto;">
+     <img src="../img/Gaussian_2_1D.png" width="400" style="display:block; margin: 0 auto;">
+	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Plot below shows 3 datapoints sampled from the distribution
+	  </p>
+  </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Interactive Gaussian Scatter</h3>
+
+  <!-- Input controls -->
+  <div style="text-align:center; margin-bottom: 10px; display:flex; justify-content:center; align-items:center; gap:10px;font-size:0.6em">
+    <label for="x1" style="color:#EAEAEA;">X₁:</label>
+    <input id="x1" type="number" step="0.1" value="1" class="num-input">
+
+    <label for="x2" style="color:#EAEAEA;">X₂:</label>
+    <input id="x2" type="number" step="0.1" value="1" class="num-input">
+
+    <label for="cov" style="color:#EAEAEA;">Cov:</label>
+    <input id="cov" type="number" step="0.1" value="1" class="num-input">
+  </div>
+
+  <!-- Plot + Matrix container -->
+  <div style="display:flex; justify-content:center; align-items:flex-start; gap:20px;">
+    <!-- Plot -->
+    <div id="plot" style="width:700px; height:500px;"></div>
+
+    <!-- Covariance matrix -->
+    <div id="matrix" style="color:#EAEAEA; font-size:1.0em; text-align:center;"></div>
+  </div>
+
+  <!-- Plotly and MathJax -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
   <style>
     .num-input {
-      width: 5em;
+      width: 4em;
       background: #111;
       color: #EAEAEA;
       border: 1px solid #444;
@@ -506,238 +285,356 @@ until no misclassifications
       text-align: center;
       font-size: 1em;
       padding: 4px;
+      transition: border 0.2s;
     }
-    .num-input:focus { outline:none; border-color:#A8E6CF; }
+    .num-input:focus {
+      outline: none;
+      border-color: #A8E6CF;
+    }
   </style>
 
   <script>
-    const X1=[],Y1=[],X2=[],Y2=[];
-    for(let i=0;i<30;i++){
-      X1.push(Math.random()*2-4); Y1.push(Math.random()*2+1);
-      X2.push(Math.random()*2+1); Y2.push(Math.random()*2-4);
-    }
-
-    function computeLine(w1,w2,beta){
-      const x=[],y=[];
-      for(let i=-5;i<=5;i+=0.05){
-        x.push(i);
-        y.push(Math.abs(w2)>1e-6?(beta-w1*i)/w2:null);
+    function generateData(X1, X2, cov, n=2000) {
+      const points = [];
+      const rho = cov / Math.sqrt(X1 * X2);
+      for (let i = 0; i < n; i++) {
+        const u1 = Math.random(), u2 = Math.random();
+        const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        const z1 = Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+        const x = Math.sqrt(X1) * z0;
+        const y = Math.sqrt(X2) * (rho * z0 + Math.sqrt(1 - rho ** 2) * z1);
+        points.push({ x, y });
       }
-      return {x,y};
+      return points;
     }
 
-    function syncFromCartesian(){
-      const w1=parseFloat(w1el.value), w2=parseFloat(w2el.value);
-      const len=Math.sqrt(w1*w1+w2*w2);
-      const ang=Math.atan2(w2,w1)*180/Math.PI;
-      wlen.value=len.toFixed(3);
-      theta.value=ang.toFixed(1);
+    function plotData(X1, X2, cov) {
+      const data = generateData(X1, X2, cov);
+      const trace = {
+        x: data.map(p => p.x),
+        y: data.map(p => p.y),
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: '#3498db', size: 4 },
+        name: 'Samples'
+      };
+      const layout = {
+        paper_bgcolor: '#000',
+        plot_bgcolor: '#000',
+        font: { color: '#EAEAEA' },
+        xaxis: { range: [-10, 10], title: 'x₁', gridcolor: '#333' },
+        yaxis: { range: [-10, 10], title: 'x₂', gridcolor: '#333' },
+        width: 700,
+        height: 500,
+        title: `X₁=${X1}, X₂=${X2}, Cov=${cov}`,
+      };
+      Plotly.newPlot('plot', [trace], layout, {displayModeBar: false});
     }
 
-    function syncFromPolar(){
-      const len=parseFloat(wlen.value);
-      const ang=parseFloat(theta.value)*Math.PI/180;
-      w1el.value=(len*Math.cos(ang)).toFixed(3);
-      w2el.value=(len*Math.sin(ang)).toFixed(3);
+    function updateMatrix(X1, X2, cov) {
+      const html = `
+        $$\\Sigma = \\begin{bmatrix}
+          ${X1.toFixed(2)} & ${cov.toFixed(2)} \\\\
+          ${cov.toFixed(2)} & ${X2.toFixed(2)}
+        \\end{bmatrix} 
+        $$
+        $$
+        \\mu= 0
+        $$
+      `;
+      document.getElementById('matrix').innerHTML = html;
+      MathJax.typesetPromise();
     }
 
-    function draw(){
-      const w1=parseFloat(w1el.value);
-      const w2=parseFloat(w2el.value);
-      const beta=parseFloat(betael.value);
-
-      const line=computeLine(w1,w2,beta);
-
-      // unit circle
-      const cx=[],cy=[];
-      for(let t=0;t<=2*Math.PI;t+=0.01){
-        cx.push(Math.cos(t));
-        cy.push(Math.sin(t));
-      }
-
-      const circle={
-        x:cx,y:cy,mode:"lines",
-        line:{color:"#555",width:2},
-        name:"unit circle"
-      };
-
-      const trace1={x:X1,y:Y1,mode:"markers",marker:{color:"#9bd7ff",size:7},name:"+1"};
-      const trace2={x:X2,y:Y2,mode:"markers",marker:{color:"orange",size:7},name:"-1"};
-
-      const boundary={
-        x:line.x,y:line.y,mode:"lines",
-        line:{color:"#ff9bd7",width:3},
-        name:"boundary"
-      };
-
-      // arrow for w
-      const arrow={
-        x:[0,w1], y:[0,w2],
-        mode:"lines+markers",
-        line:{color:"#ff2fa3",width:4},
-        marker:{size:6},
-        name:"w"
-      };
-
-      const layout={
-        paper_bgcolor:"#000",
-        plot_bgcolor:"#000",
-        font:{color:"#EAEAEA"},
-        width:700,height:700,
-        xaxis:{range:[-5,5],gridcolor:"#333",scaleanchor:"y"},
-        yaxis:{range:[-5,5],gridcolor:"#333"},
-        showlegend:false,
-        shapes: [{
-          type:"line",
-          x0:0,y0:0,x1:w1,y1:w2,
-          line:{color:"#ff2fa3",width:4},
-          axref:"x",ayref:"y",
-        }],
-annotations: [
- 
-  {
-    x: w1,
-    y: w2  ,
-    ax: 0,
-    ay: 0,
-    xref: "x",
-    yref: "y",
-    axref: "x",
-    ayref: "y",
-    showarrow: true,
-    arrowhead: 10,
-    arrowsize: 1.5,
-    arrowwidth: 2,
-    arrowcolor: "#ff2fa3",
-  },
-  {
-    x: w1+0.3,
-    y: w2+0.3,
-    text: "w",
-    showarrow: false,
-    font: { color: "#ff2fa3" , size: 16, weight: "bold"},
-  }
-
-]
-      };
-
-      Plotly.newPlot("plot",[circle,trace1,trace2,boundary,arrow],layout,{displayModeBar:false});
+    function update() {
+      const X1 = parseFloat(document.getElementById('x1').value);
+      const X2 = parseFloat(document.getElementById('x2').value);
+      const cov = parseFloat(document.getElementById('cov').value);
+      plotData(X1, X2, cov);
+      updateMatrix(X1, X2, cov);
     }
-    const w1el=document.getElementById("w1");
-    const w2el=document.getElementById("w2");
-    const betael=document.getElementById("beta");
-    const wlen=document.getElementById("wlen");
-    const theta=document.getElementById("theta");
 
-    w1el.addEventListener("input",()=>{syncFromCartesian();draw();});
-    w2el.addEventListener("input",()=>{syncFromCartesian();draw();});
-    betael.addEventListener("input",draw);
+    ['x1', 'x2', 'cov'].forEach(id => {
+      document.getElementById(id).addEventListener('input', update);
+    });
 
-    wlen.addEventListener("input",()=>{syncFromPolar();draw();});
-    theta.addEventListener("input",()=>{syncFromPolar();draw();});
-
-    syncFromCartesian();
-    draw();
+    update();
   </script>
 </section>
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/task2_1.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
-
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Decision boundary decides which class points are assigned to
-	  </p>
-  </div>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate distance between dirac measures</h3>
+  TV norm between two dirac measures $\delta_x$ and $\delta_y$ is always 2
 </section>
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/task2_2.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
-
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Decision boundary decides which class points are assigned to
-	  </p>
-  </div>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate distance between dirac measures</h3>
+  TV norm between two dirac measures $\delta_x$ and $\delta_y$ is always 2
 </section>
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance</h3>
 
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/task2_3.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
+  <div style="font-size:0.5em;">
 
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Decision boundary decides which class points are assigned to
-	  </p>
-  </div>
+The Space $(X, d)=\left(\mathcal{P}_2\left(\mathbb{R}^d\right), W_2\right)$
+$$
+\mathcal{P}_2\left(\mathbb{R}^d\right):=\left\{\mu \in \mathcal{P}\left(\mathbb{R}^d\right): \int_{\mathbb{R}^d}\|x\|_2^2 \mathrm{~d} \mu(x)<\infty\right\}
+$$
+\blue 
+
+The term inside the Integral is also called second moment (TODO check definiton).
+
+TV norm is shit because 1 + 1 = 2 so we work with 
+\black
+the Wasserstein distance
+$$
+W_2^2(\mu, \nu):=\min _{\pi \in \Pi(\mu, \nu)} \int_{\mathbb{R}^d \times \mathbb{R}^d}\|x-y\|_2^2 \mathrm{~d} \pi(x, y)
+$$
+$\mathcal{P}_2\left(\mathbb{R}^d\right)$ becomes a complete metric space, where $\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right)$ is a coupling from
+$$
+\Pi(\mu, \nu):=\left\{\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right):\left(P_1\right)_{\#} \pi=\mu,\left(P_2\right)_{\#} \pi=\nu\right\}
+\quad \textbf{Couplings of $\mu$ and $\nu$}
+$$
+where $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, \quad P^1(x, y)=x$.
+</div>
+
+      <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      Lets look at examples of couplings and then calculate their Wasserstein distance!
+    </p>
+
+         <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      1. Independent couplings 2. Optimal couplings 3. Couplings from maps
+    </p>
 </section>
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
-
-  <div style="text-align:center; width:100%; height:100%;">
-    <img 
-      src="../img/task2_4.png" 
-      alt="Perceptron Learning Animation"
-      style="
-        max-width: 100%; 
-        max-height: 80vh; 
-        width: auto; 
-        height: auto; 
-        display: block; 
-        margin: 0 auto;
-      "
-    >
-
-    <!-- Optional caption -->
-  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-	Decision boundary decides which class points are assigned to
-	  </p>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Setting</h3>
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    We have two combinations of diracs
+  </p>
+  <div style="text-align:center;">
+     
+    <img src="../img/example1_coupling_setting.png" width="500" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
   </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;">Summary</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Independent Coupling</h3>
+
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    We have two combinations of diracs
+  </p>
+
 </section>
 
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Optimal Coupling</h3>
+
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    We have two combinations of diracs.
+    Find Minimizer of Wasserstein distance!
+  </p>
+
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Diracs</h3>
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    We have two combinations of diracs.
+    Find Minimizer of Wasserstein distance!
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Diracs</h3>
+  <p style="color:#EAEAEA; font-size:0.8em;">
+In this simple case a minimizer can be explicitly calculated by 
+  </p>
+    <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+      Under certain conditions the optimal coupling is unique! (Brenier)  
+    </p>
+</section>
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Couplings from Maps</h3>
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    Optimal couplings vs. optimal transport maps
+
+    the difference is that optimal couplings are more general than optimal transport maps, since not every coupling can be written as a map.
+  </p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Couplings from Maps</h3>
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    Optimal couplings vs. optimal transport maps
+
+    Example: $\mu=\frac{1}{2}\left(\delta_{-1}+\delta_1\right), \nu=\delta_0$ then the optimal coupling is not unique and can not be written as a map, since we have to split the mass of $\delta_0$ to transport it to $\delta_{-1}$ and $\delta_1$. todo check
+  </p>
+</section>
+
+
+<section> 
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Brenier's Theorem</h3>
+    <div style="font-size:0.5em;">
+  \textbf{Theorem (Brenier)} Let $\mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$, where $\mu \ll \lambda$. Then
+\begin{enumerate}
+    \item the optimal coupling $\pi$ is unique
+    \item it can be written as $\pi=(I, T)_{\# \mu}$, where $(I, T): \mathbb{R}^d \rightarrow \mathbb{R}^d \times \mathbb{R}^d, x \mapsto(x, T(x)) T \in L_\mu^2\left(\mathbb{R}^d, \mathbb{R}^d\right)$ is the optimal transport map, i.e. fulfills
+$$
+W_2^2(\mu, \nu)=\int_{\mathbb{R}^d}\|x-T(x)\|^2 \mathrm{~d} \mu(x) \quad \text { subject to } \quad \nu=T_{\# \mu}
+$$
+\item 
+It holds
+$$
+T(x)=\nabla \psi(x) \text { for } \mu-\text { a.e. } x \text {, }
+$$
+for some lower semi-continuous, convex, differentiable function $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^3$ (Brenier potential).
+\item 
+ Conversely, if $\psi$ is lower semi-continuous, convex and differentiable $\mu$-a.e. with $\nabla \psi \in L_\mu^2\left(\mathbb{R}^d, \mathbb{R}^d\right)$, then
+$$
+T=\nabla \psi
+$$
+is the optimal transport map from $\mu$ to $\nu=T_{\#} \mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$.
+</div>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Brenier's Theorem</h3>
+  <p style="color:#EAEAEA; font-size:0.8em;">
+    consequences
+  </p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+For two Gaussians
+<p style="color:#EAEAEA; font-size:0.5em;">
+$$
+\mu=\mathcal{N}\left(m_\mu, \Sigma_\mu\right), \quad \nu=\mathcal{N}\left(m_\nu, \Sigma_\nu\right)
+$$
+where $\mathcal{N}(m, \Sigma)$ has the density
+$$
+p(x):=(2 \pi)^{-\frac{d}{2}}(\operatorname{det} \Sigma)^{-\frac{1}{2}} \mathrm{e}^{-\frac{1}{2}(x-m)^{\top} \Sigma^{-1}(x-m)},
+$$
+the optimal transport map is given by
+$$
+\begin{gathered}
+T(x)=m_\nu+A\left(x-m_\mu\right), \quad A:=\Sigma_\mu^{-\frac{1}{2}}\left(\Sigma_\mu^{\frac{1}{2}} \Sigma_\nu \Sigma_\mu^{\frac{1}{2}}\right)^{\frac{1}{2}} \Sigma_\mu^{-\frac{1}{2}} \\
+W_2^2(\mu, \nu)=\int\|x-T(x)\|^2 \mathrm{~d} x=
+\end{gathered}
+$$
+</p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+For two Gaussians
+<p style="color:#EAEAEA; font-size:0.5em;">
+$\mathcal{N}\left(\mathbf{m}_\beta, \boldsymbol{\Sigma}_\beta\right)$ are two Gaussians in $\mathbb{R}^d$, then one can show that the following map
+$$
+\begin{equation*}
+T: x \mapsto \mathbf{m}_\beta+A\left(x-\mathbf{m}_\alpha\right), \tag{2.40}
+\end{equation*}
+$$
+where
+$$
+A=\boldsymbol{\Sigma}_\alpha^{-\frac{1}{2}}\left(\boldsymbol{\Sigma}_\alpha^{\frac{1}{2}} \boldsymbol{\Sigma}_\beta \boldsymbol{\Sigma}_\alpha^{\frac{1}{2}}\right)^{\frac{1}{2}} \boldsymbol{\Sigma}_\alpha^{-\frac{1}{2}}=A^{\mathrm{T}}
+$$
+is such that $T_{\sharp} \rho_\alpha=\rho_\beta$. Indeed, one simply has to notice that the change of variables formula (2.8) is satisfied since
+$$
+\begin{aligned}
+\rho_\beta(T(x)) & =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle T(x)-\mathbf{m}_\beta, \boldsymbol{\Sigma}_\beta^{-1}\left(T(x)-\mathbf{m}_\beta\right)\right\rangle\right) \\
+& =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle x-\mathbf{m}_\alpha, A^{\mathrm{T}} \boldsymbol{\Sigma}_\beta^{-1} A\left(x-\mathbf{m}_\alpha\right)\right\rangle\right) \\
+& =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle x-\mathbf{m}_\alpha, \boldsymbol{\Sigma}_\alpha^{-1}\left(x-\mathbf{m}_\alpha\right)\right\rangle\right)
+\end{aligned}
+$$
+and since $T$ is a linear map we have that
+$$
+\left|\operatorname{det} T^{\prime}(x)\right|=\operatorname{det} A=\left(\frac{\operatorname{det} \boldsymbol{\Sigma}_\beta}{\operatorname{det} \boldsymbol{\Sigma}_\alpha}\right)^{\frac{1}{2}}
+$$
+and we therefore recover $\rho_\alpha=\left|\operatorname{det} T^{\prime}\right| \rho_\beta$ meaning $T_{\sharp} \alpha=\beta$. Notice now that $T$ is the gradient of the convex function $\psi: x \mapsto \frac{1}{2}\left\langle x-\mathbf{m}_\alpha, A\left(x-\mathbf{m}_\alpha\right)\right\rangle+\left\langle\mathbf{m}_\beta, x\right\rangle$ to conclude, using Brenier's theorem [1991] (see Remark 2.24), that $T$ is optimal.
+</p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+For two Gaussians
+<p style="color:#EAEAEA; font-size:0.5em;">
+Both that map $T$ and the corresponding potential $\psi$ are illustrated in Figures 2.12 and 2.13
+
+With additional calculations involving first and second order moments of $\rho_\alpha$, we obtain that the transport cost of that map is
+$$
+\begin{equation*}
+\mathcal{W}_2^2(\alpha, \beta)=\left\|\mathbf{m}_\alpha-\mathbf{m}_\beta\right\|^2+\mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)^2, \tag{2.41}
+\end{equation*}
+$$
+where $\mathcal{B}$ is the so-called Bures metric [1969] between positive definite matrices (see also Forrester and Kieburg [2016]),
+$$
+\begin{equation*}
+\mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)^2 \stackrel{\text { def. }}{=} \operatorname{tr}\left(\boldsymbol{\Sigma}_\alpha+\boldsymbol{\Sigma}_\beta-2\left(\boldsymbol{\Sigma}_\alpha^{1 / 2} \boldsymbol{\Sigma}_\beta \boldsymbol{\Sigma}_\alpha^{1 / 2}\right)^{1 / 2}\right), \tag{2.42}
+\end{equation*}
+$$
+where $\boldsymbol{\Sigma}^{1 / 2}$ is the matrix square root. One can show that $\mathcal{B}$ is a distance on covariance matrices and that $\mathcal{B}^2$ is convex with respect to both its arguments. In the case where $\boldsymbol{\Sigma}_\alpha=\operatorname{diag}\left(r_i\right)_i$ and $\boldsymbol{\Sigma}_\beta=\operatorname{diag}\left(s_i\right)_i$ are diagonals, the Bures metric is the Hellinger distance
+$$
+\mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)=\|\sqrt{r}-\sqrt{s}\|_2 .
+$$
+
+For 1-D Gaussians, $\mathcal{W}_2$ is thus the Euclidean distance on the 2-D plane plotting the mean and the standard deviation of a Gaussian $(\mathbf{m}, \sqrt{\boldsymbol{\Sigma}})$, as illustrated in Figure 2.14. For a detailed treatment of the Wasserstein geometry of Gaussian distributions, we refer to Takatsu [2011], and for additional considerations on the Bures metric the reader can consult the very recent references [Malagò et al., 2018, Bhatia et al., 2018]. One can also consult [Muzellec and Cuturi, 2018] for a a recent application of this metric to compute probabilistic embeddings for words, [Shafieezadeh Abadeh et al., 2018] to see how it is used to compute a robust extension to Kalman filtering, or [Mallasto and Feragen, 2017] in which it is applied to covariance functions in reproducing kernel Hilbert spaces.
+</p>
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+Visualization of what we calculated
+</p> 
+  <div style="text-align:center;">
+     
+    <img src="../img/peyre_gaussians_example.png" width="1000" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
   </div>
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Outlook</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+</p> 
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Summary</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+</p> 
+</section>
+
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Thank You for listening!</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+</p> 
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">References</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+</p> 
+</section>
+
+
+
+</div>
 </div>
 
 
@@ -753,7 +650,8 @@ annotations: [
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-  				transition: 'none',           // default: no transition
+  				transition: 'none',   
+          slideNumber: true,         // default: no transition
   				backgroundTransition: 'none', // default: no background fade
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.MathJax3  ],
