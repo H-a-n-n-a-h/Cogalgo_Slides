@@ -10,6 +10,22 @@
 		<link rel="stylesheet" href="../dist/reveal.css">
 		<link rel="stylesheet" href="../dist/theme/black.css">
 
+		<style>
+			:root {
+				--color-myblue: #2F80ED;
+				--color-myyellow: #F6C84C;
+				--color-myred: #ef4758;
+				--color-primary: #A8E6CF;
+				--color-text: #EAEAEA;
+				--color-muted: #8A8A8A;
+			}
+			.mu { color: var(--color-myblue); }
+			.nu { color: var(--color-myyellow); }
+			.color-primary { color: var(--color-primary); }
+			.color-text { color: var(--color-text); }
+			.color-muted { color: var(--color-muted); }
+		</style>
+
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
 		<!-- MathJax for LaTeX -->
@@ -18,6 +34,7 @@
           src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
 	<body>
+  
 <div class="reveal">
   <div class="slides">
 
@@ -78,15 +95,15 @@
     Recap: Total Variation Norm
   </h3>
 
-  <div style="text-align:center;">
+  <div style="text-align:left;">
      
-    <img src="../img/TV_vs_Wasserstein.png" width="700" style="display:block; margin: 0 auto;">
+    <img src="../img/tv_distance_example.png" width="600" style="display:block; margin: 0 auto;">
       <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
   </p>
   </div>
       <!-- Question highlighted -->
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      Is the cross measure or triangle measure nearer to dot measure?
+      Is the triangle measure or the square measure nearer to dot measure?
     </p>
       <!-- Question highlighted -->
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
@@ -96,14 +113,15 @@
 
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;text-align: left;">
     Recap: TV Norm and test functions
   </h3>
 
-  <div style="font-size:0.5em;">
+  <div style="font-size:0.5em;text-align: left;">
 
-So wee look at 
-$\mathcal{M}\left(\mathbb{R}^d\right)$ is dual space of $C_0\left(\mathbb{R}^d\right)$, i.e. $C_0\left(\mathbb{R}^d\right)^{\prime}=\mathcal{M}\left(\mathbb{R}^d\right)$ (since $C_c^{\infty}\left(\mathbb{R}^d\right)$ is dense in $C_0\left(\mathbb{R}^d\right)$ we could also test against the first ones)
+
+$\mathcal{M}\left(\mathbb{R}^d\right)$ is dual space of $C_0\left(\mathbb{R}^d\right)$, i.e. $C_0\left(\mathbb{R}^d\right)^{\prime}=\mathcal{M}\left(\mathbb{R}^d\right)$ 
+<!-- (since $C_c^{\infty}\left(\mathbb{R}^d\right)$ is dense in $C_0\left(\mathbb{R}^d\right)$ we could also test against the first ones) -->
 $$
 \|\mu\|_{T V}=\sup _{\|\varphi\|_{\infty} \leq 1}|\langle\varphi, \mu\rangle|, \quad\langle x, \mu\rangle:=\int_{\mathbb{R}^d} \varphi(x) \mathrm{d} \mu(x)
 $$
@@ -111,28 +129,49 @@ and $\left(\mu_n\right)_n$ converges weak-* to a measure $\mu$ if
 $$
 \lim _{n \rightarrow \infty} \int \varphi \mathrm{~d} \mu_n=\int \varphi \mathrm{d} \mu \text { for all } \varphi \in C_0\left(\mathbb{R}^d\right)
 $$
-- $\mathcal{P}\left(\mathbb{R}^d\right)$ set of probability measures on $\mathbb{R}^d$ 
-\begin{enumerate}
+</div>
 
-    \item  probability measures $\left(\mu_n\right)_n$ does in general not weak-* converge a probability measure e.g. $\mu_n=\delta_n$ converges weak-* to $\mu \equiv 0$
-    \item
-    - probability measures $\left(\mu_n\right)_n$ converges narrowly to a (probability) measure $\mu$ if
-$$
-\lim _{n \rightarrow \infty} \int \varphi \mathrm{~d} \mu_n=\int \varphi \mathrm{d} \mu \text { for all } \varphi \in C_b\left(\mathbb{R}^d\right)
-$$
-\item 
+<div style="font-size:0.5em; text-align:left;">
+ 
+  
+      \(\mathcal{P}(\mathbb{R}^d)\): set of probability measures on \(\mathbb{R}^d\)
+    
+<div style="font-size:0.9em; text-align:left;">
+  <ul style="padding-left: 1.5em;">
 
-- TV-distance $\|\mu-\nu\|$ between $\mu, \nu \in \mathcal{P}\left(\mathbb{R}^d\right)$ with disjoint support is always 2 so need another distance!
+    <li>
+      Probability measures \((\mu_n)_n\) do in general not weak-* converge to a probability measure.  
+      Example: \(\mu_n = \delta_n\) converges weak-* to \(\mu \equiv 0\).
+    </li>
+
+    <li>
+      Probability measures \((\mu_n)_n\) converge narrowly to a (probability) measure \(\mu\) if
+      $$
+      \lim_{n \to \infty} \int \varphi \, d\mu_n
+      =
+      \int \varphi \, d\mu
+      \quad
+      \text{for all }
+      \varphi \in C_b(\mathbb{R}^d)
+      $$
+    </li>
+
+    <li>
+      TV-distance \(\|\mu-\nu\|\) between
+      \(\mu,\nu \in \mathcal{P}(\mathbb{R}^d)\)
+      with disjoint support is always \(2\), so we need another distance.
+    </li>
+    </ul>
+</div>
 </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Recap: Total Variation Norm
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; text-align: left;">
+    Recap: Push-Forward Measures
   </h3>
-  <div style="font-size:0.5em;">
+  <div style="font-size:0.5em; text-align: left;">
 
-Push-Forward Measures
 Let $T: \mathbb{R}^d \rightarrow \mathbb{R}^n, \mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ be a Borel-measurable map. 
 
 Then the push-forward measure of $\mu$ by $T$ is the measure $\nu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ defined by
@@ -140,7 +179,9 @@ $$
 \nu=T_{\#} \mu=\mu \circ T^{-1}
 $$
 with the preimage $T^{-1}(B)$ of $B \in \mathcal{B}\left(\mathbb{R}^n\right)$.
+  </div>
 
+  <div style="font-size:0.5em; text-align: left;">
 
 A Map $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is integrable with respect to $T_{\#} \mu$ if $f \circ T$ is integrable with respect to $\mu$ and
 $$
@@ -151,80 +192,90 @@ $$
 \int f(y) \mathrm{d} T_{\# \mu}(y)=\int f(T(x)) p_\mu(x) \mathrm{d} x=\int f(y) \underbrace{p_\mu\left(T^{-1}(y)\right)\left| \operatorname{det}\left(\nabla T^{-1}(y)\right)\right|}_{p_{T_{\#\mu}}} \mathrm{d} y.
 $$
 
-Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \rightarrow \mathbb{R}^d$ random variable, then we call  $\mu_X=X_{\sharp} \mathbb{P}$ \textbf{law of $X$} 
+Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \rightarrow \mathbb{R}^d$ random variable, then we call  $\mu_X=X_{\sharp} \mathbb{P}$ law of $X$ 
   </div>
 
 </section>
 
-
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-bottom:12px;">
     Examples: Probability Measures
   </h3>
 
-  <div style="font-size:0.5em;">
+  <div style="display:grid; grid-template-columns:58% 38%; gap:18px; font-size:0.55em; line-height:1.35; color:#EAEAEA; max-width:1200px; margin:0 auto;text-align: left;">
 
-    Probability measures are maps
-
-    \[
-    \mu : \mathcal{B}(\mathbb{R}^d) \to [0,\infty),
-    \qquad
-    \mu(\mathbb{R}^d)=1 .
-    \]
-
-    We denote the space by \(\mathcal{P}(\mathbb{R}^d)\).
-    It is convex, but not linear.
-
-    For \(\lambda \in [0,1]\),
-    \[
-    (1-\lambda)\mu + \lambda \nu
-    \]
-    is again a probability measure.
-
-    Examples:
-
-    <ul>
-      <li>
-        Dirac measures \(\delta_x\), \(x\in\mathbb{R}^d\):
+    <!-- LEFT SIDE -->
+    <div>
+      <div style="margin:0 0 12px 0;">
+        Let $\mu$ be a probability measure on $\mathbb{R}^d$
         \[
-        \delta_x(\{x\})=1,
+        \mu : \mathcal{B}(\mathbb{R}^d) \to [0,\infty),
         \qquad
-        \delta_x(\mathbb{R}^d\setminus\{x\})=0 .
+        \mu(\mathbb{R}^d)=1 .
         \]
-      </li>
+      </div>
 
-      <li>
-        Convex combinations of Dirac measures.
-      </li>
+      <p style="margin:0 0 10px 0;">
+        The space \(\mathcal{P}(\mathbb{R}^d)\) is convex but not linear.
+      </p>
 
-      <li>
-        Gaussian measures:
+      <div style="margin:0 0 14px 0;">
         \[
-        \mu(A)
-        :=
-        \int_A
-        \frac{1}{(2\pi\sigma^2)^{d/2}}
-        e^{-\frac{|x|^2}{2\sigma^2}}
-        \,dx .
+        (1-\lambda)\mu + \lambda \nu,\quad \lambda \in [0,1]
         \]
-      </li>
-    </ul>
+      </div>
 
-    Probability measures can be visualized through samples/realizations.
+      <p style="margin:0;">
+        is again a probability measure.
+      </p>
+
+      <p style="margin-top:12px;">
+        Probability measures can be visualized through samples or realizations.
+      </p>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div style="color:#959595;">
+
+      <p style="margin:0 0 10px 0; ">Examples:</p>
+
+      <ul style="margin:0; padding-left:18px;">
+
+        <li style="margin-bottom:12px;">
+          Dirac measures \(\delta_x\), \(x \in \mathbb{R}^d\)
+          <div style="margin-top:6px;">
+            \[
+            \delta_x(\{x\})=1,\qquad
+            \delta_x(\mathbb{R}^d\setminus\{x\})=0
+            \]
+          </div>
+        </li>
+
+        <li style="margin-bottom:12px;">
+          Convex combinations of Dirac measures
+        </li>
+
+        <li style="margin-bottom:12px;">
+          Gaussian measures
+          <div style="margin-top:6px;">
+            \[
+            \mu(A)
+            :=
+            \int_A
+            \frac{1}{(2\pi\sigma^2)^{d/2}}
+            e^{-\frac{|x|^2}{2\sigma^2}}
+            \,dx
+            \]
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
 
   </div>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Example: Samples of Dirac measure
-  </h3>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Example: Samples of 2 D Gaussian measure
-  </h3>
 </section>
 
 <section>
@@ -240,9 +291,8 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
   </div>
 </section>
 
-
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Interactive Gaussian Scatter</h3>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Sample of 2D Gaussian distribution</h3>
 
   <!-- Input controls -->
   <div style="text-align:center; margin-bottom: 10px; display:flex; justify-content:center; align-items:center; gap:10px;font-size:0.6em">
@@ -366,81 +416,597 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate distance between dirac measures</h3>
   TV norm between two dirac measures $\delta_x$ and $\delta_y$ is always 2
 </section>
-
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate distance between dirac measures</h3>
-  TV norm between two dirac measures $\delta_x$ and $\delta_y$ is always 2
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+    Example 1
+  </h3>
+
+  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
+    
+  <!-- Left side -->
+  <div style="text-align:left; margin:0; padding:0;">
+    <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+      Given the combination of diracs:
+    </p>
+
+    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      $x_1 = (0,0), x_2 = (1,0), x_3 = (0,1)$
+    </p>
+
+    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      $y_1 = (1,1), y_2 = (2,0)$
+    </p>
+
+    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      $z_1 = (4,0), z_2 = (5,1)$
+    </p>
+
+    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+      <span style="color:var(--color-myblue);">
+        $\mu=\frac{1}{6}\left(3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}\right)$
+      </span>
+    </p>
+
+    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <span style="color:var(--color-myyellow);">
+        $\nu=\frac{1}{6}\left(2\delta_{y_1}+4\delta_{y_2}\right)$
+      </span>
+    </p>
+
+    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <span style="color:var(--color-myred);">
+        $\zeta=\frac{1}{6}\left(2\delta_{z_1}+4\delta_{z_2}\right)$
+      </span>
+    </p>
+
+   
+  </div>
+
+<!-- Right side image -->
+<div style="display:flex; flex-direction:column; align-items:center;">
+  <img 
+    src="../img/example_dirac_who_is_closer.png"
+    width="100%"
+    style="max-width:700px; max-height:600px; height:auto; display:block; margin:0; padding:0;"
+  >
+
+  <p style="color:#CFCFCF; font-size:0.42em; margin:6px 0 0 0; text-align:center; line-height:1.2;">
+    Discrete measures $\mu,\nu$ and $\zeta$ with support points $x_i,y_j$ and $z_k$. The bigger the dot, the bigger the weight at the point.
+  </p>
+</div>
+  <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.8em;">
+      TV-distance between all of them is 2, since their supports are disjoint. 
+    </p>
+</div>
 </section>
-
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none; text-align: left;">Wasserstein Distance</h3>
 
-  <div style="font-size:0.5em;">
+  <div style="font-size:0.5em; text-align: left;">
 
 The Space $(X, d)=\left(\mathcal{P}_2\left(\mathbb{R}^d\right), W_2\right)$
 $$
 \mathcal{P}_2\left(\mathbb{R}^d\right):=\left\{\mu \in \mathcal{P}\left(\mathbb{R}^d\right): \int_{\mathbb{R}^d}\|x\|_2^2 \mathrm{~d} \mu(x)<\infty\right\}
 $$
-\blue 
 
-The term inside the Integral is also called second moment (TODO check definiton).
-
-TV norm is shit because 1 + 1 = 2 so we work with 
-\black
 the Wasserstein distance
-$$
-W_2^2(\mu, \nu):=\min _{\pi \in \Pi(\mu, \nu)} \int_{\mathbb{R}^d \times \mathbb{R}^d}\|x-y\|_2^2 \mathrm{~d} \pi(x, y)
-$$
+
+ <p style="color:#EAEAEA; font-size:1.3em; line-height:1.25; margin:0 0 10px 0;text-align: center;">
+      <span style="color:#ffffff;">
+        $\displaystyle W_2^2(\mu, \nu):=$
+        <span style="color:#129e61;">$\displaystyle \min _{\pi \in \Pi(\mu, \nu )}$</span>
+        $\displaystyle \int_{\mathbb{R}^d \times \mathbb{R}^d}\|x-y\|_2^2 \mathrm{~d} \pi(x, y)
+$
+      </span>
+    </p>
+
 $\mathcal{P}_2\left(\mathbb{R}^d\right)$ becomes a complete metric space, where $\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right)$ is a coupling from
-$$
-\Pi(\mu, \nu):=\left\{\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right):\left(P_1\right)_{\#} \pi=\mu,\left(P_2\right)_{\#} \pi=\nu\right\}
-\quad \textbf{Couplings of $\mu$ and $\nu$}
-$$
-where $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, \quad P^1(x, y)=x$.
+
+
+ <p style="color:#EAEAEA; font-size:1.3em; line-height:1.25; margin:0 0 10px 0;text-align: center;">
+      <span style="color:#129e61;">
+      $$
+      \Pi(\mu, \nu):=\left\{\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right):\left(P_1\right)_{\#} \pi=\mu,\left(P_2\right)_{\#} \pi=\nu\right\}
+      \quad \textbf{Couplings of $\mu$ and $\nu$}
+      $$
+      </span>
+    </p>
+
+
+where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, \quad P^1(x, y)=x$.
 </div>
 
       <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px; font-size:0.6em; ">
       Lets look at examples of couplings and then calculate their Wasserstein distance!
     </p>
 
          <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.6em;">
       1. Independent couplings 2. Optimal couplings 3. Couplings from maps
     </p>
 </section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform:none;">
+    Couplings of Atomic Measures
+  </h3>
+
+   <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%;">
+    <div style="font-size:0.45em; text-align:left; color:#EAEAEA; line-height:1.25;">
+
+      <p style="margin:0 0 10px 0;">
+        Given
+      </p>
+
+      <p style="margin:0 0 10px 0;font-size:0.9em; ">
+        $$
+        \mu=\sum_{i=1}^m \mu_i \delta_{x_i}, \quad
+        \nu=\sum_{j=1}^n \nu_j \delta_{y_j}, \quad
+        \mu_i, \nu_j \geq 0,
+        \sum_{i=1}^m \mu_i=\sum_{j=1}^n \nu_j=1
+        $$
+      </p>
+ <p style="color:#EAEAEA; font-size:1.3em; line-height:1.0; margin:0 0 10px 0;text-align: left;">
+      <span style="color:#129e61;">
+          Couplings $\displaystyle \Pi(\mu, \nu): \pi=\sum_{i, j=1}^{m, n} \pi_{i j} \delta_{x_i, y_j}, \quad \pi_{i j} \geq 0$
+      </span>
+    </p>
+      <p style="margin:0 0 10px 0;">
+      </p>
+
+      <p style="margin:0 0 10px 0;">
+        Constraints
+      </p>
+
+      <p style="margin:0 0 10px 0;">
+        $$
+        \begin{aligned}
+        & \sum_{j=1}^n \pi_{i j}=\mu_i,\quad i=1,\ldots,m \\
+        & \sum_{i=1}^m \pi_{i j}=\nu_j,\quad j=1,\ldots,n
+        \end{aligned}
+        $$
+      </p>
+
+      <p style="margin:0 0 10px 0;">
+        Wasserstein distance: Solution of a linear optimization problem
+        $$
+        \begin{aligned}
+        W_2(\mu, \nu) & =\min _{\pi \in \Pi(\mu, \nu)} \sum_{i, j=1}^{m, n} \pi_{i, j}\left\|x_i-y_j\right\|^2 \\
+        & =\min _\pi\langle c, \pi\rangle \text { s.t. } \pi 1_n=\mu, \pi^{\top} 1_m=\nu, \pi \geq 0
+        \end{aligned}
+        $$
+      </p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div style="background:rgba(0,0,0,0.25); padding:10px; border-radius:6px; width:100%; overflow-x:auto;">
+        <img
+        src="../img/Coupling_matrix.png"
+        width="100%"
+        style="max-width:420px; max-height:330px; height:auto; display:block; margin:0; padding:0;"
+      >
+ <p style="color:#CFCFCF; font-size:0.42em; margin:8px 0 0 0; text-align:center;">
+        Coupling matrix $\pi \in \Pi(\mu,\nu)$
+      </p>
+      </div>
+    </div>
+   </div>
+</section>
+<!--
+<div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; justify-content:center;">
+
+  <div style="transform:scale(0.59); transform-origin:center;">
+    $$
+    \begin{array}{c|cccc}
+    & \color{#FFD166}{\nu_1} & \color{#FFD166}{\cdots} & \color{#FFD166}{\nu_j} & \color{#FFD166}{\nu_n} \\
+    \hline
+    \color{#4DA3FF}{\mu_1} & \pi_{1,1} & \cdots & \pi_{1,j} & \pi_{1,n} \\
+    \color{#4DA3FF}{\vdots} & \vdots & \vdots & \vdots & \vdots \\
+    \color{#4DA3FF}{\mu_i} & \pi_{i,1} & \cdots & \pi_{i,j} & \pi_{i,n} \\
+    \color{#4DA3FF}{\vdots} & \vdots & \vdots & \vdots & \vdots \\
+    \color{#4DA3FF}{\mu_m} & \pi_{m,1} & \cdots & \pi_{m,j} & \pi_{m,n}
+    \end{array}
+    $$
+  </div>
+-->
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Setting</h3>
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    We have two combinations of diracs
-  </p>
-  <div style="text-align:center;">
-     
-    <img src="../img/example1_coupling_setting.png" width="500" style="display:block; margin: 0 auto;">
-      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
-  </p>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Coupling example</h3>
+
+  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
+    
+    <!-- Left side -->
+    <div style="text-align:left; margin:0; padding:0;">
+      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+        We have two combinations of diracs:
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $x_1 = 0, x_2 = 1$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $y_1 = 0, y_2 = 1$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+        <span style="color:var(--color-myblue);">
+          $\mu=\frac{1}{2} \delta_{x_1}+\frac{1}{2} \delta_{x_2}$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        <span style="color:var(--color-myyellow);">
+          $\nu=\frac{1}{3} \delta_{y_1}+\frac{2}{3} \delta_{y_2}$
+        </span>
+      </p>
+
+      <img 
+        src="../img/example1_coupling_setting.png"
+        width="100%"
+        style="max-width:420px; max-height:330px; height:auto; display:block; margin:0; padding:0;"
+      >
+    </div>
+
+    <!-- Right side -->
+    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & y_1 & y_2 \\
+          \hline
+          x_1 & 0 & 1 \\
+          x_2 & 1 & 0 
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Costs $\|x-y\|^2$
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & \frac{2}{3} & \frac{1}{3} \\
+          \hline
+          \frac{1}{2} & \frac{1}{6} & \frac{1}{3} \\
+          \frac{1}{2} & \frac{1}{6} & \frac{1}{3}
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Independent coupling $\pi=\mu \otimes \nu$
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & \frac{2}{3} & \frac{1}{3} \\
+          \hline
+          \frac{1}{2} & \frac{1}{3} & \frac{1}{6} \\
+          \frac{1}{2} & 0 & \frac{1}{2}
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Optimal coupling 
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Independent Coupling</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+    Example 1
+  </h3>
 
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    We have two combinations of diracs
-  </p>
+  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
+    
+    <!-- Left side -->
+    <div style="text-align:left; margin:0; padding:0;">
+      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+        We have two combinations of diracs:
+      </p>
 
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $x_1 = (0,0), x_2 = (1,0), x_3 = (0,1)$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $y_1 = (1,1), y_2 = (2,0)$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+        <span style="color:var(--color-myblue);">
+          $\mu=\frac{1}{6}\left(3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}\right)$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        <span style="color:var(--color-myyellow);">
+          $\nu=\frac{1}{6}\left(4\delta_{y_1}+2\delta_{y_2}\right)$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        Optimal map: $T(x_1)=y_2,\; T(x_2)=y_2,\; T(x_3)=y_1$
+      </p>
+
+      <img 
+        src="../img/example1_coupling_setting.png"
+        width="100%"
+        style="max-width:420px; max-height:330px; height:auto; display:block; margin:0; padding:0;"
+      >
+    </div>
+
+    <!-- Right side -->
+    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & y_1 & y_2 \\
+          \hline
+          x_1 & 2 & 4 \\
+          x_2 & 1 & 1 \\
+          x_3 & 1 & 5
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Costs $\|x-y\|^2$
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & 4 & 2 \\
+          \hline
+          3 & 2 & 1 \\
+          1 & 0 & 1 \\
+          2 & 2 & 0
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Optimal plan $\pi$, $\mathrm{OT}(\mu,\nu)=11$
+        </div>
+      </div>
+
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & 4 & 2 \\
+          \hline
+          3 & 3 & 0 \\
+          1 & 1 & 0 \\
+          2 & 0 & 2
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          $\pi=(\mathrm{Id},T)_{\#}\mu$, $\langle c,\pi\rangle=17$
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Optimal Coupling</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+    Example 2
+  </h3>
 
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    We have two combinations of diracs.
-    Find Minimizer of Wasserstein distance!
-  </p>
+  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
 
+    <!-- Left side -->
+    <div style="text-align:left; margin:0; padding:0;">
+
+      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+        We have two combinations of diracs:
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $x_1=(0,0),\; x_2=(1,0),\; x_3=(0,1)$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $y_1=(1,1),\; y_2=(2,0)$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+        <span style="color:var(--color-myblue);">
+          $\mu=3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        <span style="color:var(--color-myyellow);">
+          $\nu=2\delta_{y_1}+4\delta_{y_2}$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        Optimal map:
+        $T(x_1)=y_2,\; T(x_2)=y_2,\; T(x_3)=y_1$
+      </p>
+
+      <img
+        src="../img/example2_coupling_setting.png"
+        width="100%"
+        style="max-width:420px; max-height:330px; height:auto; display:block; margin:0; padding:0;"
+      >
+    </div>
+
+    <!-- Right side -->
+    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+
+      <!-- Cost matrix -->
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & y_1 & y_2 \\
+          \hline
+          x_1 & 4 & 2 \\
+          x_2 & 1 & 1 \\
+          x_3 & 5 & 1
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Costs $\|x-y\|^2$
+        </div>
+      </div>
+
+      <!-- Optimal plan -->
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|cc}
+           & 2 & 4 \\
+          \hline
+          3 & 0 & 3 \\
+          1 & 0 & 1 \\
+          2 & 2 & 0
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Optimal plan $\pi=(\mathrm{Id},T)_{\#}\mu$
+        </div>
+      </div>
+
+      <!-- OT value -->
+<!-- Transport map coupling -->
+<div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+
+  <div style="text-align:left; display:inline-block;">
+    $$\begin{array}{c|cc}
+     & 2 & 4 \\
+    \hline
+    3 & 0 & 3 \\
+    1 & 0 & 1 \\
+    2 & 2 & 0
+    \end{array}$$
+  </div>
+
+  <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+    $\pi=(\mathrm{Id},T)_{\#}\mu$, $\langle c,\pi\rangle=17$
+  </div>
+
+</div>
+
+    </div>
+  </div>
 </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+    Example 3
+  </h3>
+
+  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
+
+    <!-- Left side -->
+    <div style="text-align:left; margin:0; padding:0;">
+
+      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+        We have two combinations of diracs:
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $x_1=(1,1),\; x_2=(2,0)$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+        $y_1=(0,0),\; y_2=(1,0),\; y_3=(0,1)$
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+        <span style="color:var(--color-myblue);">
+          $\mu=2\delta_{x_1}+4\delta_{x_2}$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        <span style="color:var(--color-myyellow);">
+          $\nu=3\delta_{y_1}+1\delta_{y_2}+2\delta_{y_3}$
+        </span>
+      </p>
+
+      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+        Optimal map: does not exist.
+      </p>
+
+      <img
+        src="../img/example3_coupling_setting.png"
+        width="100%"
+        style="max-width:420px; max-height:330px; height:auto; display:block; margin:0; padding:0;"
+      >
+    </div>
+
+    <!-- Right side -->
+    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+
+      <!-- Cost matrix -->
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|ccc}
+           & y_1 & y_2 & y_3 \\
+          \hline
+          x_1 & 4 & 1 & 5 \\
+          x_2 & 2 & 1 & 1
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Costs $\|x-y\|^2$
+        </div>
+      </div>
+
+      <!-- Optimal plan -->
+      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
+
+        <div style="text-align:left; display:inline-block;">
+          $$\begin{array}{c|ccc}
+           & 3 & 1 & 2 \\
+          \hline
+          2 & 0 & 0 & 2 \\
+          4 & 3 & 1 & 0
+          \end{array}$$
+        </div>
+
+        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
+          Optimal plan $\pi$
+        </div>
+      </div>
+
+      <!-- OT value -->
+      <div style="background:rgba(0,0,0,0.3); padding:16px 12px; border-radius:4px; display:flex; justify-content:center; align-items:center;">
+
+        <div style="text-align:center; font-size:1.05em;">
+          $\mathrm{OT}(\mu,\nu)=17$
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Diracs</h3>
@@ -452,24 +1018,23 @@ where $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, \quad P^1
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Diracs</h3>
-  <p style="color:#EAEAEA; font-size:0.8em;">
-In this simple case a minimizer can be explicitly calculated by 
+  <p style="color:#EAEAEA; font-size:0.8em; text-align: left;">
+In this simple case a minimizer can be explicitly calculated. 
+      <p style="margin:0 0 10px 0;font-size: 0.6em;">
+        Wasserstein distance: Solution of a linear optimization problem
+        $$
+        \begin{aligned}
+        W_2(\mu, \nu) & =\min _{\pi \in \Pi(\mu, \nu)} \sum_{i, j=1}^{m, n} \pi_{i, j}\left\|x_i-y_j\right\|^2 \\
+        & =\min _\pi\langle c, \pi\rangle \text { s.t. } \pi 1_n=\mu, \pi^{\top} 1_m=\nu, \pi \geq 0
+        \end{aligned}
+        $$
+      </p>
+
   </p>
     <!-- Question highlighted -->
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
       Under certain conditions the optimal coupling is unique! (Brenier)  
     </p>
-</section>
-
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Couplings from Maps</h3>
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    Optimal couplings vs. optimal transport maps
-
-    the difference is that optimal couplings are more general than optimal transport maps, since not every coupling can be written as a map.
-  </p>
 </section>
 
 <section>
@@ -480,45 +1045,63 @@ In this simple case a minimizer can be explicitly calculated by
     Example: $\mu=\frac{1}{2}\left(\delta_{-1}+\delta_1\right), \nu=\delta_0$ then the optimal coupling is not unique and can not be written as a map, since we have to split the mass of $\delta_0$ to transport it to $\delta_{-1}$ and $\delta_1$. todo check
   </p>
 </section>
-
-
 <section> 
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Brenier's Theorem</h3>
-    <div style="font-size:0.5em;">
-  \textbf{Theorem (Brenier)} Let $\mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$, where $\mu \ll \lambda$. Then
-\begin{enumerate}
-    \item the optimal coupling $\pi$ is unique
-    \item it can be written as $\pi=(I, T)_{\# \mu}$, where $(I, T): \mathbb{R}^d \rightarrow \mathbb{R}^d \times \mathbb{R}^d, x \mapsto(x, T(x)) T \in L_\mu^2\left(\mathbb{R}^d, \mathbb{R}^d\right)$ is the optimal transport map, i.e. fulfills
-$$
-W_2^2(\mu, \nu)=\int_{\mathbb{R}^d}\|x-T(x)\|^2 \mathrm{~d} \mu(x) \quad \text { subject to } \quad \nu=T_{\# \mu}
-$$
-\item 
-It holds
-$$
-T(x)=\nabla \psi(x) \text { for } \mu-\text { a.e. } x \text {, }
-$$
-for some lower semi-continuous, convex, differentiable function $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^3$ (Brenier potential).
-\item 
- Conversely, if $\psi$ is lower semi-continuous, convex and differentiable $\mu$-a.e. with $\nabla \psi \in L_\mu^2\left(\mathbb{R}^d, \mathbb{R}^d\right)$, then
-$$
-T=\nabla \psi
-$$
-is the optimal transport map from $\mu$ to $\nu=T_{\#} \mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$.
-</div>
-</section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">
+    Brenier's Theorem
+  </h3>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Brenier's Theorem</h3>
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    consequences
-  </p>
-</section>
+  <div style="font-size:0.5em; text-align: left; color:#EAEAEA; line-height:0.4; margin:0 0 10px 0;">
+    Let $\mu \in \mathcal{P}_2(\mathbb{R}^d)$, where $\mu \ll \lambda$. 
+    <br> 
+    <br><br>
 
+    <ol style="padding-left: 2em;">
+      <li style="margin-bottom: 1em;">
+        The optimal coupling $\pi$ is unique.
+      </li>
+
+      <li style="margin-bottom: 1em;">
+        It can be written as
+          <span style="color:#129e61;">
+             $\pi = (I, T)_{\# \mu}$</span>, where <span style="color:#129e61;">$(I, T): \mathbb{R}^d \rightarrow \mathbb{R}^d \times \mathbb{R}^d$, 
+        $x \mapsto (x, T(x))$
+      </span>
+     , with $T \in L_\mu^2(\mathbb{R}^d, \mathbb{R}^d)$ being the optimal transport map, i.e.
+        <br><br>
+        $$
+        W_2^2(\mu, \nu) = \int_{\mathbb{R}^d} \|x - T(x)\|^2 \, d\mu(x)
+        \quad \text{subject to} \quad \nu = T_{\# \mu}
+        $$
+      </li>
+
+      <li style="margin-bottom: 1em;">
+        It holds
+        <br><br>
+        $$
+        T(x) = \nabla \psi(x) \quad \text{for } \mu\text{-a.e. } x,
+        $$
+        for some lower semi-continuous, convex, differentiable function 
+        $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^d$ (Brenier potential).
+      </li>
+
+      <li>
+        Conversely, if $\psi$ is lower semi-continuous, convex and differentiable $\mu$-a.e., with 
+        $\nabla \psi \in L_\mu^2(\mathbb{R}^d, \mathbb{R}^d)$, then
+        <br><br>
+        $$
+        T = \nabla \psi
+        $$
+        is the optimal transport map from $\mu$ to $\nu = T_{\#}\mu \in \mathcal{P}_2(\mathbb{R}^d)$.
+      </li>
+    </ol>
+  </div>
+</section>
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+
+<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
 For two Gaussians
-<p style="color:#EAEAEA; font-size:0.5em;">
 $$
 \mu=\mathcal{N}\left(m_\mu, \Sigma_\mu\right), \quad \nu=\mathcal{N}\left(m_\nu, \Sigma_\nu\right)
 $$
@@ -538,8 +1121,8 @@ $$
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
-For two Gaussians
-<p style="color:#EAEAEA; font-size:0.5em;">
+
+<p style="color:#EAEAEA; font-size:0.5em;text-align: left;">
 $\mathcal{N}\left(\mathbf{m}_\beta, \boldsymbol{\Sigma}_\beta\right)$ are two Gaussians in $\mathbb{R}^d$, then one can show that the following map
 $$
 \begin{equation*}
@@ -557,7 +1140,14 @@ $$
 & =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle x-\mathbf{m}_\alpha, A^{\mathrm{T}} \boldsymbol{\Sigma}_\beta^{-1} A\left(x-\mathbf{m}_\alpha\right)\right\rangle\right) \\
 & =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle x-\mathbf{m}_\alpha, \boldsymbol{\Sigma}_\alpha^{-1}\left(x-\mathbf{m}_\alpha\right)\right\rangle\right)
 \end{aligned}
-$$
+
+</p>
+</section>
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+
+<p style="color:#EAEAEA; font-size:0.5em;text-align: left;">
+
 and since $T$ is a linear map we have that
 $$
 \left|\operatorname{det} T^{\prime}(x)\right|=\operatorname{det} A=\left(\frac{\operatorname{det} \boldsymbol{\Sigma}_\beta}{\operatorname{det} \boldsymbol{\Sigma}_\alpha}\right)^{\frac{1}{2}}
@@ -566,11 +1156,10 @@ and we therefore recover $\rho_\alpha=\left|\operatorname{det} T^{\prime}\right|
 </p>
 </section>
 
-
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none;">Distance between Gaussians (todo cite peyre)</h3>
 For two Gaussians
-<p style="color:#EAEAEA; font-size:0.5em;">
+<p style="color:#EAEAEA; font-size:0.5em;text-align: left;">
 Both that map $T$ and the corresponding potential $\psi$ are illustrated in Figures 2.12 and 2.13
 
 With additional calculations involving first and second order moments of $\rho_\alpha$, we obtain that the transport cost of that map is
@@ -589,13 +1178,27 @@ where $\boldsymbol{\Sigma}^{1 / 2}$ is the matrix square root. One can show that
 $$
 \mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)=\|\sqrt{r}-\sqrt{s}\|_2 .
 $$
-
-For 1-D Gaussians, $\mathcal{W}_2$ is thus the Euclidean distance on the 2-D plane plotting the mean and the standard deviation of a Gaussian $(\mathbf{m}, \sqrt{\boldsymbol{\Sigma}})$, as illustrated in Figure 2.14. For a detailed treatment of the Wasserstein geometry of Gaussian distributions, we refer to Takatsu [2011], and for additional considerations on the Bures metric the reader can consult the very recent references [Malagò et al., 2018, Bhatia et al., 2018]. One can also consult [Muzellec and Cuturi, 2018] for a a recent application of this metric to compute probabilistic embeddings for words, [Shafieezadeh Abadeh et al., 2018] to see how it is used to compute a robust extension to Kalman filtering, or [Mallasto and Feragen, 2017] in which it is applied to covariance functions in reproducing kernel Hilbert spaces.
 </p>
 </section>
 
+
 <section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none;">"Direct interpolation" how do you call that?</h3>
+
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/example_gaussian.gif" width="600"style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Convex combination of two Gaussianbased functions. 
+    $f = t \cdot g1 + (1-t) \cdot g2$ with $t$ varying from 0 to 1.
+	  </p>
+  </div>
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Optimal Transport map</h3>
 <p style="color:#EAEAEA; font-size:0.5em;">
 Visualization of what we calculated
 </p> 
@@ -604,6 +1207,10 @@ Visualization of what we calculated
     <img src="../img/peyre_gaussians_example.png" width="1000" style="display:block; margin: 0 auto;">
       <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
   </p>
+  	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Convex combination of two Gaussianbased functions. 
+    $f = (tT + (1-t) Id )_{\#\alpha}$ with $t$ varying from 0 to 1.
+	  </p>
   </div>
 </section>
 
