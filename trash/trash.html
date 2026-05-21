@@ -644,7 +644,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     <!-- Left side -->
     <div style="text-align:left; margin:0; padding:0;">
       <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
-        Give the Atomic measures on $\mathbb{R}$:
+        We have two combinations of diracs:
       </p>
 
       <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
@@ -668,9 +668,9 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
       </p>
 
       <img 
-        src="../img/Atomic_Measures_example_1_1D.png"
+        src="../img/example1_coupling_setting.png"
         width="100%"
-        style="max-width:800px; max-height:400px; height:auto; display:block; margin:0; padding:0;"
+        style="max-width:420px; max-height:330px; height:auto; display:block; margin:0; padding:0;"
       >
     </div>
 
@@ -1029,27 +1029,12 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
   </div>
 </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Paths from couplings
-  </h3>
 
-  <div style="text-align:left;">
-     
-    <img src="../img/Coupling_possible_paths_from_couplings.png" width="600" style="display:block; margin: 0 auto;">
-      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
-  </p>
-  </div>
-      <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      Wow! We can construct paths between $\mu$ and $\nu$ from couplings! 
-    </p>
 
-</section>
 
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Atomic Measures</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Diracs</h3>
   <p style="color:#EAEAEA; font-size:0.8em;">
     We have two combinations of diracs.
     Find Minimizer of Wasserstein distance!
@@ -1138,7 +1123,7 @@ In this simple case a minimizer can be explicitly calculated.
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians </h3>
 
 <p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
 For two Gaussians
@@ -1159,13 +1144,6 @@ $$
 </p>
 </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculation of Optimal Transport Map on $\mathbb{R}$</h3>
-
-<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
-TODO
-</p>
-</section>
 
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
@@ -1733,7 +1711,324 @@ $$
 </section>
 
 
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
 
+<p style="color:#EAEAEA; font-size:0.5em;text-align: left;">
+$\mathcal{N}\left(\mathbf{m}_\beta, \boldsymbol{\Sigma}_\beta\right)$ are two Gaussians in $\mathbb{R}^d$, then one can show that the following map
+$$
+\begin{equation*}
+T: x \mapsto \mathbf{m}_\beta+A\left(x-\mathbf{m}_\alpha\right), \tag{2.40}
+\end{equation*}
+$$
+where
+$$
+A=\boldsymbol{\Sigma}_\alpha^{-\frac{1}{2}}\left(\boldsymbol{\Sigma}_\alpha^{\frac{1}{2}} \boldsymbol{\Sigma}_\beta \boldsymbol{\Sigma}_\alpha^{\frac{1}{2}}\right)^{\frac{1}{2}} \boldsymbol{\Sigma}_\alpha^{-\frac{1}{2}}=A^{\mathrm{T}}
+$$
+is such that $T_{\sharp} \rho_\alpha=\rho_\beta$. Indeed, one simply has to notice that the change of variables formula (2.8) is satisfied since
+$$
+\begin{aligned}
+\rho_\beta(T(x)) & =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle T(x)-\mathbf{m}_\beta, \boldsymbol{\Sigma}_\beta^{-1}\left(T(x)-\mathbf{m}_\beta\right)\right\rangle\right) \\
+& =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle x-\mathbf{m}_\alpha, A^{\mathrm{T}} \boldsymbol{\Sigma}_\beta^{-1} A\left(x-\mathbf{m}_\alpha\right)\right\rangle\right) \\
+& =\operatorname{det}\left(2 \pi \boldsymbol{\Sigma}_\beta\right)^{-\frac{1}{2}} \exp \left(-\left\langle x-\mathbf{m}_\alpha, \boldsymbol{\Sigma}_\alpha^{-1}\left(x-\mathbf{m}_\alpha\right)\right\rangle\right)
+\end{aligned}
+
+</p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians </h3>
+
+<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1) \mathrm{d} x$ and $\nu=\mathcal{N}(m, \sigma) \mathrm{d} x$ :
+
+
+- If $X_\mu, X_\nu$ independent, i.e. with joint distribution $\pi=\mu \otimes \nu$, we get by convolution
+$$
+p_t=\int_{\mathbb{R}^d} p_\mu\left(\frac{1}{1-t} y\right) p_\nu\left(\frac{1}{t}(\cdot-y)\right) \mathrm{d} y=\mathcal{N}\left(t m,(1-t)^2+t^2 \sigma^2\right)
+$$
+- If $\left(X_\mu, X_\nu\right) \sim \pi=(I, T)_{\sharp \mu}$ and
+$T_t: \mathbb{R}^d \rightarrow \mathbb{R}^d, T_t(x):=(1-t) x+t T(x)$
+$$
+e_t: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, e_t(x, y):=(1-t) x+t y
+$$
+
+Then
+$$
+\mu_t=\left(T_t\right)_{\sharp} \mu=\left(e_t\right)_{\sharp} \pi
+$$
+and if $\mu$ has density $p$ we know that $\mu_t$ has density $p_t=C p\left(T_t^{-1} \cdot\right)$. Thus, with the optimal transport map $T(x)=m+\sigma x$, we obtain
+$$
+p_t=\mathcal{N}(t m, 1-t+t \sigma)
+$$
+</p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Distance between Gaussians (todo cite peyre)</h3>
+
+<p style="color:#EAEAEA; font-size:0.5em;text-align: left;">
+
+and since $T$ is a linear map we have that
+$$
+\left|\operatorname{det} T^{\prime}(x)\right|=\operatorname{det} A=\left(\frac{\operatorname{det} \boldsymbol{\Sigma}_\beta}{\operatorname{det} \boldsymbol{\Sigma}_\alpha}\right)^{\frac{1}{2}}
+$$
+and we therefore recover $\rho_\alpha=\left|\operatorname{det} T^{\prime}\right| \rho_\beta$ meaning $T_{\sharp} \alpha=\beta$. Notice now that $T$ is the gradient of the convex function $\psi: x \mapsto \frac{1}{2}\left\langle x-\mathbf{m}_\alpha, A\left(x-\mathbf{m}_\alpha\right)\right\rangle+\left\langle\mathbf{m}_\beta, x\right\rangle$ to conclude, using Brenier's theorem [1991] (see Remark 2.24), that $T$ is optimal.
+</p>
+</section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none;">Distance between Gaussians (todo cite peyre)</h3>
+For two Gaussians
+<p style="color:#EAEAEA; font-size:0.5em;text-align: left;">
+Both that map $T$ and the corresponding potential $\psi$ are illustrated in Figures 2.12 and 2.13
+
+With additional calculations involving first and second order moments of $\rho_\alpha$, we obtain that the transport cost of that map is
+$$
+\begin{equation*}
+\mathcal{W}_2^2(\alpha, \beta)=\left\|\mathbf{m}_\alpha-\mathbf{m}_\beta\right\|^2+\mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)^2, \tag{2.41}
+\end{equation*}
+$$
+where $\mathcal{B}$ is the so-called Bures metric [1969] between positive definite matrices (see also Forrester and Kieburg [2016]),
+$$
+\begin{equation*}
+\mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)^2 \stackrel{\text { def. }}{=} \operatorname{tr}\left(\boldsymbol{\Sigma}_\alpha+\boldsymbol{\Sigma}_\beta-2\left(\boldsymbol{\Sigma}_\alpha^{1 / 2} \boldsymbol{\Sigma}_\beta \boldsymbol{\Sigma}_\alpha^{1 / 2}\right)^{1 / 2}\right), \tag{2.42}
+\end{equation*}
+$$
+where $\boldsymbol{\Sigma}^{1 / 2}$ is the matrix square root. One can show that $\mathcal{B}$ is a distance on covariance matrices and that $\mathcal{B}^2$ is convex with respect to both its arguments. In the case where $\boldsymbol{\Sigma}_\alpha=\operatorname{diag}\left(r_i\right)_i$ and $\boldsymbol{\Sigma}_\beta=\operatorname{diag}\left(s_i\right)_i$ are diagonals, the Bures metric is the Hellinger distance
+$$
+\mathcal{B}\left(\boldsymbol{\Sigma}_\alpha, \boldsymbol{\Sigma}_\beta\right)=\|\sqrt{r}-\sqrt{s}\|_2 .
+$$
+</p>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none;">"Direct interpolation" how do you call that?</h3>
+
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/example_gaussian.gif" width="600"style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Convex combination of two Gaussianbased functions. 
+    $f = t \cdot g1 + (1-t) \cdot g2$ with $t$ varying from 0 to 1.
+	  </p>
+  </div>
+</section>
+
+<section>
+
+  <h3 style="color:#A8E6CF; text-align:left;">
+    Interactive
+  </h3>
+
+  <!-- Inputs -->
+  <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; font-size:0.8em;">
+
+    <div style="display:flex; align-items:center; gap:40px; font-size:0.8em;">
+
+      <!-- Left -->
+      <div style="display:flex; align-items:center; gap:5px; color:#FFD166;">
+        <span>Left Density</span>
+
+        <label>μ₁</label>
+        <input id="gmix_opt2_mu1" type="number" value="0" step="0.1" class="num-input yellow-input">
+
+        <label>σ₁</label>
+        <input id="gmix_opt2_sigma1" type="number" value="1" min="0.1" step="0.1" class="num-input yellow-input">
+      </div>
+
+      <!-- Right -->
+      <div style="display:flex; align-items:center; gap:5px; color:#7AA2FF;">
+        <span>Right Density</span>
+
+        <label>μ₂</label>
+        <input id="gmix_opt2_mu2" type="number" value="10" step="0.1" class="num-input blue-input">
+
+        <label>σ₂</label>
+        <input id="gmix_opt2_sigma2" type="number" value="3" min="0.1" step="0.1" class="num-input blue-input">
+      </div>
+
+    </div>
+
+    <p style="color:#EAEAEA; font-size:1em; text-align:left; width:100%;">
+      $(1-t)\mu + t\nu$
+    </p>
+  </div>
+
+  <!-- Plot -->
+  <div id="gmix_opt2_plot"
+       style="width:100%; height:400px; margin:0;">
+  </div>
+
+  <!-- Slider -->
+  <div style="width:950px; margin:0 auto; display:flex; align-items:center; gap:5px;">
+    <span style="color:#FFD166;">t = 0</span>
+
+    <input id="gmix_opt2_t"
+           type="range"
+           min="0"
+           max="1"
+           step="0.001"
+           value="0"
+           style="flex:1; height:8px; cursor:pointer;">
+
+    <span style="color:#7AA2FF;">t = 1</span>
+  </div>
+
+  <div style="text-align:center; color:#EAEAEA; margin-top:8px; font-size:0.6em;">
+    t = <span id="gmix_opt2_tval" style="color:#A8E6CF;">0.000</span>
+  </div>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    .num-input {
+      width: 3em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+    }
+    .yellow-input:focus { border-color: #FFD166; }
+    .blue-input:focus { border-color: #7AA2FF; }
+  </style>
+
+  <script>
+  (function () {
+
+    const N = 1200;
+    const X = new Float64Array(N);
+
+    for (let i = 0; i < N; i++) {
+      X[i] = -10 + 35 * i / (N - 1);
+    }
+
+    const SQRT_2PI = Math.sqrt(2 * Math.PI);
+
+    function gaussian(x, mu, sigma) {
+      const z = (x - mu) / sigma;
+      return Math.exp(-0.5 * z * z) / (sigma * SQRT_2PI);
+    }
+
+    function compute(mu1, s1, mu2, s2, t) {
+
+      const Y1 = new Array(N);
+      const Y2 = new Array(N);
+      const Ymix = new Array(N);
+
+      const mu = (1 - t) * mu1 + t * mu2;
+      const sigma = (1 - t) * s1 + t * s2;
+
+      for (let i = 0; i < N; i++) {
+        const x = X[i];
+
+        Y1[i] = gaussian(x, mu1, s1);
+        Y2[i] = gaussian(x, mu2, s2);
+
+        Ymix[i] =
+          Math.exp(-0.5 * ((x - mu) / sigma) ** 2) /
+          (sigma * SQRT_2PI);
+      }
+
+      return { Y1, Y2, Ymix };
+    }
+
+    function draw() {
+
+      const mu1 = +document.getElementById("gmix_opt2_mu1").value;
+      const s1  = +document.getElementById("gmix_opt2_sigma1").value;
+      const mu2 = +document.getElementById("gmix_opt2_mu2").value;
+      const s2  = +document.getElementById("gmix_opt2_sigma2").value;
+      const t   = +document.getElementById("gmix_opt2_t").value;
+
+      document.getElementById("gmix_opt2_tval").innerText = t.toFixed(3);
+
+      const { Y1, Y2, Ymix } = compute(mu1, s1, mu2, s2, t);
+
+      const trace1 = {
+        x: Array.from(X),
+        y: Y1,
+        mode: "lines",
+        line: { width: 2, color: "rgba(255,180,0,0.45)" },
+        name: "Left"
+      };
+
+      const trace2 = {
+        x: Array.from(X),
+        y: Y2,
+        mode: "lines",
+        line: { width: 2, color: "rgba(90,120,255,0.45)" },
+        name: "Right"
+      };
+
+      const r = Math.round((1 - t) * 255 + t * 77);
+      const g = Math.round((1 - t) * 128 + t * 102);
+      const b = Math.round((1 - t) * 0 + t * 255);
+
+      const traceMix = {
+        x: Array.from(X),
+        y: Ymix,
+        mode: "lines",
+        line: { width: 4, color: `rgb(${r},${g},${b})` },
+        fill: "tozeroy",
+        fillcolor: `rgba(${r},${g},${b},0.18)`,
+        name: "Interpolation"
+      };
+
+      Plotly.purge("gmix_opt2_plot");
+
+      Plotly.react(
+        "gmix_opt2_plot",
+        [trace1, trace2, traceMix],
+        {
+          paper_bgcolor: "#000",
+          plot_bgcolor: "#000",
+          height: 400,
+          margin: { l: 60, r: 20, t: 40, b: 50 },
+          font: { color: "#EAEAEA" },
+          xaxis: { range: [-10, 25], gridcolor: "#222" },
+          yaxis: { range: [0, 0.5], gridcolor: "#222" }
+        },
+        { displayModeBar: false }
+      );
+    }
+
+    document.getElementById("gmix_opt2_t").addEventListener("input", draw);
+    document.getElementById("gmix_opt2_mu1").addEventListener("input", draw);
+    document.getElementById("gmix_opt2_sigma1").addEventListener("input", draw);
+    document.getElementById("gmix_opt2_mu2").addEventListener("input", draw);
+    document.getElementById("gmix_opt2_sigma2").addEventListener("input", draw);
+
+    draw();
+
+  })();
+  </script>
+
+</section>
+
+<section>
+<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Optimal Transport map</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+Visualization of what we calculated
+</p> 
+  <div style="text-align:center;">
+     
+    <img src="../img/peyre_gaussians_example.png" width="1000" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Convex combination of two Gaussianbased functions. 
+    $f = (tT + (1-t) Id )_{\#\alpha}$ with $t$ varying from 0 to 1.
+	  </p>
+  </div>
+</section>
 
 <section>
 <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Outlook</h3>
