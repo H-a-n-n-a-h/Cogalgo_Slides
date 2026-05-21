@@ -41,32 +41,6 @@
     </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
-  
-    
-	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Tutorials on 1st December and 15th December will be over zoom. 
-    <br>
-    I'll create a poll for exact dates!
-	  </p>    
-    	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      My slides are now available at: <br>
-
-      https://h-a-n-n-a-h.github.io/Cogalgo_Slides/
-    </p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Homework</h3>
-  
-    
-	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		The deadline of the homework is now Wednesday 8 am!
-	  </p>    
-</section>
-
-<section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Course Structure</h3>
   <svg id="tree1" width="700" height="600"></svg>
 
@@ -192,6 +166,25 @@
   </div>
 </section>
 
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Binary Classification: Example 1</h3>
+  
+  <div style="text-align:center;">
+    <!-- Make the GIF larger -->
+    <img src="../img/dog-or-food5.jpg.webp" width="500" alt="Perceptron Learning Animation" style="display:block; margin: 0 auto;">
+    
+    <!-- Text below the GIF -->
+    <p style="color:#EAEAEA; font-size:0.9em; margin-top:10px;">
+      
+    </p>
+	  <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+		Dog or Mop?
+	  </p>
+  </div>
+
+</section>
+
+
     <!-- Slide 2: LaTeX math -->
     <section>
       <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Recap: Binary classification model</h3>
@@ -211,10 +204,24 @@
 
 
 <section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/simple_linear_regression.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we find a function that approximates the underlying function?
+    </p>
+  </div>
+</section>
+
+<section>
   <h3 style="color:#A8E6CF; text-align:left; text-transform: none; font-size:1.2em;">Linear Regression with mapping on output</h3>
   <p style="color:#EAEAEA;">
-    $$ \hat{f}: \mathbb{R}^d \to \mathbb{R}, \quad x \mapsto  \mathbf{w}^\top \varphi(x)  $$
-    where $\varphi$ is a function, weight vector $\mathbf{w} \in \mathbb{R}^m$, data point $x \in \mathbb{R}^d$, and bias $\beta \in \mathbb{R}$. 
+    $$ \hat{f}: \mathbb{R}^d \to \mathbb{R}, \quad x \mapsto  \mathbf{w}^\top \varphi(x) = \hat{y}  $$
+    where $\varphi$ is a function, weight vector $\mathbf{w} \in \mathbb{R}^m$, data point $x \in \mathbb{R}^d$. 
   </p>
 </section>
 
@@ -280,6 +287,22 @@
   </p>
 </section>
 
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Visualization of Example 1</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/polyfit_example_11.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we need to change $\varphi$ to get a linear regression with an offset?
+    </p>
+  </div>
+</section>
+
+
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example 2</h3>
   <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
@@ -299,9 +322,24 @@
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
   </p>
 </section>
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Visualization of Example 2</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/polyfit_example_2.png" width="700" style="display:block; margin: 0 auto;">
+    
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we change $\varphi$ such that we get function polynomial in $x$?
+    </p>
+  </div>
+</section>
+
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Example 3</h3>
-  <p style="color:#EAEAEA; text-align:left; font-size:0.8em;">
+  <p style="color:#EAEAEA; text-align:left; font-size:0.6em;">
     \[x \in \mathbb{R}, p \in \mathbb{N},\varphi(x) = \begin{bmatrix} 1 & x & x^2 & \dots & x^p \end{bmatrix}^\top\]
     then polynomial of degree $p$:
     \begin{align*}
@@ -321,13 +359,49 @@
 </section>
 
 <section>
-How do we find $w$ and $\varphi$?
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Visualization of Example 3</h3>
+  
+  <div style="text-align:center;">
+     
+    <img src="../img/polyfit_example_3.png" width="700" style="display:block; margin: 0 auto;">
+    
+  </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Regression Goal (Least Squares)</h3>
+How do we find $w$ and $\varphi$?
+
+	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Lets assume we have $\varphi$.
+    </p>
+        <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      How do we measure how good $w$ is? We need a loss function.
+    </p>
+         <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+       We need a loss function of $\mathbf{w}$.
+    </p>
+
+      <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+        <span style="color:#ffffff;">
+              
+          $$ \hat{f}: \mathbb{R}^d \to \mathbb{R}, \quad x \mapsto  \mathbf{w}^\top \varphi(x) = \hat{y} = \text{ predicted label } \in \mathbb{R}$$</span>
+    (where $\varphi$ is a function, weight vector $\mathbf{w} \in \mathbb{R}^m$, data point $x \in \mathbb{R}^d$, and bias $\beta \in \mathbb{R}$). 
+    </p>
+</section>
+
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Regression Goal (Least Squares)</h3>
+
+    <p style="color:#ffffff; font-size:0.9em; margin-top:5px; text-align: left;">
+        Let $\mathbf{y} \in \mathbb{R}^N$ contain labels of the $n$ data points.
+  </p>
+      
 
   <table style="width: 100%; border-collapse: collapse; border: none;">
+    
     <tr class="fragment">
       <td style="vertical-align: top; width: 20%; border: none;"><b>$\displaystyle \mathcal{E}_{LSQ}(\mathbf{w})$</b></td>
       <td style="vertical-align: top; text-align: left; border: none;">
@@ -351,57 +425,24 @@ How do we find $w$ and $\varphi$?
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
     We want to minimize this error.
   </p>
-</section>
-
-
-<section>
-      <h3 style="color:#8A8A8A; text-align:left; text-transform: none;font-size:1.2em">Regression goal (LSQ with regularization)</h3>
-      <p style="color:#8A8A8A;">
-        \begin{align*}
-        
-        \mathcal{E}_{rr}(\mathbf{w}) :&= 
-        \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 
-        + \underbrace{\lambda \|\mathbf{w}\|^2}_{\text{regularization}}\\
-        &=
-        \left(\sum_{i=1}^N (y_i - \mathbf{w}^\top \varphi(\mathbf{x}_i))^2\right) 
-        + \underbrace{\lambda (\mathbf{w}^\top \mathbf{w})}_{\text{regularization}}
-        
-        \end{align*}
-      </p>
-      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		We want to minimize this error.
-	  </p>
-</section>
-
-
-
-<section>
-      <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Regression Goal (Least Squares)</h3>
-      <p style="color:#EAEAEA;">
-        \begin{align*}
-        
-        \mathcal{E}_{LSQ}(\mathbf{w}) :&= 
-        \|\mathbf{y} - \mathbf{w}^\top \varphi(X)\|^2 \\
-   
-        \end{align*}
-      </p>
-    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		We want to minimize this error.
-	  </p>
-    	   <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
+      	   <!-- Question highlighted -->
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.8em;">
       This function is convex! Set derivative to 0 and solve for $\mathbf{w}$.
     </p>
 </section>
 
+
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Solution Regression Goal (Least Squares)</h3>
-  
+     <p style="color:#ffffff; font-size:0.7em; margin-top:5px; text-align: left;">
+        In the lecture we derived the formular for $\mathbf{w}$ that minimizes the least squares error:
+  </p>
+      
   <p style="color:#EAEAEA;">
     \begin{equation*}
       \mathbf{w} = (X X^\top)^{-1} X \mathbf{y}^\top
     \end{equation*}
-    where $\mathbf{w} \in \mathbb{R}^d$, $X \in \mathbb{R}^{n \times d}$ is the matrix containing mapped data points.
+    where $\mathbf{w} \in \mathbb{R}^p$, $X \in \mathbb{R}^{n \times p}$ is the matrix containing mapped data points.
   </p>
   
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
@@ -683,7 +724,7 @@ How do we find $w$ and $\varphi$?
 
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Linear regression with polynomial basis</h3>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Overfitting</h3>
   
   <div style="text-align:center;">
      
@@ -695,34 +736,6 @@ How do we find $w$ and $\varphi$?
       <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
       Degree 50 seems to much? Let's decrease it.
     </p>
-</section>
-
-<section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Linear regression with polynomial basis</h3>
-  
-  <div style="text-align:center;">
-     
-    <img src="../img/polyfit_2_on_polynomial.png" width="700" style="display:block; margin: 0 auto;">
-  </div>
-    <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-		Good fit on polynomial function.
-	  </p>
-         <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-     How do we find good Hyperparameters?.
-    </p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Combination of possible hyperparameter</h3>
-
-  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
-    <img src="../img/grid_train.png" width="600">
-    <img src="../img/grid_test.png" width="600">
-  </div>
-
-  <p style="color:#8A8A8A; font-size:0.7em; text-align:center; margin-top:5px;">
-    Darker "better" (lower mean squared error)
-  </p>
 </section>
 
 <section>
@@ -757,20 +770,23 @@ How do we find $w$ and $\varphi$?
 	  </p>
       </p>
          <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-     How does $\lambda$ influence bias and variance? 
+     How do we find a good $\lambda$ and $\varphi$?
     </p>
 </section>
 
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Overview: Bias and Variance</h3>
-  
-  <div style="text-align:center;">
-     
-    <img src="../img/bias_variance_visualization.jpg" width="800" style="display:block; margin: 0 auto;">
-  </div>
-</section>
+  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Combination of possible hyperparameter</h3>
 
+  <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+    <img src="../img/grid_train.png" width="600">
+    <img src="../img/grid_test.png" width="600">
+  </div>
+
+  <p style="color:#8A8A8A; font-size:0.7em; text-align:center; margin-top:5px;">
+    Darker "better" (lower mean squared error)
+  </p>
+</section>
 
 <section>
   <h3 style="color:#A8E6CF; text-align:left; text-transform: none">Standard approach</h3>
