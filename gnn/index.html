@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="../dist/reset.css">
 		<link rel="stylesheet" href="../dist/reveal.css">
-		<link rel="stylesheet" href="../dist/theme/black.css">
+		<link rel="stylesheet" href="../dist/theme/white_math.css">
 
 		<style>
 			:root {
@@ -29,7 +29,7 @@
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
 		<!-- MathJax for LaTeX -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  	<!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
   <script id="MathJax-script" async
           src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
@@ -40,169 +40,44 @@
 
     <!-- Slide 1: Title -->
     <section>
-      <h2 style="color:#A8E6CF;">(Optimal) Coupliing of measures</h2>
-      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
-      <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
+      <h2  ">Couplings of measures</h2>
+      <p style="color:var(--color3);">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+      <p style="color:var(--color3); font-size:0.7em; margin-top:5px;">
         June 4th 2026, TU Berlin
       </p>
     </section>
 
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Contents</h3>
+  <h3   text-align:center;text-transform: none">Contents</h3>
   <div style="font-size:0.8em; line-height:1.6; max-width:800px; margin:0 auto;">
-    <ul style="text-align:left; color:#EAEAEA;">
-      <li>Recap: Total Variation Norm</li>
-      <li>Probability Measures and examples</li>
-      <li>Push-forward measures and laws of random variables</li>
-      <li>Wasserstein distance and optimal couplings</li>
-      <li>Couplings from maps and Brenier's theorem</li>
-      <li>Distance between Gaussian measures</li>
-      <li>Summary and outlook</li>
+    <ul style="text-align:left;">
+      <li>Couplings of Probability Measures</li>
+    <ul style="text-align:left;">
+        <li>Probability Measures</li>
+        <li>Independent couplings</li>
+        <li>Optimal couplings</li>
+        <li>Couplings from maps</li>
+    </ul>
+      <li>Distance of Probability Measures</li>
+    <ul style="text-align:left;">
+    <li>Total Variation Norm</li>
+    <li>Wasserstein Distance</li>
+    </ul> 
+      <li>Couplings of Atomic Measures</li>
+      <li>Brenier's theorem</li>
+      <li>Transportation Maps of Gaussian</li>
+      <li>Summary</li>
     </ul>
   </div>
 </section>
 
-
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Recap: Total Variation Norm
-  </h3>
-
-  <div style="font-size:0.8em;">
-    Let $\mathcal{M}(\mathbb{R}^d)$ be the Banach space of signed
-    $\sigma$-additive Borel measures on $\mathbb{R}^d$.
-
-    \[
-    \|\mu\|_{TV} := |\mu|(\mathbb{R}^d)
-    \]
-
-    where
-
-    \[
-    |\mu|(A)
-    :=
-    \sup_{A=\cup_k A_k}
-    \sum_k |\mu(A_k)|,
-    \qquad
-    A_i \cap A_j = \emptyset .
-    \]
-  </div>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Recap: Total Variation Norm
-  </h3>
-
-  <div style="text-align:left;">
-     
-    <img src="../img/tv_distance_example.png" width="600" style="display:block; margin: 0 auto;">
-      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
-  </p>
-  </div>
-      <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      Is the triangle measure or the square measure nearer to dot measure?
-    </p>
-      <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      TV of Probability measures is always 2, but intuitively the cross measure should be closer to the dot measure. (check on board)
-    </p>
-</section>
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;text-align: left;">
-    Recap: TV Norm and test functions
-  </h3>
-
-  <div style="font-size:0.5em;text-align: left;">
-
-
-$\mathcal{M}\left(\mathbb{R}^d\right)$ is dual space of $C_0\left(\mathbb{R}^d\right)$, i.e. $C_0\left(\mathbb{R}^d\right)^{\prime}=\mathcal{M}\left(\mathbb{R}^d\right)$ 
-<!-- (since $C_c^{\infty}\left(\mathbb{R}^d\right)$ is dense in $C_0\left(\mathbb{R}^d\right)$ we could also test against the first ones) -->
-$$
-\|\mu\|_{T V}=\sup _{\|\varphi\|_{\infty} \leq 1}|\langle\varphi, \mu\rangle|, \quad\langle x, \mu\rangle:=\int_{\mathbb{R}^d} \varphi(x) \mathrm{d} \mu(x)
-$$
-and $\left(\mu_n\right)_n$ converges weak-* to a measure $\mu$ if
-$$
-\lim _{n \rightarrow \infty} \int \varphi \mathrm{~d} \mu_n=\int \varphi \mathrm{d} \mu \text { for all } \varphi \in C_0\left(\mathbb{R}^d\right)
-$$
-</div>
-
-<div style="font-size:0.5em; text-align:left;">
- 
-  
-      \(\mathcal{P}(\mathbb{R}^d)\): set of probability measures on \(\mathbb{R}^d\)
-    
-<div style="font-size:0.9em; text-align:left;">
-  <ul style="padding-left: 1.5em;">
-
-    <li>
-      Probability measures \((\mu_n)_n\) do in general not weak-* converge to a probability measure.  
-      Example: \(\mu_n = \delta_n\) converges weak-* to \(\mu \equiv 0\).
-    </li>
-
-    <li>
-      Probability measures \((\mu_n)_n\) converge narrowly to a (probability) measure \(\mu\) if
-      $$
-      \lim_{n \to \infty} \int \varphi \, d\mu_n
-      =
-      \int \varphi \, d\mu
-      \quad
-      \text{for all }
-      \varphi \in C_b(\mathbb{R}^d)
-      $$
-    </li>
-
-    <li>
-      TV-distance \(\|\mu-\nu\|\) between
-      \(\mu,\nu \in \mathcal{P}(\mathbb{R}^d)\)
-      with disjoint support is always \(2\), so we need another distance.
-    </li>
-    </ul>
-</div>
-</div>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; text-align: left;">
-    Recap: Push-Forward Measures
-  </h3>
-  <div style="font-size:0.5em; text-align: left;">
-
-Let $T: \mathbb{R}^d \rightarrow \mathbb{R}^n, \mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ be a Borel-measurable map. 
-
-Then the push-forward measure of $\mu$ by $T$ is the measure $\nu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ defined by
-$$
-\nu=T_{\#} \mu=\mu \circ T^{-1}
-$$
-with the preimage $T^{-1}(B)$ of $B \in \mathcal{B}\left(\mathbb{R}^n\right)$.
-  </div>
-
-  <div style="font-size:0.5em; text-align: left;">
-
-A Map $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is integrable with respect to $T_{\#} \mu$ if $f \circ T$ is integrable with respect to $\mu$ and
-$$
-\int_{\mathbb{R}^n} f(y) \mathrm{d} T_{\#} \mu(y)=\int_{T^{-1}\left(\mathbb{R}^n\right)} f(T(x)) \mathrm{d} \mu(x) .
-$$
-Also if the map $T: \mathbb{R}^d \rightarrow \mathbb{R}^d$ is a $C^1$ diffeomorphism and $\mu$ has density $p_\mu$, then
-$$
-\int f(y) \mathrm{d} T_{\# \mu}(y)=\int f(T(x)) p_\mu(x) \mathrm{d} x=\int f(y) \underbrace{p_\mu\left(T^{-1}(y)\right)\left| \operatorname{det}\left(\nabla T^{-1}(y)\right)\right|}_{p_{T_{\#\mu}}} \mathrm{d} y.
-$$
-
-Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \rightarrow \mathbb{R}^d$ random variable, then we call  $\mu_X=X_{\sharp} \mathbb{P}$ law of $X$ 
-  </div>
-
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-bottom:12px;">
+  <h3  margin-bottom:12px;">
     Examples: Probability Measures
   </h3>
 
-  <div style="display:grid; grid-template-columns:58% 38%; gap:18px; font-size:0.55em; line-height:1.35; color:#EAEAEA; max-width:1200px; margin:0 auto;text-align: left;">
+  <div style="display:grid; grid-template-columns:58% 38%; gap:18px; font-size:0.55em; line-height:1.35; max-width:1200px; margin:0 auto;text-align: left;">
 
     <!-- LEFT SIDE -->
     <div>
@@ -236,7 +111,7 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
     </div>
 
     <!-- RIGHT SIDE -->
-    <div style="color:#959595;">
+    <div>
 
       <p style="margin:0 0 10px 0; ">Examples:</p>
 
@@ -279,7 +154,7 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Sample of Gaussian distribution</h3>
+  <h3   text-align:center;text-transform: none">Sample of Gaussian distribution</h3>
   
   <div style="text-align:center;">
     <!-- Make the GIF larger -->
@@ -291,29 +166,44 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
   </div>
 </section>
 
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Sample of 2D Gaussian distribution</h3>
+  <h3   text-align:center;text-transform: none">Sample of 2D Gaussian distribution</h3>
 
-  <!-- Input controls -->
-  <div style="text-align:center; margin-bottom: 10px; display:flex; justify-content:center; align-items:center; gap:10px;font-size:0.6em">
-    <label for="x1" style="color:#EAEAEA;">X₁:</label>
-    <input id="x1" type="number" step="0.1" value="1" class="num-input">
+<!-- MAIN LAYOUT -->
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:30px; margin-top:10px;">
 
-    <label for="x2" style="color:#EAEAEA;">X₂:</label>
-    <input id="x2" type="number" step="0.1" value="1" class="num-input">
+  <!-- LEFT: Plot -->
+  <div id="plot" style="width:550px; height:550px;"></div>
 
-    <label for="cov" style="color:#EAEAEA;">Cov:</label>
-    <input id="cov" type="number" step="0.1" value="1" class="num-input">
+  <!-- RIGHT: Controls + text -->
+  <div style="display:flex; flex-direction:column; gap:15px; font-size:0.6em; text-align:left;">
+
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div style="font-weight:600;">Parameters</div>
+
+      <label>Variance $X_1$:
+        <input id="x1" type="number" step="0.1" value="1" class="num-input">
+      </label>
+
+      <label>Variance $X_2$:
+        <input id="x2" type="number" step="0.1" value="1" class="num-input">
+      </label>
+
+      <label>Covariance $(X_1, X_2)$:
+        <input id="cov" type="number" step="0.1" value="1" class="num-input">
+      </label>
+    </div>
+
+    <div>
+      <div style="margin-bottom:5px;">Then the corresponding covariance matrix is:</div>
+      <div id="matrix"></div>
+      Each point represents one sample from the distribution. The plot shows 1000 samples.
+    </div>
+
   </div>
 
-  <!-- Plot + Matrix container -->
-  <div style="display:flex; justify-content:center; align-items:flex-start; gap:20px;">
-    <!-- Plot -->
-    <div id="plot" style="width:700px; height:500px;"></div>
-
-    <!-- Covariance matrix -->
-    <div id="matrix" style="color:#EAEAEA; font-size:1.0em; text-align:center;"></div>
-  </div>
+</div>
 
   <!-- Plotly and MathJax -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -325,26 +215,28 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-  <style>
-    .num-input {
-      width: 4em;
-      background: #111;
-      color: #EAEAEA;
-      border: 1px solid #444;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 1em;
-      padding: 4px;
-      transition: border 0.2s;
-    }
-    .num-input:focus {
-      outline: none;
-      border-color: #A8E6CF;
-    }
-  </style>
+<style>
+  .num-input {
+    width: 4em;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--muted);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1em;
+    padding: 4px;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+
+  .num-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+</style>
 
   <script>
-    function generateData(X1, X2, cov, n=2000) {
+    function generateData(X1, X2, cov, n=1000) {
       const points = [];
       const rho = cov / Math.sqrt(X1 * X2);
       for (let i = 0; i < n; i++) {
@@ -374,9 +266,8 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
         font: { color: '#EAEAEA' },
         xaxis: { range: [-10, 10], title: 'x₁', gridcolor: '#333' },
         yaxis: { range: [-10, 10], title: 'x₂', gridcolor: '#333' },
-        width: 700,
-        height: 500,
-        title: `X₁=${X1}, X₂=${X2}, Cov=${cov}`,
+        width: 550,
+        height: 550,
       };
       Plotly.newPlot('plot', [trace], layout, {displayModeBar: false});
     }
@@ -413,10 +304,69 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">TV distance between Atomic measures</h3>
+  <h3   text-align:center;text-transform: none">  Distance of Measures: TV norm</h3>
+
+<!-- MAIN LAYOUT -->
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:30px; margin-top:10px;">
+
+  <!-- LEFT: Plot -->
+      <img src="../img/tv_example1.png" width="600" style="display:block; margin: 0 auto;">
+      <p class="p1">
+  </p>
+
+  <!-- RIGHT: Controls + text -->
+  <div style="display:flex; flex-direction:column; gap:15px; font-size:0.6em; text-align:left;">
+
+    Is the diamond measure closer to the Triangle measure than the square measure? 
+
+      <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
+      TV of Probability measures is always 2, but intuitively the cross measure should be closer to the dot measure. (check on board)
+    </p>
+
+          <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Different distance!
+      Wasserstein (later)
+    </p>
+
+  </div>
+
+</div>
+</section>
+
+<section>
+  <h3   text-align:center;  ">
+    Recap: Total Variation Norm
+  </h3>
+
+  <div style="font-size:0.8em;">
+    Let $\mathcal{M}(\mathbb{R}^d)$ be the Banach space of signed
+    $\sigma$-additive Borel measures on $\mathbb{R}^d$.
+
+    \[
+    \|\mu\|_{TV} := |\mu|(\mathbb{R}^d)
+    \]
+
+    where
+
+    \[
+    |\mu|(A)
+    :=
+    \sup_{A=\cup_k A_k}
+    \sum_k |\mu(A_k)|,
+    \qquad
+    A_i \cap A_j = \emptyset .
+    \]
+  </div>
+</section>
+
+
+<section>
+  <h3   text-align:center; text-transform: none">TV distance between Atomic measures</h3>
   
 
-  <p style="color:#ffffff; font-size:0.5em; text-align:center; margin-top:5px;">
+  <p style="font-size:0.5em; text-align:center; margin-top:5px;">
 
     TV norm between two Atomic measures $\mu$ and $\nu$ is always 2
 
@@ -441,72 +391,41 @@ $$
 
   </p>
 </section>
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
-    Example 1
+  <h3   text-align:center;   text-align: left;">
+    Recap: Push-Forward Measures
   </h3>
+  <div style="font-size:0.5em; text-align: left;">
 
-  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
-    
-  <!-- Left side -->
-  <div style="text-align:left; margin:0; padding:0;">
-    <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
-      Given the combination of diracs:
-    </p>
+Let $T: \mathbb{R}^d \rightarrow \mathbb{R}^n, \mu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ be a Borel-measurable map. 
 
-    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
-      $x_1 = (0,0), x_2 = (1,0), x_3 = (0,1)$
-    </p>
-
-    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
-      $y_1 = (1,1), y_2 = (2,0)$
-    </p>
-
-    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
-      $z_1 = (4,0), z_2 = (5,1)$
-    </p>
-
-    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
-      <span style="color:var(--color-myblue);">
-        $\mu=\frac{1}{6}\left(3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}\right)$
-      </span>
-    </p>
-
-    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
-      <span style="color:var(--color-myyellow);">
-        $\nu=\frac{1}{6}\left(2\delta_{y_1}+4\delta_{y_2}\right)$
-      </span>
-    </p>
-
-    <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
-      <span style="color:var(--color-myred);">
-        $\zeta=\frac{1}{6}\left(2\delta_{z_1}+4\delta_{z_2}\right)$
-      </span>
-    </p>
-
-   
+Then the push-forward measure of $\mu$ by $T$ is the measure $\nu \in \mathcal{P}_2\left(\mathbb{R}^d\right)$ defined by
+$$
+\nu=T_{\#} \mu=\mu \circ T^{-1}
+$$
+with the preimage $T^{-1}(B)$ of $B \in \mathcal{B}\left(\mathbb{R}^n\right)$.
   </div>
 
-<!-- Right side image -->
-<div style="display:flex; flex-direction:column; align-items:center;">
-  <img 
-    src="../img/example_dirac_who_is_closer.png"
-    width="100%"
-    style="max-width:700px; max-height:600px; height:auto; display:block; margin:0; padding:0;"
-  >
+  <div style="font-size:0.5em; text-align: left;">
 
-  <p style="color:#CFCFCF; font-size:0.42em; margin:6px 0 0 0; text-align:center; line-height:1.2;">
-    Discrete measures $\mu,\nu$ and $\zeta$ with support points $x_i,y_j$ and $z_k$. The bigger the dot, the bigger the weight at the point.
-  </p>
-</div>
-  <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.8em;">
-      TV-distance between all of them is 2, since their supports are disjoint. 
-    </p>
-</div>
+A Map $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is integrable with respect to $T_{\#} \mu$ if $f \circ T$ is integrable with respect to $\mu$ and
+$$
+\int_{\mathbb{R}^n} f(y) \mathrm{d} T_{\#} \mu(y)=\int_{T^{-1}\left(\mathbb{R}^n\right)} f(T(x)) \mathrm{d} \mu(x) .
+$$
+Also if the map $T: \mathbb{R}^d \rightarrow \mathbb{R}^d$ is a $C^1$ diffeomorphism and $\mu$ has density $p_\mu$, then
+$$
+\int f(y) \mathrm{d} T_{\# \mu}(y)=\int f(T(x)) p_\mu(x) \mathrm{d} x=\int f(y) \underbrace{p_\mu\left(T^{-1}(y)\right)\left| \operatorname{det}\left(\nabla T^{-1}(y)\right)\right|}_{p_{T_{\#\mu}}} \mathrm{d} y.
+$$
+
+Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \rightarrow \mathbb{R}^d$ random variable, then we call  $\mu_X=X_{\sharp} \mathbb{P}$ law of $X$ 
+  </div>
+
 </section>
+
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none; text-align: left;">Wasserstein Distance</h3>
+  <h3   text-align:center; text-transform: none; text-align: left;">Wasserstein Distance</h3>
 
   <div style="font-size:0.5em; text-align: left;">
 
@@ -518,9 +437,9 @@ $$
 the Wasserstein distance
 
  <p style="color:#EAEAEA; font-size:1.3em; line-height:1.25; margin:0 0 10px 0;text-align: center;">
-      <span style="color:#ffffff;">
+      <span style="color:#000000;">
         $\displaystyle W_2^2(\mu, \nu):=$
-        <span style="color:#129e61;">$\displaystyle \min _{\pi \in \Pi(\mu, \nu )}$</span>
+        <span style="color:var(--color6);">$\displaystyle \min _{\pi \in \Pi(\mu, \nu )}$</span>
         $\displaystyle \int_{\mathbb{R}^d \times \mathbb{R}^d}\|x-y\|_2^2 \mathrm{~d} \pi(x, y)
 $
       </span>
@@ -530,7 +449,7 @@ $\mathcal{P}_2\left(\mathbb{R}^d\right)$ becomes a complete metric space, where 
 
 
  <p style="color:#EAEAEA; font-size:1.3em; line-height:1.25; margin:0 0 10px 0;text-align: center;">
-      <span style="color:#129e61;">
+      <span style="color:var(--color6);">
       $$
       \Pi(\mu, \nu):=\left\{\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right):\left(P_1\right)_{\#} \pi=\mu,\left(P_2\right)_{\#} \pi=\nu\right\}
       \quad \textbf{Couplings of $\mu$ and $\nu$}
@@ -543,22 +462,40 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
 </div>
 
       <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px; font-size:0.6em; ">
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px; font-size:0.6em; ">
       Lets look at examples of couplings and then calculate their Wasserstein distance!
     </p>
 
          <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.6em;">
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.6em;">
       1. Independent couplings 2. Optimal couplings 3. Couplings from maps
     </p>
 </section>
+
 <section>
-  <h3 style="color:#A8E6CF; text-align:left; text-transform:none;">
+  <h3   text-align:center;  ">
+   Couplings of Atomic Measures
+  </h3>
+
+  <div style="text-align:left;">
+     
+    <img src="../img/Coupling_possible_paths_from_couplings.png" width="600" style="display:block; margin: 0 auto;">
+      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
+  </p>
+  </div>
+      <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
+    </p>
+
+</section>
+
+<section>
+  <h3   text-align:left;  ">
     Couplings of Atomic Measures
   </h3>
 
    <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%;">
-    <div style="font-size:0.45em; text-align:left; color:#EAEAEA; line-height:1.25;">
+    <div style="font-size:0.45em; text-align:left;  line-height:1.25;">
 
       <p style="margin:0 0 10px 0;">
         Given
@@ -573,7 +510,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
         $$
       </p>
  <p style="color:#EAEAEA; font-size:1.3em; line-height:1.0; margin:0 0 10px 0;text-align: left;">
-      <span style="color:#129e61;">
+      <span style="color:var(--color6);">
           Couplings $\displaystyle \Pi(\mu, \nu): \pi=\sum_{i, j=1}^{m, n} \pi_{i j} \delta_{x_i, y_j}, \quad \pi_{i j} \geq 0$
       </span>
     </p>
@@ -624,7 +561,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
   <div style="transform:scale(0.59); transform-origin:center;">
     $$
     \begin{array}{c|cccc}
-    & \color{#FFD166}{\nu_1} & \color{#FFD166}{\cdots} & \color{#FFD166}{\nu_j} & \color{#FFD166}{\nu_n} \\
+    & \color{ var(--color5)}{\nu_1} & \color{ var(--color5)}{\cdots} & \color{ var(--color5)}{\nu_j} & \color{ var(--color5)}{\nu_n} \\
     \hline
     \color{#4DA3FF}{\mu_1} & \pi_{1,1} & \cdots & \pi_{1,j} & \pi_{1,n} \\
     \color{#4DA3FF}{\vdots} & \vdots & \vdots & \vdots & \vdots \\
@@ -636,98 +573,9 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
   </div>
 -->
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Coupling example</h3>
-
-  <div style="display:grid; grid-template-columns:58% 38%; gap:12px; align-items:start; width:100%; max-width:1480px; margin:0; padding:0;">
-    
-    <!-- Left side -->
-    <div style="text-align:left; margin:0; padding:0;">
-      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
-        Give the Atomic measures on $\mathbb{R}$:
-      </p>
-
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
-        $x_1 = 0, x_2 = 1$
-      </p>
-
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
-        $y_1 = 0, y_2 = 1$
-      </p>
-
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
-        <span style="color:var(--color-myblue);">
-          $\mu=\frac{1}{2} \delta_{x_1}+\frac{1}{2} \delta_{x_2}$
-        </span>
-      </p>
-
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
-        <span style="color:var(--color-myyellow);">
-          $\nu=\frac{1}{3} \delta_{y_1}+\frac{2}{3} \delta_{y_2}$
-        </span>
-      </p>
-
-      <img 
-        src="../img/Atomic_Measures_example_1_1D.png"
-        width="100%"
-        style="max-width:800px; max-height:400px; height:auto; display:block; margin:0; padding:0;"
-      >
-    </div>
-
-    <!-- Right side -->
-    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
-
-      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
-        <div style="text-align:left; display:inline-block;">
-          $$\begin{array}{c|cc}
-           & y_1 & y_2 \\
-          \hline
-          x_1 & 0 & 1 \\
-          x_2 & 1 & 0 
-          \end{array}$$
-        </div>
-
-        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
-          Costs $\|x-y\|^2$
-        </div>
-      </div>
-
-      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
-        <div style="text-align:left; display:inline-block;">
-          $$\begin{array}{c|cc}
-           & \frac{2}{3} & \frac{1}{3} \\
-          \hline
-          \frac{1}{2} & \frac{1}{6} & \frac{1}{3} \\
-          \frac{1}{2} & \frac{1}{6} & \frac{1}{3}
-          \end{array}$$
-        </div>
-
-        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
-          Independent coupling $\pi=\mu \otimes \nu$
-        </div>
-      </div>
-
-      <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
-        <div style="text-align:left; display:inline-block;">
-          $$\begin{array}{c|cc}
-           & \frac{2}{3} & \frac{1}{3} \\
-          \hline
-          \frac{1}{2} & \frac{1}{3} & \frac{1}{6} \\
-          \frac{1}{2} & 0 & \frac{1}{2}
-          \end{array}$$
-        </div>
-
-        <div style="margin-left:auto; text-align:right; font-size:0.9em; white-space:nowrap; min-width:140px; line-height:1.3;">
-          Optimal coupling 
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+  <h3    margin-left:0; padding-left:0;">
     Example 1
   </h3>
 
@@ -735,31 +583,31 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     
     <!-- Left side -->
     <div style="text-align:left; margin:0; padding:0;">
-      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
-        We have two combinations of diracs:
+      <p style=" font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+        Given atomic measures:
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      <p style="font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
         $x_1 = (0,0), x_2 = (1,0), x_3 = (0,1)$
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
         $y_1 = (1,1), y_2 = (2,0)$
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
         <span style="color:var(--color-myblue);">
           $\mu=\frac{1}{6}\left(3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}\right)$
         </span>
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         <span style="color:var(--color-myyellow);">
           $\nu=\frac{1}{6}\left(4\delta_{y_1}+2\delta_{y_2}\right)$
         </span>
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         Optimal map: $T(x_1)=y_2,\; T(x_2)=y_2,\; T(x_3)=y_1$
       </p>
 
@@ -771,7 +619,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     </div>
 
     <!-- Right side -->
-    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+    <div style=" font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
 
       <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
         <div style="text-align:left; display:inline-block;">
@@ -826,7 +674,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+  <h3   text-align:center;   margin-left:0; padding-left:0;">
     Example 2
   </h3>
 
@@ -835,31 +683,31 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     <!-- Left side -->
     <div style="text-align:left; margin:0; padding:0;">
 
-      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+      <p style=" font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
         We have two combinations of diracs:
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
         $x_1=(0,0),\; x_2=(1,0),\; x_3=(0,1)$
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
         $y_1=(1,1),\; y_2=(2,0)$
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
         <span style="color:var(--color-myblue);">
           $\mu=3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}$
         </span>
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         <span style="color:var(--color-myyellow);">
           $\nu=2\delta_{y_1}+4\delta_{y_2}$
         </span>
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         Optimal map:
         $T(x_1)=y_2,\; T(x_2)=y_2,\; T(x_3)=y_1$
       </p>
@@ -872,7 +720,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     </div>
 
     <!-- Right side -->
-    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+    <div style=" font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
 
       <!-- Cost matrix -->
       <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
@@ -935,7 +783,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none; margin-left:0; padding-left:0;">
+  <h3   text-align:center;   margin-left:0; padding-left:0;">
     Example 3
   </h3>
 
@@ -944,31 +792,31 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     <!-- Left side -->
     <div style="text-align:left; margin:0; padding:0;">
 
-      <p style="color:#EAEAEA; font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
+      <p style=" font-size:0.7em; line-height:1.25; margin:0 0 8px 0;">
         We have two combinations of diracs:
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
         $x_1=(1,1),\; x_2=(2,0)$
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 6px 0;">
         $y_1=(0,0),\; y_2=(1,0),\; y_3=(0,1)$
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
         <span style="color:var(--color-myblue);">
           $\mu=2\delta_{x_1}+4\delta_{x_2}$
         </span>
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         <span style="color:var(--color-myyellow);">
           $\nu=3\delta_{y_1}+1\delta_{y_2}+2\delta_{y_3}$
         </span>
       </p>
 
-      <p style="color:#EAEAEA; font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
+      <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         Optimal map: does not exist.
       </p>
 
@@ -980,7 +828,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
     </div>
 
     <!-- Right side -->
-    <div style="color:#EAEAEA; font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
+    <div style=" font-size:0.42em; display:flex; flex-direction:column; gap:8px; margin:0; padding:0;">
 
       <!-- Cost matrix -->
       <div style="background:rgba(0,0,0,0.3); padding:10px 10px 10px 12px; border-radius:4px; display:flex; gap:12px; align-items:center;">
@@ -1030,35 +878,8 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform:none;">
-    Paths from couplings
-  </h3>
-
-  <div style="text-align:left;">
-     
-    <img src="../img/Coupling_possible_paths_from_couplings.png" width="600" style="display:block; margin: 0 auto;">
-      <p style="color:#8A8A8A; font-size:0.3em; text-align:center; margin-top:5px;">
-  </p>
-  </div>
-      <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;font-size:0.7em;">
-      Wow! We can construct paths between $\mu$ and $\nu$ from couplings! 
-    </p>
-
-</section>
-
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Atomic Measures</h3>
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    We have two combinations of diracs.
-    Find Minimizer of Wasserstein distance!
-  </p>
-</section>
-
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculate Wasserstein Distance of Atomic Measures</h3>
-  <p style="color:#EAEAEA; font-size:0.8em; text-align: left;">
+  <h3   text-align:center; text-transform: none">Calculate Wasserstein Distance of Atomic Measures</h3>
+  <p style=" font-size:0.8em; text-align: left;">
 In this simple case a minimizer can be explicitly calculated. 
       <p style="margin:0 0 10px 0;font-size: 0.6em;">
         Wasserstein distance: Solution of a linear optimization problem
@@ -1072,25 +893,17 @@ In this simple case a minimizer can be explicitly calculated.
 
   </p>
     <!-- Question highlighted -->
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;">
       Under certain conditions the optimal coupling is unique! (Brenier)  
     </p>
 </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Couplings from Maps</h3>
-  <p style="color:#EAEAEA; font-size:0.8em;">
-    Optimal couplings vs. optimal transport maps
-
-    Example: $\mu=\frac{1}{2}\left(\delta_{-1}+\delta_1\right), \nu=\delta_0$ then the optimal coupling is not unique and can not be written as a map, since we have to split the mass of $\delta_0$ to transport it to $\delta_{-1}$ and $\delta_1$. todo check
-  </p>
-</section>
 <section> 
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">
+  <h3   text-align:center; text-transform: none">
     Brenier's Theorem
   </h3>
 
-  <div style="font-size:0.5em; text-align: left; color:#EAEAEA; line-height:0.4; margin:0 0 10px 0;">
+  <div style="font-size:0.5em; text-align: left;  line-height:0.4; margin:0 0 10px 0;">
     Let $\mu \in \mathcal{P}_2(\mathbb{R}^d)$, where $\mu \ll \lambda$. 
     <br> 
     <br><br>
@@ -1102,8 +915,8 @@ In this simple case a minimizer can be explicitly calculated.
 
       <li style="margin-bottom: 1em;">
         It can be written as
-          <span style="color:#129e61;">
-             $\pi = (I, T)_{\# \mu}$</span>, where <span style="color:#129e61;">$(I, T): \mathbb{R}^d \rightarrow \mathbb{R}^d \times \mathbb{R}^d$, 
+          <span style="color:var(--color6);">
+             $\pi = (I, T)_{\# \mu}$</span>, where <span style="color:var(--color6);">$(I, T): \mathbb{R}^d \rightarrow \mathbb{R}^d \times \mathbb{R}^d$, 
         $x \mapsto (x, T(x))$
       </span>
      , with $T \in L_\mu^2(\mathbb{R}^d, \mathbb{R}^d)$ being the optimal transport map, i.e.
@@ -1112,9 +925,12 @@ In this simple case a minimizer can be explicitly calculated.
         W_2^2(\mu, \nu) = \int_{\mathbb{R}^d} \|x - T(x)\|^2 \, d\mu(x)
         \quad \text{subject to} \quad \nu = T_{\# \mu}
         $$
-      </li>
 
-      <li style="margin-bottom: 1em;">
+      </li>
+      <li>
+    <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color3); margin-top:20px;">
+
         It holds
         <br><br>
         $$
@@ -1122,25 +938,31 @@ In this simple case a minimizer can be explicitly calculated.
         $$
         for some lower semi-continuous, convex, differentiable function 
         $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^d$ (Brenier potential).
-      </li>
+     
+    
+    </p>
 
       <li>
-        Conversely, if $\psi$ is lower semi-continuous, convex and differentiable $\mu$-a.e., with 
+
+      <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color3); margin-top:20px;">
+     Conversely, if $\psi$ is lower semi-continuous, convex and differentiable $\mu$-a.e., with 
         $\nabla \psi \in L_\mu^2(\mathbb{R}^d, \mathbb{R}^d)$, then
         <br><br>
         $$
         T = \nabla \psi
         $$
         is the optimal transport map from $\mu$ to $\nu = T_{\#}\mu \in \mathcal{P}_2(\mathbb{R}^d)$.
-      </li>
+    </p>
+              </li>
     </ol>
   </div>
 </section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
+  <h3   text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
 
-<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+<p style=" font-size:0.5em; text-align: left;">
 For two Gaussians
 $$
 \mu=\mathcal{N}\left(m_\mu, \Sigma_\mu\right), \quad \nu=\mathcal{N}\left(m_\nu, \Sigma_\nu\right)
@@ -1159,22 +981,15 @@ $$
 </p>
 </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculation of Optimal Transport Map on $\mathbb{R}$</h3>
-
-<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
-TODO
-</p>
-</section>
 
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
+  <h3   text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
 
-<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+<p style=" font-size:0.5em; text-align: left;">
 Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma)\, dx$ :
 </p>
 
-<ul style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+<ul style=" font-size:0.5em; text-align: left;">
   <li>
 $\mu_t=(1-t) \mu+t \nu$, i.e. $p_t=(1-t) \mathcal{N}(0,1)+t \mathcal{N}(m, \sigma)$
   </li>
@@ -1183,134 +998,99 @@ $X_t=(1-t) X_\mu+t X_\nu$, where $X_\mu \sim \mu, X_\nu \sim \nu, \mu_t \sim X_t
 </ul>
 </section>
 
-<!-- Interactive -->
+<!-- nice Interactive Teleport -->
 <section>
-  <h3 style="color:#A8E6CF; text-align:left; text-transform: none;">
-    Path example 1
+  <h3   text-align:left; text-transform: none;">
+    Teleport
   </h3>
 
-  <!-- Inputs -->
+  <!-- Row 2: formula -->
+  <div style="text-align:center; font-size:0.9em; margin-bottom:10px;">
+    $p_t = (1-t)\mu + t\nu$
+  </div>
+
+  <!-- Row 3: 3-column layout -->
   <div style="
     display:flex;
     justify-content:center;
+    align-items:flex-start;
+    gap: 30px;
+    margin-bottom:10px;
+  ">
+
+    <!-- LEFT -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      gap:0px;
+      font-size:0.6em;
+      text-align:right;
+      min-width:180px;
+    ">
+      <div>Left Gaussian $\mu$ with parameters</div>
+
+      <label>μ₁
+        <input id="mu1" type="number" value="0" step="0.1" class="num-input yellow-input">
+      </label>
+
+      <label>σ₁
+        <input id="sigma1" type="number" value="1" min="0.1" step="0.1" class="num-input yellow-input">
+      </label>
+    </div>
+
+    <!-- MIDDLE (plot) -->
+    <div id="gaussianPlot"
+         style="width:800px; height:400px;">
+    </div>
+
+    <!-- RIGHT -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      text-align:left;
+      gap:0px;
+      font-size:0.6em;
+      min-width:180px;
+    ">
+      <div>Right Gaussian $\nu$ with parameters</div>
+
+      <label>μ₂
+        <input id="mu2" type="number" value="10" step="0.1" class="num-input blue-input">
+      </label>
+
+      <label>σ₂
+        <input id="sigma2" type="number" value="3" min="0.1" step="0.1" class="num-input blue-input">
+      </label>
+    </div>
+
+  </div>
+
+  <!-- Row 4: slider -->
+  <div style="
+    width:700px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
     gap:10px;
-    margin-bottom:0px;
-    flex-wrap:wrap;
-    font-size:0.8em;
+    font-size:0.6em;
   ">
 
-<div style="
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:40px;
-  font-size:0.8em;
-  margin-bottom:0px;
-">
+    <span style="color:  #000000;">t = 0</span>
 
-  <!-- Left -->
-  <div style="
-    display:flex;
-    align-items:center;
-    gap:5px;
-    color:#FFD166;
-  ">
-    <span>Left Density</span>
+    <input id="tSlider" type="range" min="0" max="1" step="0.001" value="0"
+      style="flex:1;">
 
-    <label>μ₁</label>
-    <input id="mu1"
-           type="number"
-           value="0"
-           step="0.1"
-           class="num-input yellow-input">
-
-    <label>σ₁</label>
-    <input id="sigma1"
-           type="number"
-           value="1"
-           min="0.1"
-           step="0.1"
-           class="num-input yellow-input">
+    <span style="color:#000000;">t = 1</span>
   </div>
 
-  <!-- Right -->
-  <div style="
-    display:flex;
-    align-items:center;
-    gap:5px;
-    color:#7AA2FF;
-  ">
-    <span>Right Density</span>
-
-    <label>μ₂</label>
-    <input id="mu2"
-           type="number"
-           value="10"
-           step="0.1"
-           class="num-input blue-input">
-
-    <label>σ₂</label>
-    <input id="sigma2"
-           type="number"
-           value="3"
-           min="0.1"
-           step="0.1"
-           class="num-input blue-input">
-  </div>
-<p style="color:#EAEAEA; font-size:1em; text-align: left;">
-$(1- t)\mu + t \nu$ 
-</p>
-</div>
-  <!-- Plot -->
-<div id="gaussianPlot"
-     style="
-       width:100%;
-       height:400px;
-       margin:0 px;
-     ", >
-</div>
-  <!-- Slider -->
-  <div style="
-    width:950px;
-    margin: 0px auto 0 auto;
-    display:flex;
-    align-items:center;
-    gap:5px;
-  ">
-    <span style="color:#FFD166; font-size:1em;">t = 0</span>
-
-    <input
-      id="tSlider"
-      type="range"
-      min="0"
-      max="1"
-      step="0.001"
-      value="0"
-      style="
-        flex:1;
-        height:8px;
-        cursor:pointer;
-      "
-    >
-
-    <span style="color:#7AA2FF; font-size:1em;">t = 1</span>
+  <div style="text-align:center; font-size:0em; margin-top:5px; ">
+    t = <span id="tValue">0.000</span>
   </div>
 
-  <div style="
-    text-align:center;
-    color:#EAEAEA;
-    margin-top:8px;
-    font-size:0.5em;
-  ">
-    Interpolation parameter:
-    <span id="tValue" style="color:#A8E6CF;">0.000</span>
-  </div>
-
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
+  <!-- styles -->
   <style>
     .num-input {
-      width: 3em;
+      width: 3.5em;
       background: #111;
       color: #EAEAEA;
       border: 1px solid #444;
@@ -1318,100 +1098,61 @@ $(1- t)\mu + t \nu$
       text-align: center;
       font-size: 1em;
       padding: 4px;
-      transition: border 0.2s;
     }
 
-    .num-input:focus {
-      outline: none;
-    }
-
-    .yellow-input:focus {
-      border-color: #FFD166;
-    }
-
-    .blue-input:focus {
-      border-color: #7AA2FF;
-    }
+    .yellow-input:focus { border-color: var(--color5); }
+    .blue-input:focus { border-color: #7AA2FF; }
 
     input[type="range"] {
       appearance: none;
       background: #222;
       border-radius: 999px;
+      height: 6px;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: #A8E6CF;
-      cursor: pointer;
-      border: none;
+      background: #000000;
     }
   </style>
 
+
+
   <script>
-    /* -------------------------------------------------- */
-    /* CONFIG */
-    /* -------------------------------------------------- */
-
     const N = 1200;
-
     const X = new Float64Array(N);
-
-    for (let i = 0; i < N; i++) {
-      X[i] = -10 + 35 * i / (N - 1);
-    }
-
     const SQRT_2PI = Math.sqrt(2 * Math.PI);
 
-    /* -------------------------------------------------- */
-    /* GAUSSIAN */
-    /* -------------------------------------------------- */
+    for (let i = 0; i < N; i++) {
+      X[i] = -10 + 35 * i / (N - 1);}
 
     function gaussian(x, mu, sigma) {
       const z = (x - mu) / sigma;
-      return Math.exp(-0.5 * z * z) / (sigma * SQRT_2PI);
-    }
-
-    /* -------------------------------------------------- */
-    /* COMPUTE CURVES */
-    /* -------------------------------------------------- */
+      return Math.exp(-0.5 * z * z) / (sigma * SQRT_2PI);}
 
     function computeDensities(mu1, sigma1, mu2, sigma2, t) {
-
       const Ymix = new Array(N);
       const Y1 = new Array(N);
       const Y2 = new Array(N);
 
       for (let i = 0; i < N; i++) {
-
         const x = X[i];
-
         const y1 = gaussian(x, mu1, sigma1);
         const y2 = gaussian(x, mu2, sigma2);
-
         Y1[i] = y1;
         Y2[i] = y2;
 
-        Ymix[i] = (1 - t) * y1 + t * y2;
-      }
-
-      return { Y1, Y2, Ymix };
-    }
-
-    /* -------------------------------------------------- */
-    /* DRAW */
-    /* -------------------------------------------------- */
+        Ymix[i] = (1 - t) * y1 + t * y2;}
+      return { Y1, Y2, Ymix };}
 
     function drawPlot() {
-
       const mu1 = parseFloat(document.getElementById("mu1").value);
       const sigma1 = parseFloat(document.getElementById("sigma1").value);
-
       const mu2 = parseFloat(document.getElementById("mu2").value);
       const sigma2 = parseFloat(document.getElementById("sigma2").value);
-
       const t = parseFloat(document.getElementById("tSlider").value);
 
       document.getElementById("tValue").innerText = t.toFixed(3);
@@ -1424,8 +1165,8 @@ $(1- t)\mu + t \nu$
         y: Y1,
         mode: "lines",
         line: {
-          width: 2,
-          color: "rgba(255,180,0,0.45)"
+          width: 3,
+          color: "rgba(255,220,0,1)"
         },
         name: "Left Density"
       };
@@ -1435,93 +1176,65 @@ $(1- t)\mu + t \nu$
         y: Y2,
         mode: "lines",
         line: {
-          width: 2,
-          color: "rgba(90,120,255,0.45)"
+          width: 3,
+          color: "rgba(50,255,255,1)"
         },
         name: "Right Density"
       };
 
       /* vibrant interpolation color */
-      const r = Math.round((1 - t) * 255 + t * 77);
-      const g = Math.round((1 - t) * 128 + t * 102);
+      const r = Math.round((1 - t) * 255 + t * 100);
+      const g = Math.round((1 - t) * 220 + t * 170);
       const b = Math.round((1 - t) * 0 + t * 255);
-
       const traceMix = {
         x: Array.from(X),
         y: Ymix,
         mode: "lines",
         line: {
-          width: 4,
+          width: 6,
           color: `rgb(${r},${g},${b})`
         },
         fill: "tozeroy",
         fillcolor: `rgba(${r},${g},${b},0.18)`,
         name: "Interpolated Density"
       };
-
       const layout = {
-
         paper_bgcolor: "#000",
         plot_bgcolor: "#000",
 
-        width: 900,
+        width: 800,
         height: 400,
 
-        font: {
-          color: "#EAEAEA"
-        },
-
-        margin: {
-          l: 70,
-          r: 30,
-          t: 50,
-          b: 60
-        },
+        font: { color: "#EAEAEA" },
+        margin: { l: 70, r: 30, t: 50, b: 60 },
 
         title: {
           text: `Density Interpolation   |   t = ${t.toFixed(3)}`,
-          font: {
-            size: 22
-          }
-        },
+          font: {size: 22}},
 
         xaxis: {
           range: [-10, 25],
           gridcolor: "#222",
           zerolinecolor: "#333",
-          title: "x"
-        },
-
+          title: "x"},
         yaxis: {
           range: [0, 0.5],
           gridcolor: "#222",
           zerolinecolor: "#333",
-          title: "density"
-        },
-
+          title: "density"},
         legend: {
           orientation: "h",
-          y: 1.08
-        }
+          y: 1.08}
       };
 
       Plotly.react(
         "gaussianPlot",
         [trace1, trace2, traceMix],
         layout,
-        {
-          displayModeBar: false
-        }
+        {displayModeBar: false}
       );
     }
-
-    /* -------------------------------------------------- */
-    /* EVENTS */
-    /* -------------------------------------------------- */
-
-    [
-      "mu1",
-      "sigma1",
+    ["mu1","sigma1",
       "mu2",
       "sigma2",
       "tSlider"
@@ -1530,24 +1243,20 @@ $(1- t)\mu + t \nu$
         .getElementById(id)
         .addEventListener("input", drawPlot);
     });
-
-    /* -------------------------------------------------- */
-    /* INITIAL */
-    /* -------------------------------------------------- */
-
     drawPlot();
-
   </script>
+
 </section>
 
+<!-- independent -->
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
+  <h3   text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
 
-<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+<p style="font-size:0.5em; text-align: left;">
 Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma)\, dx$ :
 </p>
 
-<ul style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+<ul style="font-size:0.5em; text-align: left;">
   <li>
 If $X_\mu, X_\nu$ independent, i.e. with joint distribution $\pi=\mu \otimes \nu$, we get by convolution
 $$
@@ -1556,16 +1265,256 @@ $$
   </li>
 </ul>
 </section>
-<!-- Interactive TODO -->
 
+<!-- Interactive independent TODO -->
 <section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
+  <h3   text-align:left; text-transform: none;">
+    Independent
+  </h3>
 
-<p style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+  <div style="text-align:center; font-size:0.9em; margin-bottom:10px;">
+    $p_t=\mathcal{N}(t m, (1-t)^2 + t \sigma^2)$
+  </div>
+
+  <div style="
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap: 30px;
+    margin-bottom:10px;
+  ">
+
+    <!-- LEFT -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      gap:0px;
+      font-size:0.6em;
+      text-align:right;
+      min-width:180px;
+    ">
+      <div>Left Gaussian $\mu$ with parameters</div>
+
+      <label>μ₁
+        <input id="mu1_3" type="number" value="0" step="0.1" class="num-input yellow-input">
+      </label>
+
+      <label>σ₁
+        <input id="sigma1_3" type="number" value="1" min="0.1" step="0.1" class="num-input yellow-input">
+      </label>
+    </div>
+
+    <!-- MIDDLE -->
+    <div id="gaussianPlot_3"
+         style="width:800px; height:400px;">
+    </div>
+
+    <!-- RIGHT -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      text-align:left;
+      gap:0px;
+      font-size:0.6em;
+      min-width:180px;
+    ">
+      <div>Right Gaussian $\nu$ with parameters</div>
+
+      <label>μ₂
+        <input id="mu2_3" type="number" value="10" step="0.1" class="num-input blue-input">
+      </label>
+
+      <label>σ₂
+        <input id="sigma2_3" type="number" value="3" min="0.1" step="0.1" class="num-input blue-input">
+      </label>
+    </div>
+
+  </div>
+
+  <div style="
+    width:700px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:0.6em;
+  ">
+
+    <span style="color:#000000;">t = 0</span>
+
+    <input id="tSlider_3" type="range" min="0" max="1" step="0.001" value="0"
+      style="flex:1;">
+
+    <span style="color:#000000;">t = 1</span>
+  </div>
+
+  <div style="text-align:center; font-size:0em; margin-top:5px;">
+    t = <span id="tValue_3">0.000</span>
+  </div>
+
+  <style>
+    .num-input {
+      width: 3.5em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+    }
+
+    .yellow-input:focus { border-color: var(--color5); }
+    .blue-input:focus { border-color: #7AA2FF; }
+
+    input[type="range"] {
+      appearance: none;
+      background: #222;
+      border-radius: 999px;
+      height: 6px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #000000;
+    }
+  </style>
+
+  <script>
+    const N_3 = 1200;
+    const X_3 = new Float64Array(N_3);
+    const SQRT_2PI_3 = Math.sqrt(2 * Math.PI);
+
+    for (let i = 0; i < N_3; i++) {
+      X_3[i] = -10 + 35 * i / (N_3 - 1);
+    }
+
+    function gaussian_3(x, mu, sigma) {
+      const z = (x - mu) / sigma;
+      return Math.exp(-0.5 * z * z) / (sigma * SQRT_2PI_3);
+    }
+
+    function computeDensities_3(mu1, sigma1, mu2, sigma2, t) {
+      const Ymix = new Array(N_3);
+      const Y1 = new Array(N_3);
+      const Y2 = new Array(N_3);
+
+      for (let i = 0; i < N_3; i++) {
+        const x = X_3[i];
+        const y1 = gaussian_3(x, mu1, sigma1);
+        const y2 = gaussian_3(x, mu2, sigma2);
+        Y1[i] = y1;
+        Y2[i] = y2;
+        Ymix[i] = (1 - t) * y1 + t * y2;
+      }
+      return { Y1, Y2, Ymix };
+    }
+
+    function drawPlot_3() {
+      const mu1 = parseFloat(document.getElementById("mu1_3").value);
+      const sigma1 = parseFloat(document.getElementById("sigma1_3").value);
+      const mu2 = parseFloat(document.getElementById("mu2_3").value);
+      const sigma2 = parseFloat(document.getElementById("sigma2_3").value);
+      const t = parseFloat(document.getElementById("tSlider_3").value);
+
+      document.getElementById("tValue_3").innerText = t.toFixed(3);
+
+      const { Y1, Y2, Ymix } =
+        computeDensities_3(mu1, sigma1, mu2, sigma2, t);
+
+      const trace1 = {
+        x: Array.from(X_3),
+        y: Y1,
+        mode: "lines",
+        line: { width: 3, color: "rgba(255,220,0,1)" },
+        name: "Left Density"
+      };
+
+      const trace2 = {
+        x: Array.from(X_3),
+        y: Y2,
+        mode: "lines",
+        line: { width: 3, color: "rgba(50,255,255,1)" },
+        name: "Right Density"
+      };
+
+      const r = Math.round((1 - t) * 255 + t * 100);
+      const g = Math.round((1 - t) * 220 + t * 170);
+      const b = Math.round((1 - t) * 0 + t * 255);
+
+      const traceMix = {
+        x: Array.from(X_3),
+        y: Ymix,
+        mode: "lines",
+        line: {
+          width: 6,
+          color: `rgb(${r},${g},${b})`
+        },
+        fill: "tozeroy",
+        fillcolor: `rgba(${r},${g},${b},0.18)`,
+        name: "Interpolated Density"
+      };
+
+      const layout = {
+        paper_bgcolor: "#000",
+        plot_bgcolor: "#000",
+        width: 800,
+        height: 400,
+        font: { color: "#EAEAEA" },
+        margin: { l: 70, r: 30, t: 50, b: 60 },
+        title: {
+          text: `Density Interpolation | t = ${t.toFixed(3)}`,
+          font: { size: 22 }
+        },
+        xaxis: {
+          range: [-10, 25],
+          gridcolor: "#222",
+          zerolinecolor: "#333",
+          title: "x"
+        },
+        yaxis: {
+          range: [0, 0.5],
+          gridcolor: "#222",
+          zerolinecolor: "#333",
+          title: "density"
+        },
+        legend: { orientation: "h", y: 1.08 }
+      };
+
+      Plotly.react(
+        "gaussianPlot_3",
+        [trace1, trace2, traceMix],
+        layout,
+        { displayModeBar: false }
+      );
+    }
+
+    [
+      "mu1_3",
+      "sigma1_3",
+      "mu2_3",
+      "sigma2_3",
+      "tSlider_3"
+    ].forEach(id => {
+      document.getElementById(id).addEventListener("input", drawPlot_3);
+    });
+
+    drawPlot_3();
+  </script>
+</section>
+
+<!-- optimal -->
+<section>
+  <h3   text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
+
+<p style="font-size:0.5em; text-align: left;">
 Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma)\, dx$ :
 </p>
 
-<ul style="color:#EAEAEA; font-size:0.5em; text-align: left;">
+<ul style="font-size:0.5em; text-align: left;">
   <li>
 If $\left(X_\mu, X_\nu\right) \sim \pi=(I, T)_{\sharp \mu}$ and
 $T_t: \mathbb{R}^d \rightarrow \mathbb{R}^d, T_t(x):=(1-t) x+t T(x)$
@@ -1584,94 +1533,138 @@ $$
   </li>
 </ul>
 </section>
-<!-- Interactive -->
+<!-- nice Interactive Optimal -->
 <section>
-  <h3 style="color:#A8E6CF; text-align:left;">Interactive</h3>
+  <h3   text-align:left; text-transform: none;">
+    Optimal
+  </h3>
 
-  <div style="display:flex; justify-content:center; flex-wrap:wrap; font-size:0.8em;">
+  <div style="text-align:center; font-size:0.9em; margin-bottom:10px;">
+    $p_t=\mathcal{N}(t m, 1-t+t \sigma)$
+  </div>
 
-    <div style="display:flex; align-items:center; gap:40px;">
+  <div style="
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap: 30px;
+    margin-bottom:10px;
+  ">
 
-      <div style="display:flex; align-items:center; gap:5px; color:#FFD166;">
-        <span>Left Density</span>
+    <!-- LEFT -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      gap:0px;
+      font-size:0.6em;
+      text-align:right;
+      min-width:180px;
+    ">
+      <div>Left Gaussian $\mu$ with parameters</div>
 
-        <label>μ₁</label>
-        <input id="gmix_opt2_mu1" type="number" value="0" step="0.1" class="num-input yellow-input">
+      <label>μ₁
+        <input id="mu1_2" type="number" value="0" step="0.1" class="num-input yellow-input">
+      </label>
 
-        <label>σ₁</label>
-        <input id="gmix_opt2_sigma1" type="number" value="1" min="0.1" step="0.1" class="num-input yellow-input">
-      </div>
-
-      <div style="display:flex; align-items:center; gap:5px; color:#7AA2FF;">
-        <span>Right Density</span>
-
-        <label>μ₂</label>
-        <input id="gmix_opt2_mu2" type="number" value="10" step="0.1" class="num-input blue-input">
-
-        <label>σ₂</label>
-        <input id="gmix_opt2_sigma2" type="number" value="3" min="0.1" step="0.1" class="num-input blue-input">
-      </div>
-
+      <label>σ₁
+        <input id="sigma1_2" type="number" value="1" min="0.1" step="0.1" class="num-input yellow-input">
+      </label>
     </div>
 
-    <p style="color:#EAEAEA; font-size:1em; width:100%;">
-      $p_t=\mathcal{N}((1-t) \mu_1+ t \mu_2, (1-t) \sigma_1 +t \sigma_2)$
-    </p>
+    <!-- MIDDLE -->
+    <div id="gaussianPlot_2"
+         style="width:800px; height:400px;">
+    </div>
+
+    <!-- RIGHT -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      text-align:left;
+      gap:0px;
+      font-size:0.6em;
+      min-width:180px;
+    ">
+      <div>Right Gaussian $\nu$ with parameters</div>
+
+      <label>μ₂
+        <input id="mu2_2" type="number" value="10" step="0.1" class="num-input blue-input">
+      </label>
+
+      <label>σ₂
+        <input id="sigma2_2" type="number" value="3" min="0.1" step="0.1" class="num-input blue-input">
+      </label>
+    </div>
+
   </div>
 
-  <div id="gmix_opt2_plot" style="width:100%; height:400px;"></div>
-
-
-  
-  <!-- Slider -->
   <div style="
-    width:950px;
-    margin: 0px auto 0 auto;
+    width:700px;
+    margin:0 auto;
     display:flex;
     align-items:center;
-    gap:5px;
+    gap:10px;
+    font-size:0.6em;
   ">
-    <span style="color:#FFD166; font-size:1em;">t = 0</span>
 
-    <input
-      id="gmix_opt2_t" 
-      type="range"
-      min="0"
-      max="1"
-      step="0.001"
-      value="0"
-      style="
-        flex:1;
-        height:8px;
-        cursor:pointer;
-      "
-    >
+    <span style="color:#000000;">t = 0</span>
 
-    <span style="color:#7AA2FF; font-size:1em;">t = 1</span>
+    <input id="tSlider_2" type="range" min="0" max="1" step="0.001" value="0"
+      style="flex:1;">
+
+    <span style="color:#000000;">t = 1</span>
   </div>
 
-
-  <div style="text-align:center;">
-    t = <span id="gmix_opt2_tValue">0.000</span>
+  <div style="text-align:center; font-size:0em; margin-top:5px;">
+    t = <span id="tValue_2">0.000</span>
   </div>
 
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-  <script>
-  (function () {
-
-    const N = 1200;
-    const X = new Float64Array(N);
-    for (let i = 0; i < N; i++) X[i] = -10 + 35 * i / (N - 1);
-
-    const SQRT_2PI = Math.sqrt(2 * Math.PI);
-
-    function gaussian(x, mu, s) {
-      const z = (x - mu) / s;
-      return Math.exp(-0.5 * z * z) / (s * SQRT_2PI);
+  <style>
+    .num-input {
+      width: 3.5em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
     }
 
-    function compute(mu1,s1,mu2,s2,t) {
+    .yellow-input:focus { border-color: var(--color5); }
+    .blue-input:focus { border-color: #7AA2FF; }
+
+    input[type="range"] {
+      appearance: none;
+      background: #222;
+      border-radius: 999px;
+      height: 6px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #000000;
+    }
+  </style>
+
+  <script>
+    const N_2 = 1200;
+    const X_2 = new Float64Array(N_2);
+    const SQRT_2PI_2 = Math.sqrt(2 * Math.PI);
+
+    for (let i = 0; i < N_2; i++) {
+      X_2[i] = -10 + 35 * i / (N_2 - 1);
+    }
+
+    function gaussian_2(x, mu, sigma) {
+      const z = (x - mu) / sigma;
+      return Math.exp(-0.5 * z * z) / (sigma * SQRT_2PI_2);
+    }
+
+      function computeDensities_2(mu1,s1,mu2,s2,t) {
 
       const Y1 = new Array(N);
       const Y2 = new Array(N);
@@ -1690,78 +1683,117 @@ $$
       return {Y1,Y2,Ymix};
     }
 
-    function draw() {
 
-      const mu1 = +document.getElementById("gmix_opt2_mu1").value;
-      const s1  = +document.getElementById("gmix_opt2_sigma1").value;
-      const mu2 = +document.getElementById("gmix_opt2_mu2").value;
-      const s2  = +document.getElementById("gmix_opt2_sigma2").value;
-      const t   = +document.getElementById("gmix_opt2_t").value;
+    function drawPlot_2() {
+      const mu1 = parseFloat(document.getElementById("mu1_2").value);
+      const sigma1 = parseFloat(document.getElementById("sigma1_2").value);
+      const mu2 = parseFloat(document.getElementById("mu2_2").value);
+      const sigma2 = parseFloat(document.getElementById("sigma2_2").value);
+      const t = parseFloat(document.getElementById("tSlider_2").value);
 
-      document.getElementById("gmix_opt2_tValue").innerText = t.toFixed(3);
+      document.getElementById("tValue_2").innerText = t.toFixed(3);
 
-      const {Y1,Y2,Ymix} = compute(mu1,s1,mu2,s2,t);
+      const { Y1, Y2, Ymix } =
+        computeDensities_2(mu1, sigma1, mu2, sigma2, t);
 
-      const r = Math.round((1-t)*255 + t*77);
-      const g = Math.round((1-t)*128 + t*102);
-      const b = Math.round((1-t)*0 + t*255);
+      const trace1 = {
+        x: Array.from(X_2),
+        y: Y1,
+        mode: "lines",
+        line: { width: 3, color: "rgba(255,220,0,1)" },
+        name: "Left Density"
+      };
 
-      Plotly.react("gmix_opt2_plot", [
-        {x:X,y:Y1,mode:"lines",line:{color:"rgba(255,180,0,0.4)"},name:"L"},
-        {x:X,y:Y2,mode:"lines",line:{color:"rgba(90,120,255,0.4)"},name:"R"},
-        {x:X,y:Ymix,mode:"lines",line:{width:4,color:`rgb(${r},${g},${b})`},fill:"tozeroy",fillcolor:`rgba(${r},${g},${b},0.15)`}
-      ], {
-        paper_bgcolor:"#000",
-        plot_bgcolor:"#000",
-        font:{color:"#EAEAEA"},
-        margin:{l:60,r:20,t:30,b:40},
-        xaxis:{range:[-10,25],gridcolor:"#222"},
-        yaxis:{range:[0,0.5],gridcolor:"#222"}
-      }, {displayModeBar:false});
+      const trace2 = {
+        x: Array.from(X_2),
+        y: Y2,
+        mode: "lines",
+        line: { width: 3, color: "rgba(50,255,255,1)" },
+        name: "Right Density"
+      };
+
+      const r = Math.round((1 - t) * 255 + t * 100);
+      const g = Math.round((1 - t) * 220 + t * 170);
+      const b = Math.round((1 - t) * 0 + t * 255);
+
+      const traceMix = {
+        x: Array.from(X_2),
+        y: Ymix,
+        mode: "lines",
+        line: {
+          width: 6,
+          color: `rgb(${r},${g},${b})`
+        },
+        fill: "tozeroy",
+        fillcolor: `rgba(${r},${g},${b},0.18)`,
+        name: "Interpolated Density"
+      };
+
+      const layout = {
+        paper_bgcolor: "#000",
+        plot_bgcolor: "#000",
+        width: 800,
+        height: 400,
+        font: { color: "#EAEAEA" },
+        margin: { l: 70, r: 30, t: 50, b: 60 },
+        title: {
+          text: `Density Interpolation | t = ${t.toFixed(3)}`,
+          font: { size: 22 }
+        },
+        xaxis: {
+          range: [-10, 25],
+          gridcolor: "#222",
+          zerolinecolor: "#333",
+          title: "x"
+        },
+        yaxis: {
+          range: [0, 0.5],
+          gridcolor: "#222",
+          zerolinecolor: "#333",
+          title: "density"
+        },
+        legend: { orientation: "h", y: 1.08 }
+      };
+
+      Plotly.react(
+        "gaussianPlot_2",
+        [trace1, trace2, traceMix],
+        layout,
+        { displayModeBar: false }
+      );
     }
 
-    document.getElementById("gmix_opt2_t").addEventListener("input", draw);
-    document.getElementById("gmix_opt2_mu1").addEventListener("input", draw);
-    document.getElementById("gmix_opt2_sigma1").addEventListener("input", draw);
-    document.getElementById("gmix_opt2_mu2").addEventListener("input", draw);
-    document.getElementById("gmix_opt2_sigma2").addEventListener("input", draw);
+    [
+      "mu1_2",
+      "sigma1_2",
+      "mu2_2",
+      "sigma2_2",
+      "tSlider_2"
+    ].forEach(id => {
+      document.getElementById(id).addEventListener("input", drawPlot_2);
+    });
 
-    draw();
-
-  })();
+    drawPlot_2();
   </script>
 </section>
 
+<!-- summary -->
 <section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Calculation Optimal Transport Gaussian</h3>
-<p style="color:#EAEAEA; font-size:0.5em;">
-  TODO
-  (If there is time left)
-</p> 
-</section>
-
-
-<section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Outlook</h3>
+<h3   text-align:center; text-transform: none">Summary</h3>
 <p style="color:#EAEAEA; font-size:0.5em;">
 </p> 
 </section>
 
+<!-- thank you -->
 <section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Summary</h3>
+<h3   text-align:center; text-transform: none">Thank You for listening!</h3>
 <p style="color:#EAEAEA; font-size:0.5em;">
 </p> 
 </section>
 
-
+<!-- references -->
 <section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">Thank You for listening!</h3>
-<p style="color:#EAEAEA; font-size:0.5em;">
-</p> 
-</section>
-
-<section>
-<h3 style="color:#A8E6CF; text-align:center; text-transform: none">References</h3>
+<h3   text-align:center; text-transform: none">References</h3>
 <p style="color:#EAEAEA; font-size:0.5em;">
 </p> 
 

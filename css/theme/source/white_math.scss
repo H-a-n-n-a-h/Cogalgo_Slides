@@ -1,0 +1,90 @@
+/**
+ * White math theme with custom color palette
+ *
+ * By Hannah
+ */
+
+
+// Default mixins and settings -----------------
+@use "sass:color";
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(./fonts/source-sans-pro/source-sans-pro.css);
+
+// Colors
+:root {
+  --color1: #ffffff;
+  --color2: #000000;
+  --color3: #787878;
+  --color4: #bb1f1f;
+  --color5: #dd2abc;
+  --color6: #cf003b;
+  --color7: #b8ab1b;
+
+// Colors for plots
+
+  --pltbg: #ffffff;
+  --pltcolor2: #000000;
+  --pltcolor3: #575757;
+  --pltcolor4: #bb1f1f;
+  --accent: #dd2abc;
+  --pltcolor6: #147d5c;
+  --pltcolor7: #b8ab1b;
+}
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #fff;
+
+$mainColor: #222;
+$headingColor: #222;
+
+$mainFontSize: 42px;
+$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+
+$headingFontWeight: 600;
+$linkColor: #2a76dd;
+$linkColorHover: color.scale( $linkColor, $lightness: 15% );
+$selectionBackgroundColor: color.scale( $linkColor, $lightness: 25% );
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+$headingColor: #000000;
+
+$overlayElementBgColor: 0, 0, 0;
+$overlayElementFgColor: 240, 240, 240;
+
+// Paragraph colors
+$paragraphColor1: #323232;
+$paragraphColor2: #555;
+
+.p1 {
+  color: $paragraphColor1;
+  font-size: 0.3em;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.p2 {
+  color: $paragraphColor2;
+  font-size: 0.3em;
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+// Change text colors against dark slide backgrounds
+@include dark-bg-text-color(#fff);
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------

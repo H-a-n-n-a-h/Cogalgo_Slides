@@ -672,6 +672,7 @@ $controlsArrowAngleActive: 36deg;
 	perspective: 600px;
 }
 
+
 .reveal .slides>section,
 .reveal .slides>section>section {
 	display: none;
@@ -2037,6 +2038,7 @@ $notesWidthPercent: 25%;
 		display: block !important;
 		position: absolute !important;
 		width: var(--slide-width) !important;
+		
 		height: var(--slide-height) !important;
 		top: 50% !important;
 		left: 50% !important;
