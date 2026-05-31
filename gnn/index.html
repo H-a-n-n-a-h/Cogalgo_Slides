@@ -52,22 +52,15 @@
   <h3   text-align:center;text-transform: none">Contents</h3>
   <div style="font-size:0.6em; line-height:1.6; max-width:800px; margin:0 auto;">
     <ul style="text-align:left;">
-      <li>Couplings of Probability Measures</li>
-    <ul style="text-align:left;">
-        <li>Probability Measures</li>
-        <li>Independent couplings</li>
-        <li>Optimal couplings</li>
+      <li>Probability Measures</li>
+        <li>TV distance</li>
+        <li>Wasserstein Distance</li>
+        <li>Couplings</li>
+        <li>Examples of couplings of atomic measures</li>
+        <li>Brenier's theorem</li>
         <li>Couplings from maps</li>
-    </ul>
-      <li>Distance of Probability Measures</li>
-    <ul style="text-align:left;">
-    <li>Total Variation Norm</li>
-    <li>Wasserstein Distance</li>
-    </ul> 
-      <li>Couplings of Atomic Measures</li>
-      <li>Brenier's theorem</li>
-      <li>Transportation Maps of Gaussian</li>
-      <li>Summary</li>
+        <li>Examples: Transport plans of gaussians</li>
+        <li>Summary</li>
     </ul>
   </div>
 </section>
@@ -283,7 +276,7 @@
         \\end{bmatrix} 
         $$
         $$
-        \\mu= 0
+         m= 0
         $$
       `;
       document.getElementById('matrix').innerHTML = html;
@@ -325,7 +318,7 @@
 
       <!-- Question highlighted -->
     <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
-      TV of Probability measures is always 2, but intuitively the cross measure should be closer to the dot measure. (check on board)
+      TV of Probability measures with disjoint supports is always 2, but intuitively the cross measure should be closer to the dot measure. 
     </p>
 
           <!-- Question highlighted -->
@@ -397,7 +390,9 @@ $$
   </p>
 </section>
 
+
 <!-- Push-Forward Measures -->
+<!--
 <section>
   <h3   text-align:center;   text-align: left;">
     Recap: Push-Forward Measures
@@ -428,6 +423,7 @@ Let $(\Omega, \mathcal{A}, \mathbb{P})$ be a probability space and $X: \Omega \r
   </div>
 
 </section>
+-->
 
 <!-- Wasserstein Distance -->
 <section>
@@ -445,7 +441,7 @@ the Wasserstein distance
  <p style="color:#EAEAEA; font-size:1.3em; line-height:1.25; margin:0 0 10px 0;text-align: center;">
       <span style="color:#000000;">
         $\displaystyle W_2^2(\mu, \nu):=$
-        <span style="color:var(--color6);">$\displaystyle \min _{\pi \in \Pi(\mu, \nu )}$</span>
+        <span style="color:var(--color5);">$\displaystyle \min _{\pi \in \Pi(\mu, \nu )}$</span>
         $\displaystyle \int_{\mathbb{R}^d \times \mathbb{R}^d}\|x-y\|_2^2 \mathrm{~d} \pi(x, y)
 $
       </span>
@@ -455,7 +451,7 @@ $\mathcal{P}_2\left(\mathbb{R}^d\right)$ becomes a complete metric space, where 
 
 
  <p style="color:#EAEAEA; font-size:1.3em; line-height:1.25; margin:0 0 10px 0;text-align: center;">
-      <span style="color:var(--color6);">
+      <span style="color:var(--color5);">
       $$
       \Pi(\mu, \nu):=\left\{\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right):\left(P_1\right)_{\#} \pi=\mu,\left(P_2\right)_{\#} \pi=\nu\right\}
       \quad \textbf{Couplings of $\mu$ and $\nu$}
@@ -467,14 +463,10 @@ $\mathcal{P}_2\left(\mathbb{R}^d\right)$ becomes a complete metric space, where 
 where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, \quad P^1(x, y)=x$.
 </div>
 
-      <!-- Question highlighted -->
-    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px; font-size:0.6em; ">
-      Lets look at examples of couplings and then calculate their Wasserstein distance!
-    </p>
 
-         <!-- Question highlighted -->
+    <!-- Question highlighted -->
     <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.6em;">
-      1. Independent couplings 2. Optimal couplings 3. Couplings from maps
+     Lets look at examples of 1. Independent couplings 2. Optimal couplings 3. Couplings from maps!
     </p>
 </section>
 
@@ -492,6 +484,10 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
         Three possible couplings of two atomic measures $\mu$ and $\nu$ with support points $x_1, x_2$ and $y_1, y_2$. The larger the line the larger the mass transported between two points.
   </p>
   </div>
+    <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.8em;">
+     Do optimal maps always exist?
+    </p>
 </section>
 
 <!--More Examples 1-->
@@ -1748,6 +1744,13 @@ $$
 <!-- thank you -->
 <section>
 <h3   text-align:center; text-transform: none">Thank You for listening!</h3>
+<p style="color:#EAEAEA; font-size:0.5em;">
+</p> 
+</section>
+
+<!-- thank you -->
+<section>
+<h3   text-align:center; text-transform: none">Any questions?</h3>
 <p style="color:#EAEAEA; font-size:0.5em;">
 </p> 
 </section>
