@@ -148,7 +148,6 @@
 </section>
 
 <!--Sample of Gaussian distribution-->
-<!-- TODO fix typo -->
 <section>
   <h3   text-align:center;text-transform: none">Sample of Gaussian distribution</h3>
   
@@ -157,7 +156,7 @@
     <img src="../img/Gaussian_2.png" width="400" style="display:block; margin: 0 auto;">
      <img src="../img/Gaussian_2_1D.png" width="400" style="display:block; margin: 0 auto;">
 	<p style=" font-size:0.7em; margin-top:5px;">
-		Plot below shows 3 datapoints sampled from the distribution
+		Plot below shows 5 datapoints sampled from the distribution
 	  </p>
   </div>
 </section>
@@ -187,7 +186,7 @@
       </label>
 
       <label>Covariance $(X_1, X_2)$:
-        <input id="cov" type="number" step="0.1" value="1" class="num-input">
+        <input id="cov" type="number" step="0.1" value="0.99" class="num-input">
       </label>
     </div>
 
@@ -276,7 +275,10 @@
         \\end{bmatrix} 
         $$
         $$
-         m= 0
+         m = \\begin{bmatrix}
+          0 \\\\
+          0
+        \\end{bmatrix}
         $$
       `;
       document.getElementById('matrix').innerHTML = html;
@@ -299,38 +301,6 @@
   </script>
 </section>
 
-<!-- TV Distance -->
-<section>
-  <h3   text-align:center;text-transform: none">  Distance of Measures: TV norm</h3>
-
-<!-- MAIN LAYOUT -->
-<div style="display:flex; justify-content:center; align-items:flex-start; gap:30px; margin-top:10px;">
-
-  <!-- LEFT: Plot -->
-      <img src="../img/tv_example1.png" width="600" style="display:block; margin: 0 auto;">
-      <p class="p1">
-  </p>
-
-  <!-- RIGHT: Controls + text -->
-  <div style="display:flex; flex-direction:column; gap:15px; font-size:0.6em; text-align:left;">
-
-    Is the diamond measure closer to the Triangle measure than the square measure? 
-
-      <!-- Question highlighted -->
-    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
-      TV of Probability measures with disjoint supports is always 2, but intuitively the cross measure should be closer to the dot measure. 
-    </p>
-
-          <!-- Question highlighted -->
-    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
-      Different distance!
-      Wasserstein (later)
-    </p>
-
-  </div>
-
-</div>
-</section>
 
 <!-- TV Distance -->
 <section>
@@ -389,6 +359,42 @@ $$
 
   </p>
 </section>
+
+
+<!-- TV Distance -->
+<section>
+  <h3   text-align:center;text-transform: none">  Distance of Measures: TV norm</h3>
+
+<!-- MAIN LAYOUT -->
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:30px; margin-top:10px;">
+
+  <!-- LEFT: Plot -->
+      <img src="../img/tv_example1.png" width="600" style="display:block; margin: 0 auto;">
+      <p class="p1">
+  </p>
+
+  <!-- RIGHT: Controls + text -->
+  <div style="display:flex; flex-direction:column; gap:15px; font-size:0.6em; text-align:left;">
+
+    Is the diamond measure closer to the Triangle measure than the square measure? 
+
+      <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
+      TV of Probability measures with disjoint supports is always 2, but intuitively the pink diamond measure should be closer to the black triangle measure. 
+    </p>
+
+          <!-- Question highlighted -->
+    <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.7em;">
+      Different distance!
+      Wasserstein distance!
+    </p>
+
+  </div>
+
+</div>
+</section>
+
+
 
 
 <!-- Push-Forward Measures -->
@@ -458,17 +464,15 @@ $\mathcal{P}_2\left(\mathbb{R}^d\right)$ becomes a complete metric space, where 
       $$
       </span>
     </p>
-
-
-where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}^d, \quad P^1(x, y)=x$.
 </div>
-
-
     <!-- Question highlighted -->
     <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.6em;">
      Lets look at examples of 1. Independent couplings 2. Optimal couplings 3. Couplings from maps!
     </p>
 </section>
+
+
+
 
 <!-- Couplings of Atomic Measures -->
 <section>
@@ -484,11 +488,31 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
         Three possible couplings of two atomic measures $\mu$ and $\nu$ with support points $x_1, x_2$ and $y_1, y_2$. The larger the line the larger the mass transported between two points.
   </p>
   </div>
+
+</section>
+
+<!-- Monge Map -->
+<section>
+  <h3   text-align:center; text-transform: none; text-align: left;">Monge Map</h3>
+
+  <div style="font-size:0.5em; text-align: left;">
+
+
+Optimal Transport Map (Monge map):
+$T \in L^2_\mu (\mathbb{R}^d , \mathbb{R}^d)$ with 
+$$
+W_2^2(\mu, \nu)=\int_{\mathbb{R}^d}\|x-T(x)\|^2 \mathrm{~d} \mu(x) \quad \text { subject to } \quad \nu=T_{\# \mu} =: \mu \circ T^{-1} 
+$$
+The optimal coupling can be written as 
+$\pi=(I,T)_{\#{\mu}}$ where $(I,T): \mathbb{R}^d \rightarrow \mathbb{R}^d \times \mathbb{R}^d, x \mapsto (x,T(x))$
+
     <!-- Question highlighted -->
     <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;font-size:0.8em;">
      Do optimal maps always exist?
     </p>
+</div>
 </section>
+
 
 <!--More Examples 1-->
 <section>
@@ -615,13 +639,13 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
 
       <p style=" font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
         <span style="color:var(--color-myblue);">
-          $\mu=3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3}$
+          $\mu=\frac{1}{6}(3\delta_{x_1}+1\delta_{x_2}+2\delta_{x_3})$
         </span>
       </p>
 
       <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         <span style="color:var(--color-myyellow);">
-          $\nu=2\delta_{y_1}+4\delta_{y_2}$
+          $\nu=\frac{1}{6}(2\delta_{y_1}+4\delta_{y_2})$
         </span>
       </p>
 
@@ -725,13 +749,13 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
 
       <p style=" font-size:0.58em; line-height:1.25; margin:0 0 8px 0;">
         <span style="color:var(--color-myblue);">
-          $\mu=2\delta_{x_1}+4\delta_{x_2}$
+          $\mu=\frac{1}{6}(2\delta_{x_1}+4\delta_{x_2})$
         </span>
       </p>
 
       <p style=" font-size:0.58em; line-height:1.25; margin:0 0 10px 0;">
         <span style="color:var(--color-myyellow);">
-          $\nu=3\delta_{y_1}+1\delta_{y_2}+2\delta_{y_3}$
+          $\nu=\frac{1}{6}(3\delta_{y_1}+1\delta_{y_2}+2\delta_{y_3})$
         </span>
       </p>
 
@@ -756,8 +780,8 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
           $$\begin{array}{c|ccc}
            & y_1 & y_2 & y_3 \\
           \hline
-          x_1 & 4 & 1 & 5 \\
-          x_2 & 2 & 1 & 1
+          x_1 & 2 & 1 & 1\\
+          x_2 & 4 & 1 & 5 
           \end{array}$$
         </div>
 
@@ -787,7 +811,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
       <div style="background:rgba(0,0,0,0.3); padding:16px 12px; border-radius:4px; display:flex; justify-content:center; align-items:center;">
 
         <div style="text-align:center; font-size:1.05em;">
-          $\mathrm{OT}(\mu,\nu)=17$
+          $\mathrm{OT}(\mu,\nu)=15$
         </div>
 
       </div>
@@ -796,7 +820,7 @@ where the projection is $P^1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \math
   </div>
 </section>
 
-<!-- linear optimization TODO check if fits-->
+<!-- linear optimization TODO check if fits
 <section>
   <h3   text-align:center; text-transform: none">Calculate Wasserstein Distance of Atomic Measures</h3>
   <p style=" font-size:0.8em; text-align: left;">
@@ -812,12 +836,12 @@ In this simple case a minimizer can be explicitly calculated.
       </p>
 
   </p>
-    <!-- Question highlighted -->
+    Question highlighted 
     <p class="fragment" style="color: var(--color5); font-weight:bold; margin-top:20px;">
       Under certain conditions the optimal coupling is unique! (Brenier)  
     </p>
 </section>
-
+-->
 <!--Brenier-->
 <section> 
   <h3   text-align:center; text-transform: none">
@@ -850,7 +874,7 @@ In this simple case a minimizer can be explicitly calculated.
       </li>
       <li>
     <!-- Question highlighted -->
-    <p class="fragment" style="color: var(--color3); margin-top:20px;">
+    <p class="fragment" style="margin-top:20px;">
 
         It holds
         <br><br>
@@ -862,10 +886,10 @@ In this simple case a minimizer can be explicitly calculated.
      
     
     </p>
-
+ <!--
       <li>
 
-      <!-- Question highlighted -->
+     
     <p class="fragment" style="color: var(--color3); margin-top:20px;">
      Conversely, if $\psi$ is lower semi-continuous, convex and differentiable $\mu$-a.e., with 
         $\nabla \psi \in L_\mu^2(\mathbb{R}^d, \mathbb{R}^d)$, then
@@ -874,8 +898,9 @@ In this simple case a minimizer can be explicitly calculated.
         T = \nabla \psi
         $$
         is the optimal transport map from $\mu$ to $\nu = T_{\#}\mu \in \mathcal{P}_2(\mathbb{R}^d)$.
-    </p>
+    </p> 
               </li>
+    -->
     </ol>
   </div>
 </section>
@@ -901,6 +926,20 @@ W_2^2(\mu, \nu)=\int\|x-T(x)\|^2 \mathrm{~d} x= \left\|m_\mu-m_\nu\right\|^2+\op
 \end{gathered}
 $$
 </p>
+
+    <p class="fragment" style="font-size:0.5em; text-align: left;">
+
+       and if $\Sigma_\mu$ and $\Sigma_\nu$ commute, then
+        <br><br>
+        $$
+        T(x) = m_\nu + \Sigma_\nu^{\frac{1}{2}} \Sigma_\mu^{-\frac{1}{2}} (x - m_\mu)
+        $$
+        
+        $$
+        W^2_2(\mu,\nu) = \|m_\mu - m_\nu\|^2 + \|\Sigma_\mu^{\frac{1}{2}} - \Sigma_\nu^{\frac{1}{2}}\|_F^2
+        $$
+    
+    </p>
 </section>
 
 <!-- Teleport-->
@@ -928,7 +967,7 @@ $X_t=(1-t) X_\mu+t X_\nu$, where $X_\mu \sim \mu, X_\nu \sim \nu, \mu_t \sim X_t
 
   <!-- Row 2: formula -->
   <div style="text-align:center; font-size:0.9em; margin-bottom:10px;">
-    $p_t = (1-t)\mu + t\nu$
+    $ (1-t)\mu + t\nu$
   </div>
 
   <!-- Row 3: 3-column layout -->
@@ -1175,7 +1214,7 @@ $X_t=(1-t) X_\mu+t X_\nu$, where $X_\mu \sim \mu, X_\nu \sim \nu, \mu_t \sim X_t
   <h3   text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
 
 <p style="font-size:0.5em; text-align: left;">
-Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma)\, dx$ :
+Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma^2)\, dx$ :
 </p>
 
 <ul style="font-size:0.5em; text-align: left;">
@@ -1195,7 +1234,7 @@ $$
   </h3>
 
   <div style="text-align:center; font-size:0.9em; margin-bottom:10px;">
-    $p_t=\mathcal{N}(t m, (1-t)^2 + t \sigma^2)$
+    $ \mathcal{N}(t m, (1-t)^2 + t^2 \sigma^2)$
   </div>
 
   <div style="
@@ -1336,24 +1375,34 @@ $$
     }
 
 
-      function computeDensities_3(mu1,s1,mu2,s2,t) {
+  function computeDensities_3(mu1, s1, mu2, s2, t) {
 
-      const Y1 = new Array(N_3);
-      const Y2 = new Array(N_3);
-      const Ymix = new Array(N_3);
+  const Y1 = new Array(N_3);
+  const Y2 = new Array(N_3);
+  const Ymix = new Array(N_3);
 
-      const mu = (1 - t) * mu1 + t * mu2;
-      const sigma = (1 - t) ** 2 * s1 + t ** 2 * s2;
+  const mu = (1 - t) * mu1 + t * mu2;
 
-      for (let i = 0; i < N_3; i++) {
-        const x = X_3[i];
-        Y1[i] = gaussian_3(x, mu1, s1);
-        Y2[i] = gaussian_3(x, mu2, s2);
-        Ymix[i] = Math.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * SQRT_2PI_3);
-      }
+  const sigma2 =
+    (1 - t) ** 2 * s1 ** 2 +
+    t ** 2 * s2 ** 2;
 
-      return {Y1,Y2,Ymix};
-    }
+  const sigma = Math.sqrt(sigma2);
+
+  for (let i = 0; i < N_3; i++) {
+    const x = X_3[i];
+
+    Y1[i] = gaussian_3(x, mu1, s1);
+    Y2[i] = gaussian_3(x, mu2, s2);
+
+    const z = (x - mu);
+    Ymix[i] =
+      Math.exp(-0.5 * (z * z) / sigma2) /
+      (Math.sqrt(sigma2) * SQRT_2PI_3);
+  }
+
+  return { Y1, Y2, Ymix };
+}
 
     function drawPlot_3() {
       const mu1 = parseFloat(document.getElementById("mu1_3").value);
@@ -1418,7 +1467,7 @@ $$
           title: "x"
         },
         yaxis: {
-          range: [0, 0.5],
+          range: [0, 0.6],
           gridcolor: "#222",
           zerolinecolor: "#333",
           title: "density"
@@ -1453,7 +1502,7 @@ $$
   <h3   text-align:center; text-transform: none">Wasserstein Distance of Gaussians </h3>
 
 <p style="font-size:0.5em; text-align: left;">
-Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma)\, dx$ :
+Paths for $t \in[0,1]$ between $\mu=\mathcal{N}(0,1)\, dx$ and $\nu=\mathcal{N}(m,\sigma^2)\, dx$ :
 </p>
 
 <ul style="font-size:0.5em; text-align: left;">
@@ -1470,7 +1519,7 @@ $$
 $$
 and if $\mu$ has density $p$ we know that $\mu_t$ has density $p_t=C p\left(T_t^{-1} \cdot\right)$. Thus, with the optimal transport map $T(x)=m+\sigma x$, we obtain
 $$
-p_t=\mathcal{N}(t m, 1-t+t \sigma)
+\mathcal{N}(t m, 1-t+t \sigma^2)
 $$
   </li>
 </ul>
@@ -1483,7 +1532,7 @@ $$
   </h3>
 
   <div style="text-align:center; font-size:0.9em; margin-bottom:10px;">
-    $p_t=\mathcal{N}(t m, 1-t+t \sigma)$
+    $\mathcal{N}(t m, 1-t+t \sigma^2)$
   </div>
 
   <div style="
@@ -1737,8 +1786,33 @@ $$
 <!-- summary -->
 <section>
 <h3   text-align:center; text-transform: none">Summary</h3>
-<p style="color:#EAEAEA; font-size:0.5em;">
-</p> 
+<div style="font-size:0.5em; line-height:1.55; max-width:900px; margin:0 auto; text-align:left;">
+  <ul style="padding-left:18px; margin:0;">
+
+    <li><strong>Total variation</strong> 
+      $\mu,\nu$ probability measures
+      then
+      $
+\|\mu-\nu\|_{T V}=2
+$ if support disjunct, even when supports are close in space.</li>
+    <li><strong>Wasserstein distance</strong>  <span style="color:#000000;">
+        $\displaystyle W_2^2(\mu, \nu):=$
+        <span style="color:var(--color5);">$\displaystyle \min _{\pi \in \Pi(\mu, \nu )}$</span>
+        $\displaystyle \int_{\mathbb{R}^d \times \mathbb{R}^d}\|x-y\|_2^2 \mathrm{~d} \pi(x, y)
+$
+      </span> with minimizer from 
+          <span style="color:var(--color5);">
+      $
+      \Pi(\mu, \nu):=\left\{\pi \in \mathcal{P}\left(\mathbb{R}^d \times \mathbb{R}^d\right):\left(P_1\right)_{\#} \pi=\mu,\left(P_2\right)_{\#} \pi=\nu\right\}
+      \quad \textbf{Couplings of $\mu$ and $\nu$}
+      $
+      </span></li>
+    <li><strong>Couplings</strong> are joint distributions with prescribed marginals; we looked at <it>independent</it> couplings $\pi = \mu \otimes \nu$, optimal couplings (minimizers of $W_2^2$) and from optimal transport plans $\pi = (x, T(x))$, where Monge Map $T \in L^2_\mu(\mathbb{R}^d)$ is 
+    $W_2^2(\mu, \nu)=\int_{\mathbb{R}^d}\|x-T(x)\|^2 \mathrm{~d} \mu(x) \quad \text { s.t. } \quad \nu=T_{\# \mu}$</li>
+    <li><strong>Brenier's theorem</strong> for  $\mu << \nu $ then 1. optimal $\pi$ unique, 2. $\pi$ given by $(x, T(x))$ 3. $T(x) = \nabla \psi (x)$ for lower semi continuous, convex, differentiable $\psi$.</li>
+    <li><strong>Gaussian transport</strong> for $\mu = \mathcal{N}(0,1) dx$ and $\nu = \mathcal{N}(m,\sigma^2) dx$ we have for $t\in[0,1]$: Linear: $ (1-t)\mu + t\nu$, Independent: $ \mathcal{N}(t m, (1-t)^2 + t^2 \sigma^2)$, Optimal: $\mathcal{N}(t m, 1-t+t \sigma^2)$ </li>
+  </ul>
+</div>
 </section>
 
 <!-- thank you -->
@@ -1748,17 +1822,28 @@ $$
 </p> 
 </section>
 
-<!-- thank you -->
-<section>
-<h3   text-align:center; text-transform: none">Any questions?</h3>
-<p style="color:#EAEAEA; font-size:0.5em;">
-</p> 
-</section>
 
 <!-- references -->
 <section>
 <h3   text-align:center; text-transform: none">References</h3>
-<p style="color:#EAEAEA; font-size:0.5em;">
+<p style="color:#000000; font-size:0.5em;">
+  
+
+Christian Wald, Gabriele Steidl et al.
+Flow Matching: Markov Kernels, Stochastic Processes and Transport Plans.
+arXiv:2501.16839v7 (2025)
+https://arxiv.org/abs/2501.16839
+</p> 
+
+<p style="color:#000000; font-size:0.5em;">
+Cédric Villani,
+ Topics in Optimal Transportation. Graduate Studies in Mathematics, vol. 58. American Mathematical Society, Providence, RI, 2003.
+</p> 
+
+<p style="color:#000000; font-size:0.5em;">
+Gabriele Steidl, Jannis Chemseddine,
+Flows in Measure Spaces and Generative Modeling,
+Summer School HCM Bonn, May 2026
 </p> 
 
 </section>
