@@ -40,13 +40,6 @@
       <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
     </section>
 
-<section>
-  <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
-  
-    
-	<p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
-Next tutorial will be in person in Mar.0001 again!  
-</section>
 
 
 <section>
@@ -169,8 +162,6 @@ Next tutorial will be in person in Mar.0001 again!
 
 
 
-
-
 <section>
   <h3 style="color:#A8E6CF; text-align:middle; text-transform: none; font-size:1.1em;">Dimensionality Reduction</h3>
   <div style="text-align:center;">
@@ -186,6 +177,124 @@ Next tutorial will be in person in Mar.0001 again!
     \]
   </p>
   </div>
+</section>
+
+
+<section>
+  <h3 style="color:#A8E6CF; text-align:center;text-transform: none">Interactive Gaussian Scatter</h3>
+
+  <!-- Input controls -->
+  <div style="text-align:center; margin-bottom: 10px; display:flex; justify-content:center; align-items:center; gap:10px;font-size:0.6em">
+    <label for="x1" style="color:#EAEAEA;">X₁:</label>
+    <input id="x1" type="number" step="0.1" value="1" class="num-input">
+
+    <label for="x2" style="color:#EAEAEA;">X₂:</label>
+    <input id="x2" type="number" step="0.1" value="1" class="num-input">
+
+    <label for="cov" style="color:#EAEAEA;">Cov:</label>
+    <input id="cov" type="number" step="0.1" value="0" class="num-input">
+  </div>
+
+  <!-- Plot + Matrix container -->
+  <div style="display:flex; justify-content:center; align-items:flex-start; gap:20px;">
+    <!-- Plot -->
+    <div id="plot" style="width:700px; height:500px;"></div>
+
+    <!-- Covariance matrix -->
+    <div id="matrix" style="color:#EAEAEA; font-size:1.0em; text-align:center;"></div>
+  </div>
+
+  <!-- Plotly and MathJax -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <style>
+    .num-input {
+      width: 4em;
+      background: #111;
+      color: #EAEAEA;
+      border: 1px solid #444;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1em;
+      padding: 4px;
+      transition: border 0.2s;
+    }
+    .num-input:focus {
+      outline: none;
+      border-color: #A8E6CF;
+    }
+  </style>
+
+  <script>
+    function generateData(X1, X2, cov, n=2000) {
+      const points = [];
+      const rho = cov / Math.sqrt(X1 * X2);
+      for (let i = 0; i < n; i++) {
+        const u1 = Math.random(), u2 = Math.random();
+        const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        const z1 = Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+        const x = Math.sqrt(X1) * z0;
+        const y = Math.sqrt(X2) * (rho * z0 + Math.sqrt(1 - rho ** 2) * z1);
+        points.push({ x, y });
+      }
+      return points;
+    }
+
+    function plotData(X1, X2, cov) {
+      const data = generateData(X1, X2, cov);
+      const trace = {
+        x: data.map(p => p.x),
+        y: data.map(p => p.y),
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: '#04f8fb', size: 4 },
+        name: 'Samples'
+      };
+      const layout = {
+        paper_bgcolor: '#000',
+        plot_bgcolor: '#000',
+        font: { color: '#EAEAEA' },
+        xaxis: { range: [-10, 10], title: 'x₁', gridcolor: '#333' },
+        yaxis: { range: [-10, 10], title: 'x₂', gridcolor: '#333' },
+        width: 500,
+        height: 500,
+        title: `X₁=${X1}, X₂=${X2}, Cov=${cov}`,
+      };
+      Plotly.newPlot('plot', [trace], layout, {displayModeBar: false});
+    }
+
+    function updateMatrix(X1, X2, cov) {
+      const html = `
+        $$S_A = \\begin{bmatrix}
+          ${X1.toFixed(2)} & ${cov.toFixed(2)} \\\\
+          ${cov.toFixed(2)} & ${X2.toFixed(2)}
+        \\end{bmatrix}$$
+      `;
+      document.getElementById('matrix').innerHTML = html;
+      MathJax.typesetPromise();
+    }
+
+    function update() {
+      const X1 = parseFloat(document.getElementById('x1').value);
+      const X2 = parseFloat(document.getElementById('x2').value);
+      const cov = parseFloat(document.getElementById('cov').value);
+      plotData(X1, X2, cov);
+      updateMatrix(X1, X2, cov);
+    }
+
+    ['x1', 'x2', 'cov'].forEach(id => {
+      document.getElementById(id).addEventListener('input', update);
+    });
+
+    update();
+  </script>
 </section>
 
 
