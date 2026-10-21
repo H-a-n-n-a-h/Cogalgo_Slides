@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Tutorial Slides</title>
+  <title>Cognitive Algorithms — Tutorial Materials</title>
 
   <style>
     * {
@@ -13,370 +13,327 @@
 
     body {
       margin: 0;
-      background: #121212;
-      color: #eaeaea;
+      background: #fff;
+      color: #202122;
       font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
       line-height: 1.6;
     }
 
-    header {
-      padding: 70px 20px 40px;
-      text-align: center;
-      background: linear-gradient(180deg, #1c1c1c, #121212);
-      border-bottom: 1px solid #2c2c2c;
+    a {
+      color: #0645ad;
+      text-decoration: none;
     }
 
-    header h1 {
-      margin: 0 0 10px;
-      font-size: 2.7rem;
+    a:visited {
+      color: #795cb2;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    a:focus-visible {
+      outline: 2px solid #36c;
+      outline-offset: 2px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 30px 60px;
+    }
+
+    header {
+      margin-bottom: 28px;
+    }
+
+    h1, h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: normal;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #a2a9b1;
+      font-size: 2rem;
+      line-height: 1.3;
     }
 
     header p {
       margin: 0;
-      color: #aaaaaa;
-      font-size: 1rem;
-    }
-
-    main {
-      width: min(900px, 92%);
-      margin: 0 auto;
-      padding: 40px 0 70px;
+      color: #54595d;
     }
 
     section {
-      margin-bottom: 50px;
+      margin-bottom: 28px;
     }
 
-    .section-title {
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      color: #a8e6cf;
-      font-size: 1.7rem;
-      border-bottom: 1px solid #333333;
+    h2 {
+      margin: 0 0 14px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #a2a9b1;
+      font-size: 1.5rem;
+      line-height: 1.4;
     }
 
-    .notes-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    h3 {
+      margin: 18px 0 5px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .notice {
       margin-bottom: 30px;
-      padding: 22px;
-      background: #242015;
-      border: 1px solid #ffd166;
-      border-radius: 12px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border: 1px solid #a2a9b1;
     }
 
-    .notes-card a {
-      color: #ffd166;
-      font-size: 1.15rem;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .new-badge {
-      display: inline-block;
-      margin-left: 10px;
-      padding: 3px 8px;
-      background: #ffd166;
-      color: #121212;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-    }
-
-    .tutorial-grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .tutorial-card {
-      padding: 22px;
-      background: #1b1b1b;
-      border: 1px solid #303030;
-      border-radius: 12px;
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
-    }
-
-    .tutorial-card:hover {
-      transform: translateY(-3px);
-      border-color: #a8e6cf;
-    }
-
-    .tutorial-title {
-      display: inline-block;
-      margin-bottom: 12px;
-      color: #a8e6cf;
-      font-size: 1.25rem;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .tutorial-title:hover {
-      color: #ffd166;
-    }
-
-    .resource-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .notice p {
       margin: 0;
-      padding: 0;
-      list-style: none;
     }
 
-    .resource-link {
-      display: inline-block;
-      width: fit-content;
-      padding: 5px 10px;
-      color: #13daec;
-      border-radius: 6px;
-      text-decoration: none;
-      transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
+    .tutorial {
+      margin-bottom: 20px;
     }
 
-    .resource-link:hover {
-      background: rgba(19, 218, 236, 0.1);
-      transform: translateX(5px);
+    .tutorial ul {
+      margin: 5px 0 0;
+      padding-left: 28px;
+    }
+
+    .tutorial li {
+      margin-bottom: 3px;
     }
 
     .resource-type {
-      color: #888888;
-      font-size: 0.8rem;
-      text-transform: uppercase;
+      color: #54595d;
+      font-size: 0.9em;
     }
 
-    .link-card {
-      margin-bottom: 12px;
-      padding: 16px 18px;
-      background: #1b1b1b;
-      border-left: 4px solid #13daec;
-      border-radius: 8px;
+    .plain-list {
+      margin: 0;
+      padding-left: 22px;
     }
 
-    .link-card a {
-      color: #13daec;
-      font-size: 1rem;
-      text-decoration: none;
-    }
-
-    .link-card a:hover {
-      color: #ffd166;
+    .plain-list li {
+      margin-bottom: 6px;
     }
 
     footer {
-      padding: 25px;
-      color: #777777;
-      text-align: center;
-      border-top: 1px solid #2c2c2c;
+      margin-top: 45px;
+      padding-top: 12px;
+      border-top: 1px solid #a2a9b1;
+      color: #54595d;
+      font-size: 12px;
     }
 
     @media (max-width: 600px) {
-      header {
-        padding-top: 45px;
+      .container {
+        padding: 20px 18px 40px;
       }
 
-      header h1 {
-        font-size: 2rem;
+      h1 {
+        font-size: 1.7rem;
       }
 
-      .notes-card {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .tutorial-card {
-        padding: 18px;
+      h2 {
+        font-size: 1.3rem;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="container">
 
-  <header>
-    <h1>Cognitive Algorithms Tutorial Slides</h1>
-    <p>If you find any typos, errors or have suggestions for improvement, please let me know! Note that this site is still under development and some formatting may be inconsistent. </p>
-  </header>
+    <header>
+      <h1>Cognitive Algorithms — Tutorial Materials</h1>
+      <p>
+        Tutorial slides, interactive demonstrations, and additional
+        resources for Cognitive Algorithms.
+        This page is still under development, so some formatting
+        may be inconsistent. If you notice any errors or have
+        suggestions, please let me know.
+      </p>
+    </header>
 
-  <main>
+    <main>
 
-    <section>
-      <div class="notes-card">
-        <a href="Tutorial_Notes_CA.pdf" target="_blank">
-          📄 Short Written Notes
-          <span class="new-badge">Newly added</span>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Tutorials</h2>
-
-      <div class="tutorial-grid">
-
-        <article class="tutorial-card">
-          <a class="tutorial-title" href="Tutorial_1/">
-            Tutorial 1: NCC and Perceptron
+      <section class="notice">
+        <p>
+          <strong>Written notes:</strong>
+          <a href="Tutorial_Notes_CA.pdf" target="_blank">
+            Short tutorial notes (PDF)
           </a>
+          <span class="resource-type"> — recently added</span>
+        </p>
+      </section>
 
-          <ul class="resource-list">
+      <section>
+        <h2>Tutorials</h2>
+
+        <div class="tutorial">
+          <h3>
+            <a href="Tutorial_1/">
+              Tutorial 1: NCC and Perceptron
+            </a>
+          </h3>
+          <ul>
             <li>
-              <a class="resource-link" href="Tutorial_1/#/12">
-                <span class="resource-type">Animation</span><br>
+              <a href="Tutorial_1/#/12">
                 Perceptron learning
               </a>
+              <span class="resource-type">(animation)</span>
             </li>
-
             <li>
-              <a class="resource-link" href="Tutorial_1/#/16">
-                <span class="resource-type">Interactive</span><br>
-                Decision Boundary Visualization
+              <a href="Tutorial_1/#/16">
+                Decision boundary visualization
               </a>
+              <span class="resource-type">(interactive)</span>
             </li>
           </ul>
-        </article>
+        </div>
 
-        <article class="tutorial-card">
-          <a class="tutorial-title" href="Tutorial_2/">
-            Tutorial 2: Linear Discriminant Analysis
-          </a>
-
-          <ul class="resource-list">
+        <!--
+        <div class="tutorial">
+          <h3>
+            <a href="Tutorial_2/">
+              Tutorial 2: Linear Discriminant Analysis
+            </a>
+          </h3>
+          <ul>
             <li>
-              <a class="resource-link" href="Tutorial_2/#/18">
-                <span class="resource-type">Interactive</span><br>
-                Gaussian Scatter
+              <a href="Tutorial_2/#/18">
+                Gaussian scatter
               </a>
+              <span class="resource-type">(interactive)</span>
             </li>
-
             <li>
-              <a class="resource-link" href="Tutorial_2/#/22">
-                <span class="resource-type">Animation</span><br>
-                2D Datapoints Projected onto 1D
+              <a href="Tutorial_2/#/22">
+                2D datapoints projected onto 1D
               </a>
-            </li>
-          </ul>
-        </article>
-
-        <article class="tutorial-card">
-          <a class="tutorial-title" href="Tutorial_3/">
-            Tutorial 3: Regression
-          </a>
-
-          <ul class="resource-list">
-            <li>
-              <a class="resource-link" href="Tutorial_3/#/29">
-                <span class="resource-type">Interactive</span><br>
-                Regression Estimator Variance
-              </a>
+              <span class="resource-type">(animation)</span>
             </li>
           </ul>
-        </article>
+        </div>
 
-        <article class="tutorial-card">
-          <a class="tutorial-title" href="Tutorial_4/">
-            Tutorial 4: Kernels
-          </a>
-
-          <ul class="resource-list">
+        <div class="tutorial">
+          <h3>
+            <a href="Tutorial_3/">
+              Tutorial 3: Regression
+            </a>
+          </h3>
+          <ul>
             <li>
-              <a class="resource-link" href="Tutorial_4/#/21">
-                <span class="resource-type">Interactive</span><br>
-                RBF Kernel Regression
+              <a href="Tutorial_3/#/29">
+                Regression estimator variance
               </a>
+              <span class="resource-type">(interactive)</span>
             </li>
           </ul>
-        </article>
+        </div>
 
-        <article class="tutorial-card">
-          <a class="tutorial-title" href="Tutorial_5/">
-            Tutorial 5: Dimensionality Reduction
-          </a>
-        </article>
+        <div class="tutorial">
+          <h3>
+            <a href="Tutorial_4/">
+              Tutorial 4: Kernels
+            </a>
+          </h3>
+          <ul>
+            <li>
+              <a href="Tutorial_4/#/21">
+                RBF kernel regression
+              </a>
+              <span class="resource-type">(interactive)</span>
+            </li>
+          </ul>
+        </div>
 
-        <article class="tutorial-card">
-          <a class="tutorial-title" href="Tutorial_6/">
-            Tutorial 6: Multilayer Perceptron
-          </a>
-        </article>
+        <div class="tutorial">
+          <h3>
+            <a href="Tutorial_5/">
+              Tutorial 5: Dimensionality Reduction
+            </a>
+          </h3>
+        </div>
 
-      </div>
-    </section>
+        <div class="tutorial">
+          <h3>
+            <a href="Tutorial_6/">
+              Tutorial 6: Multilayer Perceptron
+            </a>
+          </h3>
+        </div>
+      </section>
 
-    <section>
-      <h2 class="section-title">Demos</h2>
 
-      <div class="link-card">
-        <a href="demos/hyponym_tree_view_things.html">
-          THINGs Labels Visualized in the WordNet Tree Structure
-        </a>
-      </div>
-    </section>
 
-    <section>
-      <h2 class="section-title">External Resources</h2>
+-->
 
-      <div class="link-card">
-        <a
-          href="https://www.youtube.com/watch?v=Q7vT0--5VII"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Kernel Trick — Visually Explained, 3 minutes
-        </a>
-      </div>
+      <section>
+        <h2>External resources</h2>
+        <ul class="plain-list">
+          <li>
+            <a
+              href="https://www.youtube.com/watch?v=Q7vT0--5VII"
+              target="_blank"
+              rel="noopener noreferrer">
+              Kernel Trick — Visually Explained
+            </a>
+            <span class="resource-type">(3 minutes)</span>
+          </li>
 
-      <div class="link-card">
-        <a
-          href="https://www.youtube.com/watch?v=PFDu9oVAE-g"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Eigenvalues and Eigenvectors — 3Blue1Brown, 17 minutes
-        </a>
-      </div>
+          <li>
+            <a
+              href="https://www.youtube.com/watch?v=PFDu9oVAE-g"
+              target="_blank"
+              rel="noopener noreferrer">
+              Eigenvalues and Eigenvectors — 3Blue1Brown
+            </a>
+            <span class="resource-type">(17 minutes)</span>
+          </li>
 
-      <div class="link-card">
-        <a
-          href="https://www.youtube.com/watch?v=Q7vT0--5VII"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Principal Component Analysis — Serrano Academy, 26 minutes
-        </a>
-      </div>
+          <li>
+            <a
+              href="https://www.youtube.com/watch?v=Q7vT0--5VII"
+              target="_blank"
+              rel="noopener noreferrer">
+              Principal Component Analysis — Serrano Academy
+            </a>
+            <span class="resource-type">(26 minutes)</span>
+          </li>
 
-      <div class="link-card">
-        <a
-          href="https://www.youtube.com/watch?v=IHZwWFHWa-w"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Gradient Descent in Multilayer Perceptrons — 3Blue1Brown, 20 minutes
-        </a>
-      </div>
+          <li>
+            <a
+              href="https://www.youtube.com/watch?v=IHZwWFHWa-w"
+              target="_blank"
+              rel="noopener noreferrer">
+              Gradient Descent in Multilayer Perceptrons — 3Blue1Brown
+            </a>
+            <span class="resource-type">(20 minutes)</span>
+          </li>
 
-      <div class="link-card">
-        <a
-          href="https://www.youtube.com/watch?v=VbYTp0CIJkY"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Stochastic Gradient Descent — Visually Explained, 3 minutes
-        </a>
-      </div>
-    </section>
+          <li>
+            <a
+              href="https://www.youtube.com/watch?v=VbYTp0CIJkY"
+              target="_blank"
+              rel="noopener noreferrer">
+              Stochastic Gradient Descent — Visually Explained
+            </a>
+            <span class="resource-type">(3 minutes)</span>
+          </li>
+        </ul>
+      </section>
 
-  </main>
+    </main>
 
-  <footer>
-    Tutorial materials and supporting resources
-  </footer>
+    <footer>
+      Last updated: October 2026
+    </footer>
 
+  </div>
 </body>
 </html>

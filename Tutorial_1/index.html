@@ -16,8 +16,95 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
           src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	</head>
+	
+  
+<style>
+  .tutorial-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 24px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #a2a9b1;
+    font: 14px Arial, sans-serif;
+  }
+
+  .tutorial-nav a,
+  .tutorial-nav button {
+    color: #0645ad;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .tutorial-nav a:hover,
+  .tutorial-nav button:hover {
+    text-decoration: underline;
+  }
+
+  .tutorial-nav .fullscreen-btn {
+    margin-left: auto;
+  }
+
+
+  html:not(:fullscreen) .reveal {
+  top: 45px;
+  height: calc(100% - 45px);
+}
+
+html:fullscreen .tutorial-nav {
+  display: none;
+}
+
+html:fullscreen .reveal {
+  top: 0;
+  height: 100%;
+}
+</style>
+
+        </head>
 	<body>
+
+
+<nav class="tutorial-nav">
+  <a href="../">← Home</a>
+  <!-- <a href="../Tutorial_2/">Next tutorial →</a> -->
+
+  <button class="fullscreen-btn" id="fullscreen-btn">
+    Fullscreen ⛶
+  </button>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fullscreenBtn = document.getElementById("fullscreen-btn");
+
+    fullscreenBtn.addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      } catch (error) {
+        console.error("Could not change fullscreen mode:", error);
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      Reveal.layout();
+    });
+  });
+</script>
+
 <div class="reveal">
   <div class="slides">
 
@@ -38,7 +125,7 @@
 	  </p> 
 
     <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-		I corrected everyone's first sheet, if you have any questions please ask me.
+		I will correct everyone's first sheet, if you have any questions please ask me.
 	  </p> 
 
       <p class="fragment" style="color:#668aff; font-weight:bold; margin-top:20px;">
@@ -412,6 +499,7 @@ until no misclassifications
   </div>
 </section>
 
+<!--
     <section>
       <h3 style="color:#A8E6CF;">Homework</h3>
     </section>
@@ -420,10 +508,8 @@ until no misclassifications
   <h3 style="color:#A8E6CF; text-align:center;">Interactive Decision Boundary (\(\mathbb{R}^2\))</h3>
   <div style="display:flex; justify-content:center; align-items:flex-start; gap:30px;">
 
-    <!-- Plot -->
     <div id="plot" style="width:600px; height:600px;"></div>
 
-    <!-- Controls (RIGHT SIDE) -->
  <div style="display:grid;grid-template-columns: auto auto; gap:10px; justify-items: end; text-wrap: nowrap;">
 
     <label style="color:#EAEAEA;">w₁ =</label>
@@ -519,7 +605,6 @@ until no misclassifications
         name:"boundary"
       };
 
-      // arrow for w
       const arrow={
         x:[0,w1], y:[0,w2],
         mode:"lines+markers",
@@ -606,7 +691,6 @@ annotations: [
       "
     >
 
-    <!-- Optional caption -->
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
 	Decision boundary decides which class points are assigned to
 	  </p>
@@ -628,7 +712,6 @@ annotations: [
       "
     >
 
-    <!-- Optional caption -->
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
 	Decision boundary decides which class points are assigned to
 	  </p>
@@ -650,7 +733,6 @@ annotations: [
       "
     >
 
-    <!-- Optional caption -->
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
 	Decision boundary decides which class points are assigned to
 	  </p>
@@ -673,7 +755,6 @@ annotations: [
       "
     >
 
-    <!-- Optional caption -->
   <p style="color:#8A8A8A; font-size:0.7em; margin-top:5px;">
 	Decision boundary decides which class points are assigned to
 	  </p>
@@ -694,6 +775,7 @@ annotations: [
 
 </section>
 
+-->
   </div>
 </div>
 
