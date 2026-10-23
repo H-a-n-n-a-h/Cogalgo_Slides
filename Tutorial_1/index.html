@@ -55,29 +55,63 @@
   }
 
 
-  html:not(:fullscreen) .reveal {
-  top: 45px;
-  height: calc(100% - 45px);
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.presentation-stage {
+  box-sizing: border-box;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 60px 24px 24px; /* room for the fixed nav */
+}
+
+.presentation-frame {
+  width: min(70vw, 5000px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid #2a2a2b;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 25%);
+}
+
+.presentation-frame .reveal {
+  width: 100%;
+  height: 100%;
 }
 
 html:fullscreen .tutorial-nav {
   display: none;
 }
 
-html:fullscreen .reveal {
-  top: 0;
-  height: 100%;
+html:fullscreen .presentation-stage {
+  min-height: 100vh;
+  padding: 0;
+}
+
+html:fullscreen .presentation-frame {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 </style>
 
-        </head>
-	<body>
-
-
+</head>
+<body>
+<main class="presentation-stage">
+  <div class="presentation-frame">
+    
 <nav class="tutorial-nav">
   <a href="../">← Home</a>
+  <a href="../Tutorial_2/">Next tutorial →</a> 
   <!-- <a href="../Tutorial_2/">Next tutorial →</a> -->
-
   <button class="fullscreen-btn" id="fullscreen-btn">
     Fullscreen ⛶
   </button>
@@ -105,30 +139,34 @@ html:fullscreen .reveal {
   });
 </script>
 
+
+
+<!-- Here the slides start -->
+
 <div class="reveal">
   <div class="slides">
 
     <!-- Slide 1: Title -->
     <section>
-      <h2 style="color:#A8E6CF;">Cognitive Algorithms: Perceptron and NCC</h2>
-      <p style="color:#EAEAEA;">Hannah Louisa Boldt h.boldt@campus.tu-berlin.de</p>
+      <h2 style="color:#A8E6CF; text-transform: none">Perceptron and NCC</h2>
+      <p style="color:#EAEAEA;">Cognitive Algorithms - Tutorial 1</p>
     </section>
 <section>
   <h3 style="color:#A8E6CF; text-align:center; text-transform: none">Organization</h3>
   
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:16px;">
     
 		You have to take an elective.
 	  </p> 
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:16px;">
 		Written Homework and Quizzes every week. You can earn 10 points in total.
 	  </p> 
 
-    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:20px;">
-		I will correct everyone's first sheet, if you have any questions please ask me.
-	  </p> 
+    <p class="fragment" style="color:#FFD166; font-weight:bold; margin-top:16px;">
+      Quizzes: <a href="https://isis.tu-berlin.de/mod/quiz/view.php?id=2422079" target="_blank" rel="noopener noreferrer">isis.tu-berlin.de/mod/quiz/view.php?id=2422079</a>
+    </p>
 
-      <p class="fragment" style="color:#668aff; font-weight:bold; margin-top:20px;">
+      <p class="fragment" style="color: #FFD166; font-weight:bold; margin-top:16px;">
 		Any Questions?
 	  </p> 
 
@@ -381,21 +419,38 @@ html:fullscreen .reveal {
 <section>
   <h3 style="color:#A8E6CF;text-transform: none">Recap: Gradient Descent</h3>
   
-  <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
-    <iframe 
-      src="https://www.youtube.com/embed/IHZwWFHWa-w?start=331" 
+<div id="gradient-video"
+     style="position:relative; aspect-ratio:16/9; max-width:1600px; background:#000;">
+  <button type="button" aria-label="Play Gradient Descent video"
+          style="position:absolute; inset:0; width:100%; height:100%; padding:0;
+                 border:0; background:#000; cursor:pointer;">
+    <img src="https://img.youtube.com/vi/IHZwWFHWa-w/maxresdefault.jpg"
+         alt="Gradient Descent video thumbnail"
+         style="width:100%; height:100%; object-fit:cover;">
+    <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                 padding:12px 24px; border-radius:12px; background:#f00;
+                 color:#fff; font-size:28px;">▶</span>
+  </button>
+</div>
+
+<script>
+  const box = document.getElementById("gradient-video");
+  box.querySelector("button").addEventListener("click", () => {
+    box.innerHTML = `<iframe
+      src="https://www.youtube.com/embed/IHZwWFHWa-w?start=331&autoplay=1"
       title="Gradient Descent (3Blue1Brown)"
-      frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
-      style="position:absolute; top:0; left:0; width:100%; height:100%;">
-    </iframe>
-  </div>
+      style="width:100%; height:100%; border:0;">
+    </iframe>`;
+  });
+</script>
     <p style="color:#8A8A8A; font-size:0.5em; margin-top:5px;">
 		@3Blue1Brown explains how to use gradient descent in Multilayer Perceptron, but the same idea applies to Perceptron learning $C(w) = \mathcal{L}_p(w)$. 
 	  </p>
 
 </section>
+
 <section style="font-size: 0.7em;">
   <h2 style="color:#A8E6CF;text-transform: none">Perceptron Algorithm </h2>
 
@@ -499,181 +554,249 @@ until no misclassifications
   </div>
 </section>
 
-<!--
-    <section>
-      <h3 style="color:#A8E6CF;">Homework</h3>
-    </section>
-    
-<section style="font-size: 0.7em;">
-  <h3 style="color:#A8E6CF; text-align:center;">Interactive Decision Boundary (\(\mathbb{R}^2\))</h3>
-  <div style="display:flex; justify-content:center; align-items:flex-start; gap:30px;">
 
-    <div id="plot" style="width:600px; height:600px;"></div>
 
- <div style="display:grid;grid-template-columns: auto auto; gap:10px; justify-items: end; text-wrap: nowrap;">
 
-    <label style="color:#EAEAEA;">w₁ =</label>
-    <input id="w1" type="number" step="0.1" value="1" class="num-input">
 
-    <label style="color:#EAEAEA;">w₂ =</label>
-    <input id="w2" type="number" step="0.1" value="1" class="num-input">
+<section style="font-size:0.7em; display:flex; flex-direction:column; align-items:flex-start; ">
+  <h3 style="color:#A8E6CF; text-transform: none; gap:12px;text-align:left;">
+    Interactive Decision Boundary on \(\mathbb{R}^2\)
+  </h3>
+<div style="display:flex; justify-content:flex-start; align-self:flex-start;
+            position:relative; width:1000px; height:600px; margin:0;">
+  <div id="plot" style="width:1000px; height:600px;"></div>
 
-    <label style="color:#EAEAEA;">β =</label>
-    <input id="beta" type="number" step="0.1" value="0" class="num-input">
 
-    <label style="color:#EAEAEA;">|w| =</label>
-    <input id="wlen" type="number" step="0.1" value="1.4" class="num-input">
+  <div style="position:absolute; left:10%; top:50%; z-index:10;
+              display:grid; grid-template-columns:auto auto; gap:10px;
+              padding:12px; background:rgba(0,0,0,0.85);font: 0.6em 'Cambria Math',serif; border-radius:0px; border:1px solid #555;">
 
-    <label style="color:#EAEAEA;">θ =</label>
-    <input id="theta" type="number" step="1" value="45" class="num-input">
+    <div style="display:grid; grid-template-columns:auto auto; gap:10px;
+                justify-items:end; align-items:center; text-wrap:nowrap;">
 
-</div>
+      <div style="grid-column:1 / -1; display:flex; align-items:center;
+                  gap:8px;">
+        <span>w =</span>
+        <span style="display:flex; align-items:center; gap:3px;">
+          
+          <span style="display:flex; flex-direction:column; gap:2px;">
+            <input id="w1" type="number" step="0.1" value="1"
+                   aria-label="w one" class="num-input">
+            <input id="w2" type="number" step="0.1" value="1"
+                   aria-label="w two" class="num-input">
+          </span>
+          
+        </span>
+      </div>
 
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <label for="beta" style="color:#EAEAEA;">$\beta$ =</label>
+      <input  id="beta" type="number" step="0.1" value="0" class="num-input">
+
+      <label for="wlen" style="color:#EAEAEA;">$||w||_2$ =</label>
+      <input id="wlen" type="number" step="0.1" value="1.4" class="num-input">
+
+      <label for="theta" style="color:#EAEAEA;">$\theta$ =</label>
+      <input id="theta" type="number" step="1" value="45" class="num-input">
+
+   
+    </div>
+  </div>
+</div> 
+
 
   <style>
     .num-input {
-      width: 5em;
-      background: #111;
+      width: 3.2em;
+      padding: px 0;
+      border: 1px solid #555;
+      border-radius: 0;
+      outline: gray;
+      background: transparent;
       color: #EAEAEA;
-      border: 1px solid #444;
-      border-radius: 6px;
       text-align: center;
-      font-size: 1em;
-      padding: 4px;
+      font:  1em "Cambria Math", "STIX Two Math", serif;
     }
-    .num-input:focus { outline:none; border-color:#A8E6CF; }
+    .num-input:focus {
+      border-bottom-color: #ffffff;
+    }
+    .num-input::-webkit-inner-spin-button,
+    .num-input::-webkit-outer-spin-button {
+      appearance: none;
+      margin: 0;
+    }
   </style>
 
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
   <script>
-    const X1=[],Y1=[],X2=[],Y2=[];
-    for(let i=0;i<30;i++){
-      X1.push(Math.random()*2-4); Y1.push(Math.random()*2+1);
-      X2.push(Math.random()*2+1); Y2.push(Math.random()*2-4);
+    const X1 = [], Y1 = [], X2 = [], Y2 = [];
+
+    for (let i = 0; i < 30; i++) {
+      X1.push(Math.random() * 2 - 4);
+      Y1.push(Math.random() * 2 + 1);
+      X2.push(Math.random() * 2 + 1);
+      Y2.push(Math.random() * 2 - 4);
     }
 
-    function computeLine(w1,w2,beta){
-      const x=[],y=[];
-      for(let i=-5;i<=5;i+=0.05){
+    function computeLine(w1, w2, beta) {
+      const x = [], y = [];
+      for (let i = -15; i <= 15; i += 0.05) {
         x.push(i);
-        y.push(Math.abs(w2)>1e-6?(beta-w1*i)/w2:null);
+        y.push(Math.abs(w2) > 1e-6 ? (beta - w1 * i) / w2 : null);
       }
-      return {x,y};
+      return { x, y };
     }
 
-    function syncFromCartesian(){
-      const w1=parseFloat(w1el.value), w2=parseFloat(w2el.value);
-      const len=Math.sqrt(w1*w1+w2*w2);
-      const ang=Math.atan2(w2,w1)*180/Math.PI;
-      wlen.value=len.toFixed(3);
-      theta.value=ang.toFixed(1);
+    const w1el = document.getElementById("w1");
+    const w2el = document.getElementById("w2");
+    const betael = document.getElementById("beta");
+    const wlen = document.getElementById("wlen");
+    const theta = document.getElementById("theta");
+
+    function syncFromCartesian() {
+      const w1 = parseFloat(w1el.value);
+      const w2 = parseFloat(w2el.value);
+      const len = Math.sqrt(w1 * w1 + w2 * w2);
+      const ang = Math.atan2(w2, w1) * 180 / Math.PI;
+      wlen.value = len.toFixed(3);
+      theta.value = ang.toFixed(1);
     }
 
-    function syncFromPolar(){
-      const len=parseFloat(wlen.value);
-      const ang=parseFloat(theta.value)*Math.PI/180;
-      w1el.value=(len*Math.cos(ang)).toFixed(3);
-      w2el.value=(len*Math.sin(ang)).toFixed(3);
+    function syncFromPolar() {
+      const len = parseFloat(wlen.value);
+      const ang = parseFloat(theta.value) * Math.PI / 180;
+      w1el.value = (len * Math.cos(ang)).toFixed(3);
+      w2el.value = (len * Math.sin(ang)).toFixed(3);
     }
 
-    function draw(){
-      const w1=parseFloat(w1el.value);
-      const w2=parseFloat(w2el.value);
-      const beta=parseFloat(betael.value);
+    function draw() {
+      const w1 = parseFloat(w1el.value);
+      const w2 = parseFloat(w2el.value);
+      const beta = parseFloat(betael.value);
+      const fmt = n => Number(n).toFixed(2);
 
-      const line=computeLine(w1,w2,beta);
+      const yTerm = w2 < 0
+        ? `− ${fmt(Math.abs(w2))}y`
+        : `+ ${fmt(w2)}y`;
 
-      // unit circle
-      const cx=[],cy=[];
-      for(let t=0;t<=2*Math.PI;t+=0.01){
+      const betaTerm = beta < 0
+        ? `+ ${fmt(Math.abs(beta))}`
+        : `− ${fmt(beta)}`;
+
+      const line = computeLine(w1, w2, beta);
+
+      const cx = [], cy = [];
+      for (let t = 0; t <= 2 * Math.PI; t += 0.01) {
         cx.push(Math.cos(t));
         cy.push(Math.sin(t));
       }
 
-      const circle={
-        x:cx,y:cy,mode:"lines",
-        line:{color:"#555",width:2},
-        name:"unit circle"
+      const circle = {
+        x: cx, y: cy, mode: "lines",
+        line: { color: "#777", width: 2 },
+        name: "Unit circle",
+        legendrank: 5
       };
 
-      const trace1={x:X1,y:Y1,mode:"markers",marker:{color:"#9bd7ff",size:7},name:"+1"};
-      const trace2={x:X2,y:Y2,mode:"markers",marker:{color:"orange",size:7},name:"-1"};
-
-      const boundary={
-        x:line.x,y:line.y,mode:"lines",
-        line:{color:"#ff9bd7",width:3},
-        name:"boundary"
+      const trace1 = {
+        x: X1, y: Y1, mode: "markers",
+        marker: { color: "#9bd7ff", size: 7 },
+        name: "Class A",
+        legendrank: 1
       };
 
-      const arrow={
-        x:[0,w1], y:[0,w2],
-        mode:"lines+markers",
-        line:{color:"#ff2fa3",width:4},
-        marker:{size:6},
-        name:"w"
+      const trace2 = {
+        x: X2, y: Y2, mode: "markers",
+        marker: { color: "orange", size: 7 },
+        name: "Class B",
+        legendrank: 2
       };
 
-      const layout={
-        paper_bgcolor:"#000",
-        plot_bgcolor:"#000",
-        font:{color:"#EAEAEA"},
-        width:600,height:600,
-        xaxis:{range:[-5,5],gridcolor:"#333",scaleanchor:"y"},
-        yaxis:{range:[-5,5],gridcolor:"#333"},
-        showlegend:false,
+      const boundary = {
+        x: line.x, y: line.y, mode: "lines",
+        line: { color: "#ff9bd7", width: 3 },
+        name: `Boundary: ${fmt(w1)} ${yTerm} ${betaTerm} = 0`,
+        legendrank: 4
+      };
+
+      const arrow = {
+        x: [0, w1], y: [0, w2],
+        mode: "lines+markers",
+        line: { color: "#ff2fa3", width: 4 },
+        marker: { color: "#ff2fa3", size: 6 },
+        name: `Weight vector w = (${fmt(w1)}, ${fmt(w2)})`,
+        legendrank: 3
+      };
+
+      const layout = {
+        paper_bgcolor: "#000",
+        plot_bgcolor: "#000",
+        font: { color: "#EAEAEA" },
+        width: 1000,
+        height: 600,
+        xaxis: { range: [-10, 10], gridcolor: "#333", scaleanchor: "y" , dtick: 1},
+        yaxis: { range: [-5, 5], gridcolor: "#333" , dtick: 1},
+        showlegend: true,
+        legend: {
+          x: 0.7,
+          y: 1.0,
+          xanchor: "left",
+          yanchor: "top",
+          bgcolor: "rgba(0,0,0,0.75)",
+          bordercolor: "#555",
+          borderwidth: 1,
+          font: { color: "#EAEAEA", size: 11 }
+        },
         shapes: [{
-          type:"line",
-          x0:0,y0:0,x1:w1,y1:w2,
-          line:{color:"#ff2fa3",width:4},
-          axref:"x",ayref:"y",
+          type: "line",
+          x0: 0, y0: 0, x1: w1, y1: w2,
+          line: { color: "#ff2fa3", width: 4 },
+          axref: "x_1",
+          ayref: "x_2"
         }],
-annotations: [
- 
-  {
-    x: w1,
-    y: w2  ,
-    ax: 0,
-    ay: 0,
-    xref: "x",
-    yref: "y",
-    axref: "x",
-    ayref: "y",
-    showarrow: true,
-    arrowhead: 10,
-    arrowsize: 1.5,
-    arrowwidth: 2,
-    arrowcolor: "#ff2fa3",
-  },
-  {
-    x: w1+0.3,
-    y: w2+0.3,
-    text: "w",
-    showarrow: false,
-    font: { color: "#ff2fa3" , size: 16, weight: "bold"},
-  }
-
-]
+        annotations: [
+          {
+            x: w1, y: w2,
+            ax: 0, ay: 0,
+            xref: "x_1", yref: "x_2",
+            axref: "x_1", ayref: "x_2",
+            showarrow: true,
+            arrowhead: 10,
+            arrowsize: 1.5,
+            arrowwidth: 2,
+            arrowcolor: "#ff2fa3"
+          },
+          {
+            x: w1 + 0.3, y: w2 + 0.3,
+            text: "w",
+            showarrow: false,
+            font: { color: "#ff2fa3", size: 16, weight: "bold" }
+          }
+        ]
       };
 
-      Plotly.newPlot("plot",[circle,trace1,trace2,boundary,arrow],layout,{displayModeBar:false});
+      Plotly.newPlot(
+        "plot",
+        [circle, trace1, trace2, boundary, arrow],
+        layout,
+        { displayModeBar: false }
+      );
     }
-    const w1el=document.getElementById("w1");
-    const w2el=document.getElementById("w2");
-    const betael=document.getElementById("beta");
-    const wlen=document.getElementById("wlen");
-    const theta=document.getElementById("theta");
 
-    w1el.addEventListener("input",()=>{syncFromCartesian();draw();});
-    w2el.addEventListener("input",()=>{syncFromCartesian();draw();});
-    betael.addEventListener("input",draw);
-
-    wlen.addEventListener("input",()=>{syncFromPolar();draw();});
-    theta.addEventListener("input",()=>{syncFromPolar();draw();});
+    w1el.addEventListener("input", () => { syncFromCartesian(); draw(); });
+    w2el.addEventListener("input", () => { syncFromCartesian(); draw(); });
+    betael.addEventListener("input", draw);
+    wlen.addEventListener("input", () => { syncFromPolar(); draw(); });
+    theta.addEventListener("input", () => { syncFromPolar(); draw(); });
 
     syncFromCartesian();
     draw();
   </script>
 </section>
+
+
+
+<!--
 <section>
   <h3 style="color:#A8E6CF; text-align:center;">Task 2</h3>
 
@@ -776,7 +899,8 @@ annotations: [
 </section>
 
 -->
-  </div>
+  
+</div>
 </div>
 
 

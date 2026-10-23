@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="../dist/reset.css">
 		<link rel="stylesheet" href="../dist/reveal.css">
-		<link rel="stylesheet" href="../dist/theme/white_math.css">
+		<link rel="stylesheet" href="../dist/theme/black.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
@@ -16,21 +16,139 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
           src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	</head>
-
-  <style>
+	
+    <style>
 :root {
-  --nicecyan:   #004534;  /* (0,0.8,0.6) */
+  --nicecyan:   #00CC99;  /* (0,0.8,0.6) */
   --niceblue:   #4D66FF;  /* (0.3,0.4,1) */
   --nicepurple: #FF1AFF;  /* (1,0.1,1) */
   --nicered:    #CC001A;  /* (0.8,0,0.1) */
   --niceyellow: #FFB300;  /* (1,0.7,0) */
   --niceorange: #FF8000;  /* (1,0.5,0) */
-  --offwhite:   #000000;  /* (1,0.9,1) */
+  --offwhite:   #FFE6FF;  /* (1,0.9,1) */
+}
+</style>
+<style>
+  .tutorial-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 24px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #a2a9b1;
+    font: 14px Arial, sans-serif;
+  }
+
+  .tutorial-nav a,
+  .tutorial-nav button {
+    color: #0645ad;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .tutorial-nav a:hover,
+  .tutorial-nav button:hover {
+    text-decoration: underline;
+  }
+
+  .tutorial-nav .fullscreen-btn {
+    margin-left: auto;
+  }
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.presentation-stage {
+  box-sizing: border-box;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 60px 24px 24px; /* room for the fixed nav */
+}
+
+.presentation-frame {
+  width: min(70vw, 5000px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 15%);
+}
+
+.presentation-frame .reveal {
+  width: 100%;
+  height: 100%;
+}
+
+html:fullscreen .tutorial-nav {
+  display: none;
+}
+
+html:fullscreen .presentation-stage {
+  min-height: 100vh;
+  padding: 0;
+}
+
+html:fullscreen .presentation-frame {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 </style>
 
-	<body>
+</head>
+<body>
+<main class="presentation-stage">
+  <div class="presentation-frame">
+    
+<nav class="tutorial-nav">
+  <a href="../"> Home</a>
+  <a href="../Tutorial_1/"> ← Previous tutorial</a> 
+  <!-- <a href="../Tutorial_3/">Next tutorial →</a> -->
+  <button class="fullscreen-btn" id="fullscreen-btn">
+    Fullscreen ⛶
+  </button>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fullscreenBtn = document.getElementById("fullscreen-btn");
+
+    fullscreenBtn.addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      } catch (error) {
+        console.error("Could not change fullscreen mode:", error);
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      Reveal.layout();
+    });
+  });
+</script>
+
 <div class="reveal">
   <div class="slides">
 
